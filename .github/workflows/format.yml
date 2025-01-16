@@ -1,0 +1,46 @@
+name: Code Formatter
+
+on:
+  push:
+    branches:
+      - main # ou la branche sur laquelle tu veux que le formatage soit effectué
+  pull_request:
+    branches:
+      - main # ou la branche sur laquelle tu veux que le formatage soit effectué
+
+jobs:
+  format:
+    runs-on: ubuntu-latest
+
+    steps:
+    # Vérifier les dépendances et installer PHP
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    # Installer PHP et les dépendances via Composer (pour PHP-CS-Fixer)
+    - name: Set up PHP
+      uses: shivammathur/setup-php@v2
+      with:
+        php-version: '7.4' # ou la version que tu utilises
+    - name: Install dependencies
+      run: |
+        composer install
+
+    # Installer Prettier (pour formater le JavaScript, CSS, etc.)
+    - name: Install Prettier
+      run: npm install --save-dev prettier
+
+    # Formater le code PHP avec PHP-CS-Fixer
+    - name: Format PHP code with PHP-CS-Fixer
+      run: |
+        vendor/bin/php-cs-fixer fix --fix
+
+    # Formater le code JavaScript, CSS, HTML avec Prettier
+    - name: Format front-end code with Prettier
+      run: |
+        npx prettier --write . # ou tu peux spécifier les fichiers comme "*.js *.css"
+
+    # Vérifier si des fichiers ont été modifiés après le formatage
+    - name: Check for formatting changes
+      run: |
+        git diff --exit-code || echo "Code needs to be formatted!"
