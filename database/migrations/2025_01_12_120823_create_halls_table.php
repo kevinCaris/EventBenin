@@ -17,10 +17,10 @@ return new class extends Migration
             $table->string('title');
             $table->text('description');
             $table->integer('capacity');
-            $table->string('location');
+            $table->json('location');
             $table->float('price');
             $table->string('image')->nullable();
-            $table->text('address');
+            $table->string('address');
             $table->enum('status', array_column(StatusHallEnum::cases(), 'value'))->default(StatusHallEnum::AVAILABLE->value);
             $table->foreignId('company_id')->constrained('companies')->onDelete('cascade');
             $table->timestamps();

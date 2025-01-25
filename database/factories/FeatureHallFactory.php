@@ -2,6 +2,8 @@
 
 namespace Database\Factories;
 
+use App\Models\Feature;
+use App\Models\Hall;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -17,7 +19,8 @@ class FeatureHallFactory extends Factory
     public function definition(): array
     {
         return [
-            //
+            'feature_id' => Feature::all()->random()->id,
+            'hall_id' => Hall::all()->random()->id,
         ];
     }
 }

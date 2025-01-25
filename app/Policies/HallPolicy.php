@@ -13,7 +13,7 @@ class HallPolicy
      */
     public function viewAny(User $user): bool
     {
-        //
+        return $user->isAdmin() || $user->isOwner();
     }
 
     /**
@@ -21,7 +21,7 @@ class HallPolicy
      */
     public function view(User $user, Hall $hall): bool
     {
-        //
+        return $user->is_admin || $user->isOwner() && $user->company_id === $hall->company_id;
     }
 
     /**
@@ -29,7 +29,7 @@ class HallPolicy
      */
     public function create(User $user): bool
     {
-        //
+        return $user->is_admin || $user->isOwner();
     }
 
     /**
@@ -37,7 +37,7 @@ class HallPolicy
      */
     public function update(User $user, Hall $hall): bool
     {
-        //
+        return $user->is_admin || $user->isOwner() && $user->company_id === $hall->company_id;
     }
 
     /**
@@ -45,7 +45,7 @@ class HallPolicy
      */
     public function delete(User $user, Hall $hall): bool
     {
-        //
+        return $user->is_admin || $user->isOwner() && $user->company_id === $hall->company_id;
     }
 
     /**
@@ -53,7 +53,7 @@ class HallPolicy
      */
     public function restore(User $user, Hall $hall): bool
     {
-        //
+        return false;
     }
 
     /**
@@ -61,6 +61,6 @@ class HallPolicy
      */
     public function forceDelete(User $user, Hall $hall): bool
     {
-        //
+        return false;
     }
 }

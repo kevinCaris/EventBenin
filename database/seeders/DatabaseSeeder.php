@@ -25,6 +25,10 @@ class DatabaseSeeder extends Seeder
             HallPicturesSeeder::class,
             FeatureSeeder::class,
             EventTypeSeeder::class,
+            EventTypeHallSeeder::class,
+            FeatureHallSeeder::class,
+            PaiementSeeder::class,
+            EventSeeder::class,
         ]);
     }
 }

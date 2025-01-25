@@ -6,6 +6,7 @@ use App\Enums\StatusHallEnum;
 use file;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Hall extends Model
 {
@@ -28,6 +29,11 @@ class Hall extends Model
         'status' => StatusHallEnum::class,
     ];
 
+    public function isActive(): bool
+    {
+        return $this->status === StatusHallEnum::AVAILABLE;
+    }
+
     public function company(): BelongsTo
     {
         return $this->belongsTo(Company::class);
@@ -35,7 +41,7 @@ class Hall extends Model
 
     public function pictures(): HasMany
     {
-        return $this->hasMany(HallPicture::class);
+        return $this->hasMany(HallPictures::class);
     }
 
     public function reservations(): HasMany
@@ -49,12 +55,12 @@ class Hall extends Model
 
     public function events(): BelongsToMany
     {
-        return $this->belongsToMany(EventType::class);
+        return $this->belongsToMany(EventType::class, 'event_type_halls');
     }
 
     public function features(): BelongsToMany
     {
-        return $this->belongsToMany(Feature::class);
+        return $this->belongsToMany(Feature::class, 'feature_halls');
     }
 
 

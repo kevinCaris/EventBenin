@@ -1,4 +1,4 @@
-<x-app-layout>
+<x-dashboard-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
             {{ __('Liste des Compagnies') }}
@@ -20,15 +20,15 @@
                         </div>
                     @endif
                     {{-- <livewire:compagnies.index :companies="$companies" /> --}}
-                    <div class="flex justify-between items-center mt-8">
+                    <div class="flex justify-between items-center my-6">
                         <h3 class="text-lg font-medium text-gray-700">Liste des Compagnies</h3>
                         <a href="{{ route('companies.create') }}"
                             class="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600">
-                            + Nouvelle Compagnie
+                            <i class="fas fa-plus mr-2"></i>Nouvelle Compagnie
                         </a>
                     </div>
 
-                    <di class="overflow-x-auto">
+                    <div class="overflow-x-auto">
                         <table class="min-w-full divide-y divide-gray-200">
                             <thead class="bg-gray-50 ">
                                 <tr>
@@ -43,6 +43,14 @@
                                     <th scope="col"
                                         class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                                         Téléphone
+                                    </th>
+                                    <th scope="col"
+                                        class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                        Ville
+                                    </th>
+                                    <th scope="col"
+                                        class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                        Pays
                                     </th>
                                     <th scope="col"
                                         class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
@@ -63,32 +71,28 @@
                                         <td class="px-6 py-4 whitespace-nowrap">
                                             <div class="text-sm text-gray-900">{{ $company->phone }}</div>
                                         </td>
+                                        <td class="px-6 py-4 whitespace-nowrap">
+                                            <div class="text-sm text-gray-900">{{ $company->ville }}</div>
+                                        </td>
+                                        <td class="px-6 py-4 whitespace-nowrap">
+                                            <div class="text-sm text-gray-900">{{ $company->pays }}</div>
+                                        </td>
                                         <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
                                             <div class="flex space-x-2">
-
                                                 <a href="{{ route('companies.show', $company) }}"
-                                                    class="px-4 py-2 bg-blue-500 text-white text-sm font-medium rounded hover:bg-blue-600 transition"
+                                                    class="px-3 py-2 bg-blue-500 text-white text-sm font-medium rounded hover:bg-blue-600 transition"
                                                     wire:navigate>
-                                                    Vew
+                                                    <i class="fas fa-eye"></i>
                                                 </a>
                                                 <a href="{{ route('companies.edit', $company) }}"
-                                                    class="px-4 py-2 bg-green-500 text-white text-sm font-medium rounded hover:bg-green-600 transition"
+                                                    class="px-3 py-2 bg-green-500 text-white text-sm font-medium rounded hover:bg-green-600 transition"
                                                     wire:navigate>
-                                                    update
-                                                </a>
-                                                {{-- <button wire:click="destroy({{ $company->id }})" class="px-4 py-2 bg-red-500 text-white text-sm font-medium rounded hover:bg-red-600 transition">
-                                                        Supprimer
-                                                    </button> --}}
-                                                <form action="{{ route('companies.destroy', $company) }}" method="POST"
-                                                    onsubmit="return confirm('Êtes-vous sûr de vouloir supprimer cette compagnie ?');">
-                                                    @csrf
-                                                    @method('DELETE')
-                                                    <button type="submit"
-                                                        class="px-4 py-2 bg-red-500 text-white rounded hover:bg-red-600">
-                                                        Supprimer
-                                                    </button>
-                                                </form>
-
+                                                    <i class="fas fa-edit"></i>
+                                            </a>
+                                                <x-confirmationmodal :title="'Supprimer la compagnie'" :message="'Êtes-vous sûr de vouloir supprimer cette compagnie ? Cette action est irréversible.'"
+                                                    :route="route('companies.destroy', $company)">
+                                                    <i class="fas fa-trash"></i> <!-- Icône du bouton -->
+                                                </x-confirmationmodal>
                                             </div>
                                         </td>
                                     </tr>
@@ -100,10 +104,13 @@
                                 @endforelse
                             </tbody>
                         </table>
+                    </div>
+                    <div class="mt-4" wire:abort>
+                        {{ $companies->links() }}
+                    </div>
                 </div>
-
             </div>
         </div>
     </div>
-    </div>
-</x-app-layout>
+
+</x-dashboard-layout>

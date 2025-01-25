@@ -17,17 +17,20 @@ class HallFactory extends Factory
      */
     public function definition(): array
     {
-        $company = Company::inrandomOrder()->first() ?? Company::factory()->create(); ;
+        $company = Company::inrandomOrder()->first() ?? Company::factory()->create();
         return [
             'title' => fake()->company(),
             'description' => fake()->text(),
             'capacity' => fake()->randomNumber(),
-            'location' => fake()->address(),
+            'location' => json_encode([
+                'latitude' => fake()->latitude(),
+                'longitude' => fake()->longitude(),
+                'address' => fake()->address(),
+            ]),
             'price' => fake()->randomFloat(2, 0, 100),
             'image' => null,
             'address' => fake()->address(),
             'company_id' => $company->id
-
         ];
     }
 }

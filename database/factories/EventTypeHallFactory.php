@@ -2,6 +2,8 @@
 
 namespace Database\Factories;
 
+use App\Models\EventType;
+use App\Models\Hall;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -17,7 +19,8 @@ class EventTypeHallFactory extends Factory
     public function definition(): array
     {
         return [
-            //
+            'event_type_id' => EventType::all()->random()->id,
+            'hall_id' => Hall::all()->random()->id,
         ];
     }
 }

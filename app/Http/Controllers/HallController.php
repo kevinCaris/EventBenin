@@ -6,15 +6,39 @@ use App\Models\Hall;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreHallRequest;
 use App\Http\Requests\UpdateHallRequest;
+use App\Models\EventType;
+use App\Models\Feature;
+use App\Models\HallPictures;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Storage;
+
+use function Ramsey\Uuid\v1;
 
 class HallController extends Controller
 {
+
+    /**
+     * Authorize the resource
+     *
+     * @return void
+     */
+    public function __construct(){
+        $this->authorizeResource(Hall::class, 'hall');
+    }
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        //
+        if(auth()->user()->isAdmin()){
+            $halls = Hall::paginate(10);
+            return view('halls.index', compact('halls'));
+        }else{
+            $company= auth()->user()->company_id;
+            $halls = Hall::where('company_id', $company)->paginate(10);
+            return view('halls.index', compact('halls'));
+        }
+
     }
 
     /**
@@ -22,7 +46,9 @@ class HallController extends Controller
      */
     public function create()
     {
-        //
+        $features = Feature::all();
+        $eventTypes = EventType::all();
+        return view('halls.create', compact('features', 'eventTypes'));
     }
 
     /**
@@ -30,7 +56,21 @@ class HallController extends Controller
      */
     public function store(StoreHallRequest $request)
     {
-        //
+        $data=$request->validated();
+
+        $data['company_id'] = auth()->user()->company_id;
+
+        if($request->hasFile('image')) {
+            $data['image'] = $request->file('image')->store('halls', 'public');
+        }
+        if($request->status == 1) {
+            $data['status'] = StatusHallEnum::AVAILABLE;
+        }else{
+            $data['status'] = StatusHallEnum::UNAVAILABLE;
+        }
+        Hall::create($data);
+
+        return redirect()->route('halls.index')->with('success', 'salle crée avec success.');
     }
 
     /**
@@ -38,7 +78,8 @@ class HallController extends Controller
      */
     public function show(Hall $hall)
     {
-        //
+        $hall = Hall::with('pictures')->findOrFail($hall->id);
+        return view('halls.show', compact('hall'));
     }
 
     /**
@@ -46,7 +87,8 @@ class HallController extends Controller
      */
     public function edit(Hall $hall)
     {
-        //
+        $hall = Hall::findOrFail($hall->id);
+        return view('halls.edit', compact('hall'));
     }
 
     /**
@@ -54,7 +96,21 @@ class HallController extends Controller
      */
     public function update(UpdateHallRequest $request, Hall $hall)
     {
-        //
+
+        $data=$request->validated();
+
+        if($request->hasFile('image')) {
+            Storage::disk('public')->delete($hall->image);
+            $data['image'] = $request->file('image')->store('halls', 'public');
+        }
+        if($request->status == 1) {
+            $data['status'] = StatusHallEnum::AVAILABLE;
+        }else{
+            $data['status'] = StatusHallEnum::UNAVAILABLE;
+        }
+
+        $hall->update($data);
+        return redirect()->route('halls.index')->with('success', 'salle mise à jour avec success.');
     }
 
     /**
@@ -62,6 +118,8 @@ class HallController extends Controller
      */
     public function destroy(Hall $hall)
     {
-        //
+        Storage::disk('public')->delete($hall->image);
+        $hall->delete();
+        return redirect()->route('halls.index')->with('success', 'salle suprimée avec success.');
     }
 }

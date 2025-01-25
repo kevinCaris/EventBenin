@@ -39,7 +39,6 @@ class CompanyPolicy
      */
     public function update(User $user, Company $company): bool
     {
-        Log::info($user->isOwner() && $user->company_id === $company->id);
         return $user->isAdmin() || $user->isOwner() && $user->company_id === $company->id;
     }
     /**

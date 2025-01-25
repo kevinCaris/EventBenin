@@ -16,6 +16,6 @@ class Feature extends Model
 
     public function halls():BelongsToMany
     {
-        return $this->belongsToMany(Hall::class);
+        return $this->belongsToMany(Hall::class, 'feature_halls');
     }
 }
