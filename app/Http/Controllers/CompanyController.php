@@ -68,7 +68,7 @@ class CompanyController extends Controller
                 'data' => $request->all()
             ]);
 
-            return back()->with('error', 'An error occurred while creating the company. Please try again.');
+            return back()->with('error', 'une erreur est survenue lors de la création de la compagnie.');
         }
     }
 
@@ -132,7 +132,7 @@ class CompanyController extends Controller
                 'error' => $e->getMessage()
             ]);
 
-            return back()->with('error', 'An error occurred while updating the company. Please try again.');
+            return back()->with('error', 'une erreur est survenue lors de la mise à jour de la compagnie');
         }
     }
 

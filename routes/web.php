@@ -2,6 +2,7 @@
 
 
 use App\Http\Controllers\CompanyController;
+use App\Http\Controllers\EventTypeController;
 use App\Http\Controllers\HallController;
 use Illuminate\Support\Facades\Route;
 
@@ -26,6 +27,7 @@ Route::middleware(['auth','verified','role:admin'])->group(function () {
 
     Route::resource('companies', CompanyController::class);
     Route::resource('halls', HallController::class);
+    Route::resource('eventTypes', EventTypeController::class);
 });
 
 
