@@ -17,7 +17,7 @@
     <div x-show="open" class="fixed inset-0 z-50 flex items-center  text-left justify-center bg-black bg-opacity-50 p-4"
         style="display: none;">
         <!-- Contenu de la modale -->
-        <div class="bg-white w-full max-w-lg rounded-lg shadow-lg p-6 space-y-4">
+        <div class="bg-white w-2/4 max-w-full rounded-lg shadow-lg p-6 space-y-4">
             <div class="flex items-center justify-between">
                 <!-- Titre -->
                 <h2 class="text-xl font-semibold text-gray-800">{{ $title }}</h2>
@@ -26,7 +26,6 @@
                     <i class="fas fa-times"></i>
                 </button>
             </div>
-
             <!-- Formulaire -->
             <form action="{{ $route }}" method="POST">
                 @csrf
@@ -37,7 +36,7 @@
                 <!-- Champ pour le titre -->
                 <div class="mb-4">
                     <label for="title" class="block text-sm font-medium text-gray-700">Titre</label>
-                    <input type="text" name="title" id="title" class="w-full px-3 py-2 border rounded-md"
+                    <input type="text" name="title" id="title" class="w-full px-3 py-2 border-gray-300 rounded-md" placeholder="info"
                         value="{{ old('title', $feature->title ?? '') }}" required>
                     @error('title')
                         <p class="text-sm text-red-600">{{ $message }}</p>
@@ -45,7 +44,7 @@
                 </div>
                 <div class="mb-4">
                     <label for="description" class="block text-sm font-medium text-gray-700">Description</label>
-                    <textarea name="description" id="description" class="w-full px-3 py-2 border rounded-md"
+                    <textarea name="description" id="description" class="w-full px-3 py-2 border-gray-300 rounded-md" placeholder="information........"
                         required>{{ old('description', $feature->description ?? '') }}</textarea>
                     @error('description')
                         <p class="text-sm text-red-600">{{ $message }}</p>
