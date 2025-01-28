@@ -51,14 +51,6 @@
                     <span x-show="sidebarOpen" class="ml-3">Settings</span>
                 </a>
             </li>
-
-            <li>
-                <a href=""
-                   class="flex items-center py-3 px-4 hover:bg-gray-700">
-                    <i class="fas fa-cogs"></i>
-                    <span x-show="sidebarOpen" class="ml-3">Settings</span>
-                </a>
-            </li>
             <li>
                 <a href=""
                    class="flex items-center py-3 px-4 hover:bg-gray-700">
