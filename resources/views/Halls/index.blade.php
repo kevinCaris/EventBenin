@@ -32,7 +32,30 @@
                             <i class="fas fa-plus mr-2"></i>Nouvelle Salle
                         </a>
                     </div>
-                    <div class="overflow-x-auto">
+
+                    <div class="mb-4">
+                        <div class="flex space-x-2 justify-between">
+                            <div class="flex flex-col w-1/4">
+                                <label for="filterCriteria" class="block text-sm font-medium text-gray-700">Critère de
+                                    recherche</label>
+                                <select id="filterCriteria" class="px-4 py-2 border rounded-md ">
+                                    <option value="title">Titre</option>
+                                    <option value="description">Description</option>
+                                    <option value="capacity">Capacité</option>
+                                    <option value="price">Prix</option>
+                                    <option value="address">Adresse</option>
+                                    <option value="status">Statut</option>
+                                </select>
+                            </div>
+                            <div class="flex flex-col  w-1/4">
+                                <label for="searchText" class="block text-sm font-medium text-gray-700">Rechercher</label>
+                                <input type="text" id="searchText" placeholder="Rechercher..."
+                                    class="border border-gray-300 rounded-md px-4 py-2 " oninput="filter()">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="overflow-x-auto" id="table">
                         <table class="min-w-full divide-y divide-gray-200">
                             <thead class="bg-gray-50 ">
                                 <tr>
@@ -71,24 +94,24 @@
                             <tbody class="bg-white divide-y divide-gray-200">
                                 @forelse ($halls as $hall)
                                     <tr>
-                                        <td class="px-6 py-4 whitespace-nowrap">
+                                        <td class="px-6 py-4 whitespace-nowrap" data-title="{{ $hall->title }}">
                                             <div class="text-sm text-gray-900">{{ $hall->title }}</div>
                                         </td>
-                                        <td class="px-6 py-4 whitespace-nowrap">
+                                        <td class="px-6 py-4 whitespace-nowrap" data-description="{{ $hall->description }}">
                                             <div class="text-sm text-gray-900">
                                                 {{ Str::words($hall->description, 4, '...') }}</div>
                                         </td>
-                                        <td class="px-6 py-4 whitespace-nowrap">
+                                        <td class="px-6 py-4 whitespace-nowrap" data-capacity="{{ $hall->capacity }}">
                                             <div class="text-sm text-gray-900">{{ $hall->capacity }}</div>
                                         </td>
-                                        <td class="px-6 py-4 whitespace-nowrap">
+                                        <td class="px-6 py-4 whitespace-nowrap" data-price="{{ $hall->price }}">
                                             <div class="text-sm text-gray-900">{{ $hall->price }}</div>
                                         </td>
-                                        <td class="px-6 py-4 whitespace-nowrap">
+                                        <td class="px-6 py-4 whitespace-nowrap" data-address="{{ $hall->address }}">
                                             <div class="text-sm text-gray-900">
                                                 {{ str::words($hall->address, 4, '...') }}</div>
                                         </td>
-                                        <td class="px-6 py-4 whitespace-nowrap">
+                                        <td class="px-6 py-4 whitespace-nowrap" data-title="{{ $hall->status }}">
                                             @if ($hall->status == StatusHallEnum::AVAILABLE)
                                                 <span class="text-green-500">
                                                     <i class="fas fa-check-circle"></i> {{ __('Available') }}
@@ -111,7 +134,7 @@
                                                 <a href="{{ route('halls.edit', $hall) }}"
                                                     class="px-3 py-2 bg-green-500 text-white text-sm font-medium rounded hover:bg-green-600 transition"
                                                     wire:navigate>
-                                                    <i class="fas fa-edit"></i>
+                                                    <i class="fa-solid fa-pen"></i>
                                                 </a>
 
                                                 <x-confirmationmodal
@@ -141,3 +164,17 @@
         </div>
     </div>
 </x-dashboard-layout>
+<script>
+    function filter() {
+        const filterCriteria = document.getElementById('filterCriteria').value; // Champ sélectionné
+        const searchText = document.getElementById('searchText').value.toLowerCase(); // Texte de recherche
+
+        const rows = document.querySelectorAll('#table tbody tr');
+
+        rows.forEach(row => {
+            const cell = row.querySelector(`[data-${filterCriteria}]`);
+            const cellText = cell ? cell.textContent.toLowerCase() : '';
+            row.style.display = cellText.includes(searchText) ? '' : 'none';
+        });
+    }
+</script>

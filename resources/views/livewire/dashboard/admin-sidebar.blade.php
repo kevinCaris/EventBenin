@@ -31,6 +31,13 @@
                 </a>
             </li>
             <li>
+                <a href="{{ route('eventTypes.index') }}"
+                   class="flex items-center py-3 px-4 hover:bg-gray-700">
+                    <i class="fas fa-building"></i>
+                    <span x-show="sidebarOpen" class="ml-3">Event Types</span>
+                </a>
+            </li>
+            <li>
                 <a href="{{ route('features.index') }}"
                    class="flex items-center py-3 px-4 hover:bg-gray-700">
                     <i class="fas fa-tags"></i>
@@ -40,8 +47,8 @@
             <li>
                 <a href=""
                    class="flex items-center py-3 px-4 hover:bg-gray-700">
-                    <i class="fas fa-chart-line"></i>
-                    <span x-show="sidebarOpen" class="ml-3">Reports</span>
+                    <i class="fas fa-cogs"></i>
+                    <span x-show="sidebarOpen" class="ml-3">Settings</span>
                 </a>
             </li>
 

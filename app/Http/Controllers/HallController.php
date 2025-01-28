@@ -56,6 +56,7 @@ class HallController extends Controller
      */
     public function store(StoreHallRequest $request)
     {
+        try {
         $data=$request->validated();
 
         $data['company_id'] = auth()->user()->company_id;
@@ -71,6 +72,10 @@ class HallController extends Controller
         Hall::create($data);
 
         return redirect()->route('halls.index')->with('success', 'salle crée avec success.');
+        } catch (\Exception $e) {
+
+            return redirect()->route('halls.index')->with('error', 'Une erreur est survenue lors de la création de la salle.');
+        }
     }
 
     /**
@@ -96,7 +101,7 @@ class HallController extends Controller
      */
     public function update(UpdateHallRequest $request, Hall $hall)
     {
-
+        try {
         $data=$request->validated();
 
         if($request->hasFile('image')) {
@@ -111,6 +116,9 @@ class HallController extends Controller
 
         $hall->update($data);
         return redirect()->route('halls.index')->with('success', 'salle mise à jour avec success.');
+        } catch (\Exception $e) {
+            return redirect()->route('halls.index')->with('error', 'Une erreur est survenue lors de la mise à jour de la salle.');
+        }
     }
 
     /**

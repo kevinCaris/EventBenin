@@ -14,6 +14,7 @@ class FeaturePolicy
     public function viewAny(User $user): bool
     {
         return $user->isAdmin() || $user->isOwner();
+        return $user->isAdmin() || $user->isOwner();
     }
 
     /**
@@ -21,7 +22,7 @@ class FeaturePolicy
      */
     public function view(User $user, Feature $feature): bool
     {
-        return $user->isAdmin() || $user->isOwner() && $user->company_id === $feature->company_id;
+        return $user->is_admin || $user->isOwner() && $user->company_id === $feature->company_id;
     }
 
     /**
@@ -29,7 +30,7 @@ class FeaturePolicy
      */
     public function create(User $user): bool
     {
-        return $user->isAdmin() || $user->isOwner();
+        return $user->is_admin || $user->isOwner();
     }
 
     /**
@@ -37,7 +38,7 @@ class FeaturePolicy
      */
     public function update(User $user, Feature $feature): bool
     {
-        return $user->isAdmin() || $user->isOwner() && $user->company_id === $feature->company_id;
+        return $user->is_admin || $user->isOwner() && $user->company_id === $feature->company_id;
     }
 
     /**
@@ -45,7 +46,7 @@ class FeaturePolicy
      */
     public function delete(User $user, Feature $feature): bool
     {
-        return $user->isAdmin() || $user->isOwner() && $user->company_id === $feature->company_id;
+        return $user->is_admin || $user->isOwner() && $user->company_id === $feature->company_id;
     }
 
     /**

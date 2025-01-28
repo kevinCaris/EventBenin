@@ -2,7 +2,7 @@
 
 
 use App\Http\Controllers\CompanyController;
-use App\Http\Controllers\FeatureController;
+use App\Http\Controllers\EventTypeController;
 use App\Http\Controllers\HallController;
 use Illuminate\Support\Facades\Route;
 
@@ -28,6 +28,7 @@ Route::middleware(['auth','verified','role:admin'])->group(function () {
     Route::resource('companies', CompanyController::class);
     Route::resource('halls', HallController::class);
     Route::resource('features', FeatureController::class);
+    Route::resource('eventTypes', EventTypeController::class);
 });
 
 
@@ -39,7 +40,6 @@ Route::middleware(['auth','verified','role:owner'])->group(function () {
 
     Route::resource('companies', CompanyController::class)->only(['create', 'edit', 'update']);
     Route::resource('halls', HallController::class);
-    Route::resource('features', FeatureController::class);
 });
 
 
