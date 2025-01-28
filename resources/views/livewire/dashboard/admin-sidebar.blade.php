@@ -31,12 +31,20 @@
                 </a>
             </li>
             <li>
+                <a href="{{ route('features.index') }}"
+                   class="flex items-center py-3 px-4 hover:bg-gray-700">
+                    <i class="fas fa-tags"></i>
+                    <span x-show="sidebarOpen" class="ml-3">Features</span>
+                </a>
+            </li>
+            <li>
                 <a href=""
                    class="flex items-center py-3 px-4 hover:bg-gray-700">
                     <i class="fas fa-chart-line"></i>
                     <span x-show="sidebarOpen" class="ml-3">Reports</span>
                 </a>
             </li>
+
             <li>
                 <a href=""
                    class="flex items-center py-3 px-4 hover:bg-gray-700">

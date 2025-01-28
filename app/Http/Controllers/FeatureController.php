@@ -9,12 +9,17 @@ use App\Http\Requests\UpdateFeatureRequest;
 
 class FeatureController extends Controller
 {
+
+    public function __construct(){
+        $this->authorizeResource(Feature::class, 'feature');
+    }
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        //
+        $features = Feature::paginate(10);
+        return view('features.index', compact('features'));
     }
 
     /**
@@ -22,7 +27,7 @@ class FeatureController extends Controller
      */
     public function create()
     {
-        //
+        return view('features.create');
     }
 
     /**
@@ -30,7 +35,12 @@ class FeatureController extends Controller
      */
     public function store(StoreFeatureRequest $request)
     {
-        //
+        try {
+            Feature::create($request->validated());
+            return redirect()->route('features.index')->with('success', 'Feature créée avec success.');
+        } catch (\Exception $e) {
+            return back()->with('error', 'une erreur est survenue, veuillez ressayez.');
+        }
     }
 
     /**
@@ -38,7 +48,7 @@ class FeatureController extends Controller
      */
     public function show(Feature $feature)
     {
-        //
+        return view('features.show', compact('feature'));
     }
 
     /**
@@ -46,7 +56,7 @@ class FeatureController extends Controller
      */
     public function edit(Feature $feature)
     {
-        //
+        return view('features.edit', compact('feature'));
     }
 
     /**
@@ -54,7 +64,12 @@ class FeatureController extends Controller
      */
     public function update(UpdateFeatureRequest $request, Feature $feature)
     {
-        //
+        try {
+            $feature->update($request->validated());
+            return redirect()->route('features.index')->with('success', 'Feature modifiée avec success.');
+        } catch (\Exception $e) {
+            return back()->with('error', 'une erreur est survenue, veuillez ressayez.');
+        }
     }
 
     /**
@@ -62,6 +77,7 @@ class FeatureController extends Controller
      */
     public function destroy(Feature $feature)
     {
-        //
+        $feature->delete();
+        return redirect()->route('features.index')->with('success', 'Feature suprimée avec success.');
     }
 }
