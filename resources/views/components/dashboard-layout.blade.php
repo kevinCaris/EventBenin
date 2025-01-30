@@ -44,8 +44,8 @@
             <!-- Main Content -->
             <div class="flex-1 flex flex-col  overflow-hidden">
                 <!-- Topbar -->
-                {{-- <livewire:dashboard.header /> --}}
-                <livewire:layout.navigation />
+                <livewire:dashboard.header />
+                {{-- <livewire:layout.navigation /> --}}
                 <!-- Content -->
                 <main class="flex-1 overflow-y-auto ">
                     {{ $slot }}

@@ -28,7 +28,6 @@ class DatabaseSeeder extends Seeder
             EventTypeHallSeeder::class,
             FeatureHallSeeder::class,
             PaiementSeeder::class,
-            EventSeeder::class,
         ]);
     }
 }

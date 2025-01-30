@@ -26,11 +26,15 @@ class UserSeeder extends Seeder
 
         // Créer des compagnies et associer chaque utilisateur 'owner' à une compagnie
         $users->each(function ($user) {
-            $company = Company::factory()->create();
-            // Associer l'ID de la compagnie à l'utilisateur
+            $company = Company::factory()->create([
+                'user_id' => $user->id, // Associe l'utilisateur à la compagnie
+            ]);
+
+            // Associer l'ID de la compagnie à l'utilisateur (si nécessaire)
             $user->company_id = $company->id;
             $user->save();
         });
+
 
         User::updateOrCreate(
             ['email' => 'admin@example.com'], // Vérifie si l'administrateur existe déjà par son email

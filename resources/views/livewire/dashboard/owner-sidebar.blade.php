@@ -1,4 +1,21 @@
 <!-- Navigation Links of owner -->
+<?php
+
+use App\Livewire\Actions\Logout;
+use Livewire\Volt\Component;
+
+new class extends Component {
+    /**
+     * Log the current user out of the application.
+     */
+    public function logout(Logout $logout): void
+    {
+        $logout();
+
+        $this->redirect('/', navigate: true);
+    }
+}; ?>
+
 <nav class="mt-6">
     <ul>
         <li>
@@ -37,4 +54,11 @@
             </a>
         </li>
     </ul>
+
+    <button wire:click="logout" class="w-full text-start">
+        <x-responsive-nav-link>
+           <i class="fas fa-sign-out-alt"></i>
+            <span x-show="sidebarOpen" class="ml-3">Logout</span>
+        </x-responsive-nav-link>
+    </button>
 </nav>

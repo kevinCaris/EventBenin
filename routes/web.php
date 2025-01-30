@@ -27,6 +27,10 @@ Route::middleware(['auth','verified','role:admin'])->group(function () {
         return view('dashboard.admin'); // Correspond à resources/views/dashboard/admin.blade.php
     })->name('admin.dashboard');
 
+    Route::view('profile/admin', 'livewire.dashboard.profileAdmin')
+    ->middleware(['auth'])
+    ->name('profile.admin');
+
     Route::resource('companies', CompanyController::class);
     Route::resource('halls', HallController::class);
     Route::resource('features', FeatureController::class);
@@ -40,6 +44,10 @@ Route::middleware(['auth','verified','role:owner'])->group(function () {
     Route::get('/owner/dashboard', function () {
         return view('dashboard.owner'); // Correspond à resources/views/dashboard/owner.blade.php
     })->name('owner.dashboard');
+
+    Route::view('profile/owner', 'livewire.dashboard.profileOwner')
+    ->middleware(['auth'])
+    ->name('profile.owner');
 
     Route::resource('companies', CompanyController::class)->only(['create', 'edit', 'update']);
     Route::resource('halls', HallController::class);
