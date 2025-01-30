@@ -61,13 +61,7 @@ new class extends Component {
                     <span x-show="sidebarOpen" class="ml-3">Features</span>
                 </a>
             </li>
-            <li>
-                <a href=""
-                   class="flex items-center py-3 px-4 hover:bg-gray-700">
-                    <i class="fas fa-cogs"></i>
-                    <span x-show="sidebarOpen" class="ml-3">Settings</span>
-                </a>
-            </li>
+
             <li>
                 <a href=""
                    class="flex items-center py-3 px-4 hover:bg-gray-700">
@@ -87,6 +81,13 @@ new class extends Component {
                    class="flex items-center py-3 px-4 hover:bg-gray-700">
                     <i class="fas fa-server"></i>
                     <span x-show="sidebarOpen" class="ml-3">Monitor</span>
+                </a>
+            </li>
+            <li>
+                <a href=" {{ route('settings') }}"
+                   class="flex items-center py-3 px-4 hover:bg-gray-700">
+                    <i class="fas fa-cogs"></i>
+                    <span x-show="sidebarOpen" class="ml-3">Paramètres</span>
                 </a>
             </li>
         </ul>

@@ -47,7 +47,7 @@ new class extends Component {
             </a>
         </li>
         <li>
-            <a href=""
+            <a href=" {{ route('settings') }}"
                class="flex items-center py-3 px-4 hover:bg-gray-700">
                 <i class="fas fa-cogs"></i>
                 <span x-show="sidebarOpen" class="ml-3">Paramètres</span>

@@ -55,6 +55,7 @@ class User extends Authenticatable
      */
     protected $casts = [
         'email_verified_at' => 'datetime',
+        'birthday' => 'date',
         'password' => 'hashed',
         'role' => RoleEnum::class,
         'gender' => GenderEnum::class,

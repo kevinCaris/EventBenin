@@ -100,43 +100,53 @@ new class extends Component {
                         </button>
                     </x-slot>
 
-                    <x-slot name="content">
+                    <x-slot name="content" class="p-5">
                         <!-- Email affiché en haut -->
-                        <div class="px-4 py-2 text-sm text-gray-700 font-semibold">
+                        <div class="px-4 py-2 text-sm text-gray-700 font-semibold my-2 ">
                             {{ auth()->user()->email }}
                         </div>
 
+                        <x-dropdown-link :href="route('users.show', auth()->user())" wire:navigate>
+                            <i class="fas fa-user text-blue-600 mx-3"></i> {{ __('My Profile') }}
+                        </x-dropdown-link>
+
+                        <!-- Edit Profile -->
+                        <x-dropdown-link :href="route('users.edit', auth()->user())" wire:navigate>
+                            <i class="fas fa-user-edit text-blue-600 mx-3"></i> {{ __('Edit My Profile') }}
+                        </x-dropdown-link>
                         <!-- Profile Link selon rôle -->
-                        @if (auth()->user()->isAdmin())
+                        {{-- @if (auth()->user()->isAdmin())
                             <x-dropdown-link :href="route('profile.admin')" wire:navigate>
-                                <i class="fas fa-user-cog"></i> {{ __('My Profile') }}
-                            </x-dropdown-link>
-                        @elseif (auth()->user()->isOwner())
-                            <x-dropdown-link :href="route('profile.owner')" wire:navigate>
-                                <i class="fas fa-user"></i> {{ __('My Profile') }}
+                                <i class="fas fa-user-cog text-blue-600 mx-3"></i> {{ __('My Profile') }}
+                            </x-dropdown-link> --}}
+                        {{-- @elseif (auth()->user()->isOwner())
+                            <x-dropdown-link :href="route('users.show', auth()->user())" wire:navigate>
+                                <i class="fas fa-user text-blue-600 mx-3"></i> {{ __('My Profile') }}
                             </x-dropdown-link>
 
                             <!-- Edit Profile -->
-                            <x-dropdown-link  wire:navigate>
-                                <i class="fas fa-user-edit"></i> {{ __('Edit My Profile') }}
-                            </x-dropdown-link>
+                            <x-dropdown-link :href="route('users.edit', auth()->user())" wire:navigate>
+                                <i class="fas fa-user-edit text-blue-600 mx-3"></i> {{ __('Edit My Profile') }}
+                            </x-dropdown-link> --}}
 
                             <!-- Edit Company (si applicable) -->
-                            <x-dropdown-link :href="route('companies.edit', auth()->user()->company)" wire:navigate>
-                                <i class="fas fa-building"></i> {{ __('Edit My Company') }}
-                            </x-dropdown-link>
-                        @endif
+                            @if (auth()->user()->isOwner())
+                                <x-dropdown-link :href="route('companies.edit', auth()->user()->company)" wire:navigate>
+                                    <i class="fas fa-building text-blue-600 mx-3"></i> {{ __('Edit My Company') }}
+                                </x-dropdown-link>
+                            @endif
+
 
                         <!-- Inbox -->
                         <x-dropdown-link wire:navigate>
-                            <i class="fas fa-envelope"></i> {{ __('Inbox') }}
+                            <i class="fas fa-envelope text-blue-600 mx-3"></i> {{ __('Inbox') }}
                         </x-dropdown-link>
 
 
                         <!-- Authentication -->
                         <button wire:click="logout" class="w-full text-start">
                             <x-dropdown-link>
-                                <i class="fas fa-sign-out-alt"></i> {{ __('Log Out') }}
+                                <i class="fas fa-sign-out-alt text-blue-600 mx-3"></i> {{ __('Log Out') }}
                             </x-dropdown-link>
                         </button>
 

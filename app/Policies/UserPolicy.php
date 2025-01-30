@@ -17,6 +17,10 @@ class UserPolicy
 
         return $user->isAdmin();
     }
+    public function view(User $authUser, User $user): bool
+    {
+        return $authUser->isAdmin() || $user->isOwner() && $user->id == $authUser->id;
+    }
     public function create(User $authUser): bool
     {
         return $authUser->isAdmin();
