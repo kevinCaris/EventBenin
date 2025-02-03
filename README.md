@@ -37,8 +37,9 @@ cp .env.example .env
 Générer la clé d’application Laravel :
 ```bash
 php artisan key:generate
-Configurer la base de données dans le fichier .env, puis exécuter les migrations :
 ```
+Configurer la base de données dans le fichier .env, puis exécuter les migrations :
+
 ```bash
 php artisan migrate --seed
 ```
