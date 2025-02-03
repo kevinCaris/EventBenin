@@ -6,72 +6,11 @@
     <div class="grid lg:grid-cols-3 sm:grid-cols-1 md:grid-cols-1 gap-4 p-8 ">
         <!-- Nom -->
         <div class="mb-4">
-            <label for="name" class="block text-sm font-medium text-gray-700">Nom de la Compagnie</label>
+            <label for="name" class="block text-sm font-medium text-gray-700">Nom</label>
             <input type="text" name="name" id="name"
                 class="mt-1 block w-full rounded-lg border-gray-300 shadow-sm focus:ring-indigo-500 focus:border-indigo-500"
                 value="{{ old('name', $company->name ?? '') }}" required>
             @error('name')
-                <span class="text-red-500 text-sm">{{ $message }}</span>
-            @enderror
-        </div>
-
-        <!-- Email -->
-        <div class="mb-4">
-            <label for="email" class="block text-sm font-medium text-gray-700">Email</label>
-            <input type="email" name="email" id="email"
-                class="mt-1 block w-full rounded-lg border-gray-300 shadow-sm focus:ring-indigo-500 focus:border-indigo-500"
-                value="{{ old('email', $company->email ?? '') }}" required>
-            @error('email')
-                <span class="text-red-500 text-sm">{{ $message }}</span>
-            @enderror
-        </div>
-
-        <!-- Téléphone -->
-        <div class="mb-4">
-            <label for="phone" class="block text-sm font-medium text-gray-700">Téléphone</label>
-            <input type="text" name="phone" id="phone"
-                class="mt-1 block w-full rounded-lg border-gray-300 shadow-sm focus:ring-indigo-500 focus:border-indigo-500"
-                value="{{ old('phone', $company->phone ?? '') }}">
-            @error('phone')
-                <span class="text-red-500 text-sm">{{ $message }}</span>
-            @enderror
-        </div>
-
-        <!-- Postal_code -->
-        <div class="mb-4">
-            <label for="address" class="block text-sm font-medium text-gray-700">Code Postal :</label>
-            <input type="number" name="address" id="address"
-                class="mt-1 block w-full rounded-lg border-gray-300 shadow-sm focus:ring-indigo-500 focus:border-indigo-500" value="{{ old('postal_code', $company->postal_code ?? '') }}"/>
-            @error('postal_code')
-                <span class="text-red-500 text-sm">{{ $message }}</span>
-            @enderror
-        </div>
-        <!-- Pays -->
-        <div class="mb-4">
-            <label for="address" class="block text-sm font-medium text-gray-700">Pays</label>
-            <input type="text" name="pays" id="pays"
-                class="mt-1 block w-full rounded-lg border-gray-300 shadow-sm focus:ring-indigo-500 focus:border-indigo-500" value="{{ old('pays', $company->pays ?? '') }}"/>
-            @error('pays')
-                <span class="text-red-500 text-sm">{{ $message }}</span>
-            @enderror
-        </div>
-        <!-- Adresse -->
-        <div class="mb-4">
-            <label for="address" class="block text-sm font-medium text-gray-700">Adresse</label>
-            <input type="text" name="address" id="address"
-                class="mt-1 block w-full rounded-lg border-gray-300 shadow-sm focus:ring-indigo-500 focus:border-indigo-500" value="{{ old('ville', $company->ville ?? '') }}"/>
-            @error('ville')
-                <span class="text-red-500 text-sm">{{ $message }}</span>
-            @enderror
-        </div>
-
-        <!-- ville -->
-        <div class="mb-4">
-            <label for="ville" class="block text-sm font-medium text-gray-700">Ville</label>
-            <input type="text" name="ville" id="ville"
-                class="mt-1 block w-full rounded-lg border-gray-300 shadow-sm focus:ring-indigo-500 focus:border-indigo-500"
-                value="{{ old('ville', $company->ville ?? '') }}">
-            @error('ville')
                 <span class="text-red-500 text-sm">{{ $message }}</span>
             @enderror
         </div>

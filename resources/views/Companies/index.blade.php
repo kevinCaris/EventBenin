@@ -23,7 +23,7 @@
                     <div class="flex justify-between items-center my-6">
                         <h3 class="text-lg font-medium text-gray-700">Liste des Compagnies</h3>
                         <a href="{{ route('companies.create') }}"
-                            class="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600">
+                            class="px-4 py-2 bg-primary text-white rounded hover:bg-primary">
                             <i class="fas fa-plus mr-2"></i>Nouvelle Compagnie
                         </a>
                     </div>
@@ -102,7 +102,7 @@
                                         <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
                                             <div class="flex space-x-2">
                                                 <a href="{{ route('companies.show', $company) }}"
-                                                    class="px-3 py-2 bg-blue-500 text-white text-sm font-medium rounded hover:bg-blue-800 transition"
+                                                    class="px-3 py-2 bg-primary text-white text-sm font-medium rounded hover:bg-blue-800 transition"
                                                     wire:navigate>
                                                     <i class="fas fa-eye"></i>
                                                 </a>

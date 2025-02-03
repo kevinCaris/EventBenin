@@ -28,7 +28,7 @@
                     <div class="flex justify-between items-center my-6">
                         <h3 class="text-lg font-medium text-gray-700">Liste des Salles</h3>
                         <a href="{{ route('halls.create') }}"
-                            class="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600">
+                            class="px-4 py-2 bg-blue-500 text-white rounded hover:bg-primary">
                             <i class="fas fa-plus mr-2"></i>Nouvelle Salle
                         </a>
                     </div>
@@ -127,7 +127,7 @@
                                             <div class="flex space-x-2">
 
                                                 <a href="{{ route('halls.show', $hall) }}"
-                                                    class="px-3 py-2 bg-blue-500 text-white text-sm font-medium rounded hover:bg-blue-600 transition"
+                                                    class="px-3 py-2 bg-blue-500 text-white text-sm font-medium rounded hover:bg-primary transition"
                                                     wire:navigate>
                                                     <i class="fas fa-eye"></i>
                                                 </a>

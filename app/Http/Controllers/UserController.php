@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Enums\RoleEnum;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreUserRequest;
 use App\Http\Requests\UpdateUserRequest;
@@ -69,11 +70,38 @@ class UserController extends Controller
     public function update(UpdateUserRequest $request, User $user)
     {
         try {
+            // Récupérer les données validées
             $data = $request->validated();
+
+            // Vérifier si le rôle a été modifié et si c'est le cas, le mettre à jour
+            if ($request->has('role') && in_array($request->role, array_column(RoleEnum::cases(), 'value'))) {
+                $user->role = $request->role;
+            }
+
+            // Si un mot de passe a été fourni, le crypter avant de le sauvegarder
+            if ($request->has('password') && $request->password) {
+                $data['password'] = bcrypt($data['password']);
+            }
+            if($request->hasFile('avatar')) {
+                $data['avatar'] = $request->file('avatar')->store('avatars', 'public');
+            }
+
+            // Mettre à jour l'utilisateur
             $user->update($data);
-            return redirect()->route('users.index', $user)->with('success', 'utilisateur modifié avec success ');
+
+            // Vérifier si l'utilisateur est un admin pour rediriger en conséquence
+            if ($user->isAdmin()) {
+                return redirect()->route('users.index')->with('success', 'Utilisateur modifié avec succès');
+            }
+
+            // Redirection vers la page de profil de l'utilisateur
+            return redirect()->route('users.show', $user)->with('success', 'Utilisateur modifié avec succès');
         } catch (\Exception $e) {
-            return back()->with('error', 'une erreur est survenue, veuillez ressayez.');
+            // Log de l'exception pour un débogage plus facile
+            Log::error('Erreur lors de la mise à jour de l\'utilisateur: ' . $e->getMessage());
+
+            // Retour à la page précédente avec un message d'erreur
+            return back()->with('error', 'Une erreur est survenue, veuillez réessayer.');
         }
     }
 

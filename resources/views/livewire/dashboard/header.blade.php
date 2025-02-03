@@ -16,7 +16,7 @@ new class extends Component {
     }
 }; ?>
 
-<nav x-data="{ open: false }" class="bg-white border-b border-gray-100">
+<nav x-data="{ open: false }" class="bg-white border-b border-gray-100 shadow-sm">
     <!-- Primary Navigation Menu -->
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="flex justify-between h-16">
@@ -107,46 +107,46 @@ new class extends Component {
                         </div>
 
                         <x-dropdown-link :href="route('users.show', auth()->user())" wire:navigate>
-                            <i class="fas fa-user text-blue-600 mx-3"></i> {{ __('My Profile') }}
+                            <i class="fas fa-user text-primary mx-3"></i> {{ __('My Profile') }}
                         </x-dropdown-link>
 
                         <!-- Edit Profile -->
                         <x-dropdown-link :href="route('users.edit', auth()->user())" wire:navigate>
-                            <i class="fas fa-user-edit text-blue-600 mx-3"></i> {{ __('Edit My Profile') }}
+                            <i class="fas fa-user-edit text-primary mx-3"></i> {{ __('Edit My Profile') }}
                         </x-dropdown-link>
                         <!-- Profile Link selon rôle -->
                         {{-- @if (auth()->user()->isAdmin())
                             <x-dropdown-link :href="route('profile.admin')" wire:navigate>
-                                <i class="fas fa-user-cog text-blue-600 mx-3"></i> {{ __('My Profile') }}
+                                <i class="fas fa-user-cog text-primary mx-3"></i> {{ __('My Profile') }}
                             </x-dropdown-link> --}}
                         {{-- @elseif (auth()->user()->isOwner())
                             <x-dropdown-link :href="route('users.show', auth()->user())" wire:navigate>
-                                <i class="fas fa-user text-blue-600 mx-3"></i> {{ __('My Profile') }}
+                                <i class="fas fa-user text-primary mx-3"></i> {{ __('My Profile') }}
                             </x-dropdown-link>
 
                             <!-- Edit Profile -->
                             <x-dropdown-link :href="route('users.edit', auth()->user())" wire:navigate>
-                                <i class="fas fa-user-edit text-blue-600 mx-3"></i> {{ __('Edit My Profile') }}
+                                <i class="fas fa-user-edit text-primary mx-3"></i> {{ __('Edit My Profile') }}
                             </x-dropdown-link> --}}
 
                             <!-- Edit Company (si applicable) -->
                             @if (auth()->user()->isOwner())
                                 <x-dropdown-link :href="route('companies.edit', auth()->user()->company)" wire:navigate>
-                                    <i class="fas fa-building text-blue-600 mx-3"></i> {{ __('Edit My Company') }}
+                                    <i class="fas fa-building text-primary mx-3"></i> {{ __('Edit My Company') }}
                                 </x-dropdown-link>
                             @endif
 
 
                         <!-- Inbox -->
                         <x-dropdown-link wire:navigate>
-                            <i class="fas fa-envelope text-blue-600 mx-3"></i> {{ __('Inbox') }}
+                            <i class="fas fa-envelope text-primary mx-3"></i> {{ __('Inbox') }}
                         </x-dropdown-link>
 
 
                         <!-- Authentication -->
                         <button wire:click="logout" class="w-full text-start">
                             <x-dropdown-link>
-                                <i class="fas fa-sign-out-alt text-blue-600 mx-3"></i> {{ __('Log Out') }}
+                                <i class="fas fa-sign-out-alt text-primary mx-3"></i> {{ __('Log Out') }}
                             </x-dropdown-link>
                         </button>
 

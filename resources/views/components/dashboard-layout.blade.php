@@ -18,14 +18,14 @@
 </head>
 
 <body class="font-sans antialiased bg-gray-100">
-    <div class="hidden lg:block">
+    <div class="hidden lg:block fixed-top 1">
         <!-- Contenu à afficher uniquement sur PC -->
         <!-- Dashboard Wrapper -->
-        <div x-data="{ sidebarOpen: true }" class="flex h-screen bg-gray-100">
+        <div x-data="{ sidebarOpen: true }" class="flex h-screen bg-gray-100 ">
 
             <!-- Sidebar -->
             <aside :class="{ 'w-52': sidebarOpen, 'w-16': !sidebarOpen }"
-                class="bg-gray-800 text-white flex-shrink-0 transition-all duration-300 max-w-full">
+                class="bg-white   flex-shrink-0 transition-all duration-300 max-w-full border-r-2">
                 <!-- Logo and Toggle -->
                 <div class="flex items-center justify-between p-4">
                     <a href="#" class="text-2xl font-bold" @click="sidebarOpen = !sidebarOpen">
@@ -44,7 +44,7 @@
             <!-- Main Content -->
             <div class="flex-1 flex flex-col  overflow-hidden">
                 <!-- Topbar -->
-                <livewire:dashboard.header />
+                <livewire:dashboard.header  />
                 {{-- <livewire:layout.navigation /> --}}
                 <!-- Content -->
                 <main class="flex-1 overflow-y-auto ">
@@ -101,6 +101,48 @@
         </div>
 
     </div>
+
+    <!-- Toast Notification -->
+<div id="toastMessage" class="fixed bottom-5 right-5 bg-green-500 text-white px-4 py-2 rounded-lg shadow-lg opacity-0 transition-opacity duration-500">
+    <span id="toastContent"></span>
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const toastElement = document.getElementById('toastMessage');
+        const toastContent = document.getElementById('toastContent');
+
+        function showToast(message, type = 'success') {
+            if (!toastElement || !toastContent) return;
+
+            // Modifier la couleur selon le type (vert = succès, rouge = erreur)
+            toastElement.classList.remove('bg-primary', 'bg-red-500');
+            toastElement.classList.add(type === 'success' ? 'bg-primary' : 'bg-red-500');
+            toastContent.textContent = message;
+
+            // Afficher le toast
+            toastElement.classList.remove('opacity-0');
+            toastElement.classList.add('opacity-100');
+
+            // Masquer après 3 secondes
+            setTimeout(() => {
+                toastElement.classList.remove('opacity-100');
+                toastElement.classList.add('opacity-0');
+            }, 3000);
+        }
+
+        // Vérifier si Laravel a stocké un message en session
+        const successMessage = "{{ session('success') }}".trim();
+        const errorMessage = "{{ session('error') }}".trim();
+
+        if (successMessage !== "") {
+            showToast(successMessage, 'success');
+        } else if (errorMessage !== "") {
+            showToast(errorMessage, 'error');
+        }
+    });
+    </script>
+
 </body>
 
 </html>

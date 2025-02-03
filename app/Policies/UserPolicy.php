@@ -27,12 +27,12 @@ class UserPolicy
     }
     public function update(User $authUser, User $user): bool
     {
-        return $authUser->isAdmin() && $authUser->id != $user->id;
+        return ($authUser->isAdmin() && $authUser->id != $user->id) || $authUser->id == $user->id || $user->isOwner() && $user->id == $authUser->id;
     }
 
     public function delete(User $authUser, User $user): bool
     {
-        return $authUser->isAdmin() && $authUser->id != $user->id;
+        return ($authUser->isAdmin() && $authUser->id != $user->id) || $user->isOwner() && $user->id == $authUser->id;
     }
 
     public function restore(User $authUser, User $user): bool

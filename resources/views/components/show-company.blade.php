@@ -53,7 +53,7 @@
                         <p class="mt-2 text-gray-600">{{ $company->description }}</p>
                     </div>
 
-                    <!-- Social Media Section -->
+                    {{-- <!-- Social Media Section -->
                     <div class="mt-8 bg-white ">
                         <h2 class="text-xl font-semibold text-gray-800 mb-6">Suivez-nous sur les réseaux sociaux</h2>
                         <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
@@ -112,4 +112,4 @@
                                     class="font-medium truncate">{{ $company->website_url ?? 'Non renseigné' }}</span>
                             </a>
                         </div>
-                    </div>
+                    </div> --}}

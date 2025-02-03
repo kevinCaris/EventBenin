@@ -20,36 +20,55 @@ new class extends Component {
     <ul>
         <li>
             <a href="{{ route('owner.dashboard') }}"
-               class="flex items-center py-3 px-4 hover:bg-gray-700">
-                <i class="fas fa-home"></i>
+               class="flex items-center py-3 px-4 hover:bg-primary hover:text-white rounded-l-full">
+                <i class="fas fa-home text-primary"></i>
                 <span x-show="sidebarOpen" class="ml-3">Accueil</span>
             </a>
         </li>
         <li>
-            <a href="{{ route('halls.index') }}" wire:abort
-               class="flex items-center py-3 px-4 hover:bg-gray-700">
-                <i class="fas fa-door-open"></i>
+            <a href="{{ route('halls.index') }}"
+               class="flex items-center py-3 px-4 hover:bg-primary hover:text-white rounded-l-full">
+                <i class="fas fa-door-open text-primary"></i>
                 <span x-show="sidebarOpen" class="ml-3">Salles</span>
             </a>
         </li>
         <li>
-            <a href=""
-               class="flex items-center py-3 px-4 hover:bg-gray-700">
-                <i class="fas fa-plus"></i>
+            <a href="{{ route('halls.create') }}"
+               class="flex items-center py-3 px-4 hover:bg-primary hover:text-white rounded-l-full">
+
+                <i class="fas fa-plus text-primary"></i>
                 <span x-show="sidebarOpen" class="ml-3">Ajouter</span>
             </a>
         </li>
         <li>
+            <a href="{{ route('eventTypes.index') }}"
+               class="flex items-center py-3 px-4 hover:bg-primary hover:text-white rounded-l-full">
+                <i class="fas fa-building text-primary hover:text-white"></i>
+                <span x-show="sidebarOpen" class="ml-3">Event Types</span>
+            </a>
+        </li>
+        <li>
+            <a href="{{ route('features.index') }}"
+               class="flex items-center py-3 px-4 hover:bg-primary hover:text-white rounded-l-full">
+                <i class="fas fa-tags text-primary hover:text-white"></i>
+                <span x-show="sidebarOpen" class="ml-3">Features</span>
+            </a>
+        </li>
+
+        <li>
             <a href=""
-               class="flex items-center py-3 px-4 hover:bg-gray-700">
-                <i class="fas fa-chart-bar"></i>
+               {{-- class="flex items-center py-3 px-4 hover:bg-gray-700"> --}}
+               class="flex items-center py-3 px-4 hover:bg-primary hover:text-white rounded-l-full">
+
+                <i class="fas fa-chart-bar text-primary hover:text-white"></i>
                 <span x-show="sidebarOpen" class="ml-3">Statistiques</span>
             </a>
         </li>
         <li>
             <a href=" {{ route('settings') }}"
-               class="flex items-center py-3 px-4 hover:bg-gray-700">
-                <i class="fas fa-cogs"></i>
+               {{-- class="flex items-center py-3 px-4 hover:bg-gray-700"> --}}
+               class="flex items-center py-3 px-4 hover:bg-primary hover:text-white rounded-l-full">
+                <i class="fas fa-cogs text-primary hover:text-white"></i>
                 <span x-show="sidebarOpen" class="ml-3">Paramètres</span>
             </a>
         </li>
@@ -57,7 +76,7 @@ new class extends Component {
 
     <button wire:click="logout" class="w-full text-start">
         <x-responsive-nav-link>
-           <i class="fas fa-sign-out-alt"></i>
+           <i class="fas fa-sign-out-alt text-primary hover:text-white "></i>
             <span x-show="sidebarOpen" class="ml-3">Logout</span>
         </x-responsive-nav-link>
     </button>

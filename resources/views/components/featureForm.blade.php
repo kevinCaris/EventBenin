@@ -9,7 +9,7 @@
 <div x-data="{ open: false }">
     <!-- Bouton pour ouvrir la modale -->
     <button @click="open = true"
-        {{ $attributes->merge(['class' => 'px-3 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 transition']) }}>
+        {{ $attributes->merge(['class' => 'px-3 py-2 bg-blue-500 text-white rounded hover:bg-primary transition']) }}>
         {{ $slot }}
     </button>
 
@@ -58,7 +58,7 @@
 
                     <!-- Bouton Enregistrer -->
                     <button type="submit"
-                        class="px-4 py-2 bg-blue-500 text-white rounded-full hover:bg-blue-600 transition">
+                        class="px-4 py-2 bg-blue-500 text-white rounded-full hover:bg-primary transition">
                         {{ $buttonText }}
                     </button>
                 </div>
