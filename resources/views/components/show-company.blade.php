@@ -1,6 +1,6 @@
 
                     <!-- Cover Section -->
-                    <div class="relative mb-16">
+                    <div class="relative mb-8">
                         <img src="{{ asset('storage/' . $company->cover) }}" alt="Cover"
                             class="w-full h-48 object-cover rounded-t-lg object-center  ">
                         <!-- Profile Image Positioned Over the Cover (slightly tilted) -->
@@ -9,7 +9,7 @@
                                 class="w-24 h-24 rounded-full border-4 border-white">
                         </div>
                     </div>
-                    <div class="flex items-center justify-between border-b pb-4 ">
+                    <div class="flex items-center justify-between  py-8 ">
                         <div>
                             <h1 class="text-2xl font-bold text-gray-800">{{ $company->name }}</h1>
                             <p class="text-sm text-gray-500">Fondée le {{ $company->created_at->format('d/m/Y') }}</p>

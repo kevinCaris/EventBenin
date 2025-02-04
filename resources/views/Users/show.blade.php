@@ -2,11 +2,10 @@
 $auth = auth()->user();
 ?>
 <x-dashboard-layout>
-    <div class="max-w-7xl mx-auto py-12 px-6 grid grid-cols-1 col-span-2 @if (!$auth->isOwner())
+    <div class="max-w-7xl mx-auto py-12 px-6 grid grid-cols-1 col-span-2
         @if ($auth->isOwner())
            lg:grid-cols-2
-        @endif
-    @endif  gap-8">
+        @endif  gap-8">
         <!-- Colonne Profil Utilisateur -->
         <div class="space-y-6">
             <div class="bg-white shadow-lg rounded-lg p-6 space-y-4">
