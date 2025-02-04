@@ -34,7 +34,7 @@ new #[Layout('layouts.guest')] class extends Component
     }
 }; ?>
 
-<div>
+<div class="w-3/4 sm:max-w-md mt-6 p-10 bg-white shadow-md overflow-hidden sm:rounded-lg">
     <div class="mb-4 text-sm text-gray-600">
         {{ __('This is a secure area of the application. Please confirm your password before continuing.') }}
     </div>

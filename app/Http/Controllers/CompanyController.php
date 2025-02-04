@@ -47,6 +47,13 @@ class CompanyController extends Controller
     {
         try {
             $data = $request->validated();
+            $userId = auth()->user()->id;
+
+            // Vérifier si l'utilisateur a déjà une compagnie
+            if (Company::where('user_id', $userId)->exists()) {
+                return redirect()->route('owner.dashboard')->with('error', 'Vous avez déjà une compagnie enregistrée.');
+            }
+
             // Gestion de l'avatar
             if ($request->hasFile('avatar')) {
                 $data['avatar'] = $request->file('avatar')->store('avatars', 'public');
@@ -57,10 +64,20 @@ class CompanyController extends Controller
                 $data['cover'] = $request->file('cover')->store('covers', 'public');
             }
 
+            $data['user_id'] = $userId;
+            // Création de la compagnie
             $company = Company::create($data);
-            if(auth()->user()->hasRole('owner')) {
-                return redirect()->route('companies.show', $company)->with('success', 'Company created successfully.');
+
+            // Associer la compagnie à l'utilisateur
+            $user = auth()->user(); // Récupérer l'utilisateur authentifié
+            $user->company_id = $company->id; // Associer l'ID de la compagnie à l'utilisateur
+            $user->save(); // Sauvegarder l'utilisateur avec la compagnie associée
+
+            // Redirection selon le rôle de l'utilisateur
+            if (auth()->user()->hasRole('owner')) {
+                return redirect()->route('owner.dashboard', $company)->with('success', 'Company created successfully.');
             }
+
             return redirect()->route('companies.index')->with('success', 'Company created successfully.');
         } catch (\Exception $e) {
             Log::error('Erreur lors de la création de la compagnie', [
@@ -68,7 +85,7 @@ class CompanyController extends Controller
                 'data' => $request->all()
             ]);
 
-            return back()->with('error', 'une erreur est survenue lors de la création de la compagnie.');
+            return back()->with('error', 'Une erreur est survenue lors de la création de la compagnie.');
         }
     }
 

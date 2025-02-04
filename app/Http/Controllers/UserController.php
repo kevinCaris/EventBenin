@@ -39,7 +39,7 @@ class UserController extends Controller
             $data = $request->validated();
 
             // Ajouter un mot de passe par défaut ou généré
-            $data['password'] = bcrypt('password'); // Définit un mot de passe temporaire
+            $data['password'] = Hash::make('password'); // Définit un mot de passe temporaire
 
             // Création de l'utilisateur
             $user = User::create($data);

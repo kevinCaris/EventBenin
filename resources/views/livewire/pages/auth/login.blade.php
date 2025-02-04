@@ -24,18 +24,21 @@ new #[Layout('layouts.guest')] class extends Component {
 
         $user = auth()->user();
 
-        if ($user->hasRole('admin')) {
+        if ($user->isAdmin()) {
             $this->redirect(route('admin.dashboard'), navigate: true);
-        } elseif ($user->hasRole('owner')) {
+        } elseif ($user->isOwner()) {
             $this->redirect(route('owner.dashboard'), navigate: true);
-        } elseif ($user->hasRole('client')) {
+        } elseif ($user->isClient()) {
+            $this->redirect(route('client.dashboard'), navigate: true);
+        } else {
             // Cas par défaut, redirection vers une page d'accueil générique
-            $this->redirect(RouteServiceProvider::HOME, navigate: true);
+            // $this->redirect(RouteServiceProvider::HOME, navigate: true);
         }
     }
 }; ?>
 
-<div>
+<div class="w-3/4 sm:max-w-md mt-6 p-10 bg-white shadow-md overflow-hidden sm:rounded-lg">
+
     <!-- Session Status -->
     <x-auth-session-status class="mb-4" :status="session('status')" />
 
@@ -44,7 +47,7 @@ new #[Layout('layouts.guest')] class extends Component {
         <div>
             <x-input-label for="email" :value="__('Email')" />
             <x-text-input wire:model="form.email" id="email" class="block mt-1 w-full" type="email" name="email"
-                required autofocus autocomplete="username" />
+                required autofocus autocomplete="username" value="{{ old('email', '') }}" />
             <x-input-error :messages="$errors->get('form.email')" class="mt-2" />
         </div>
 

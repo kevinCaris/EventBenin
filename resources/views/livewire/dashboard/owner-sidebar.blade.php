@@ -21,14 +21,14 @@ new class extends Component {
         <li>
             <a href="{{ route('owner.dashboard') }}"
                class="flex items-center py-3 px-4 hover:bg-primary hover:text-white rounded-l-full">
-                <i class="fas fa-home text-primary"></i>
+                <i class="fas fa-home text-primary hover:text-white"></i>
                 <span x-show="sidebarOpen" class="ml-3">Accueil</span>
             </a>
         </li>
         <li>
             <a href="{{ route('halls.index') }}"
                class="flex items-center py-3 px-4 hover:bg-primary hover:text-white rounded-l-full">
-                <i class="fas fa-door-open text-primary"></i>
+                <i class="fas fa-door-open text-primary hover:text-white"></i>
                 <span x-show="sidebarOpen" class="ml-3">Salles</span>
             </a>
         </li>
@@ -36,7 +36,7 @@ new class extends Component {
             <a href="{{ route('halls.create') }}"
                class="flex items-center py-3 px-4 hover:bg-primary hover:text-white rounded-l-full">
 
-                <i class="fas fa-plus text-primary"></i>
+                <i class="fas fa-plus text-primary hover:text-white"></i>
                 <span x-show="sidebarOpen" class="ml-3">Ajouter</span>
             </a>
         </li>

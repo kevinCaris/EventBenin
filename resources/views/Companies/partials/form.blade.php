@@ -60,7 +60,7 @@
             <label for="address" class="block text-sm font-medium text-gray-700">Adresse</label>
             <input type="text" name="address" id="address"
                 class="mt-1 block w-full rounded-lg border-gray-300 shadow-sm focus:ring-indigo-500 focus:border-indigo-500" value="{{ old('ville', $company->ville ?? '') }}"/>
-            @error('ville')
+            @error('adress')
                 <span class="text-red-500 text-sm">{{ $message }}</span>
             @enderror
         </div>

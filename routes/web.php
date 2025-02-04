@@ -41,6 +41,10 @@ Route::middleware(['auth','verified','role:admin'])->group(function () {
 
 Route::middleware(['auth','verified','role:owner'])->group(function () {
 
+    Route::view('company', 'livewire.pages.auth.new-company')
+    ->middleware(['auth'])
+    ->name('company');
+
     Route::get('/owner/dashboard', function () {
         return view('dashboard.owner'); // Correspond à resources/views/dashboard/owner.blade.php
     })->name('owner.dashboard');

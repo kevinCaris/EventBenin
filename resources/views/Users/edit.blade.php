@@ -4,7 +4,7 @@
     </x-slot>
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-            <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
+            <div class="bg-white overflow-x-scroll shadow-sm sm:rounded-lg">
                 <div class="p-6 text-gray-900">
                     <h2 class="font-semibold text-xl text-gray-800 leading-tight mb-6">
                         {{ __('Edition de profil') }}
@@ -26,8 +26,8 @@
                             @error('avatar')
                                 <span class="text-red-500 text-sm">{{ $message }}</span>
                             @enderror
-                        </div>
-                        <div class="grid grid-cols-2  w-2/3 gap-5">
+                        </d>
+                        <div class="grid grid-cols-3   gap-5">
                         <!-- pseudo -->
                         <div class="mb-4">
                             <label for="name" class="block text-sm font-medium text-gray-700 text-xl">Pseudo</label>

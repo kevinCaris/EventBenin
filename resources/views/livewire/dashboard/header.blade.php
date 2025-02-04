@@ -129,12 +129,13 @@ new class extends Component {
                                 <i class="fas fa-user-edit text-primary mx-3"></i> {{ __('Edit My Profile') }}
                             </x-dropdown-link> --}}
 
-                            <!-- Edit Company (si applicable) -->
-                            @if (auth()->user()->isOwner())
-                                <x-dropdown-link :href="route('companies.edit', auth()->user()->company)" wire:navigate>
-                                    <i class="fas fa-building text-primary mx-3"></i> {{ __('Edit My Company') }}
-                                </x-dropdown-link>
-                            @endif
+                        <!-- Edit Company (si applicable) -->
+                        @if (auth()->user()->isOwner())
+                            <x-dropdown-link :href="auth()->user()->company ? route('companies.edit', auth()->user()->company) : '#'" wire:navigate>
+                                <i class="fas fa-building text-primary mx-3"></i>
+                                {{ __('Edit My Company') }}
+                            </x-dropdown-link>
+                        @endif
 
 
                         <!-- Inbox -->

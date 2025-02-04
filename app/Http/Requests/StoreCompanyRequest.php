@@ -40,6 +40,7 @@ class StoreCompanyRequest extends FormRequest
             'linkedin_url' => ['nullable', 'string', 'url', 'max:255'], // URL valide pour LinkedIn
             'youtube_url' => ['nullable', 'string', 'url', 'max:255'], // URL valide pour YouTube
             'tiktok_url' => ['nullable', 'string', 'url', 'max:255'], // URL valide pour TikTok
+            'user_id' => ['required', 'exists:users,id'], // ID de l'   utilisateur obligatoire, existant et unique
         ];
     }
 }
