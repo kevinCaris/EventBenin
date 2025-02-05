@@ -57,6 +57,8 @@ Route::middleware(['auth','verified','role:owner'])->group(function () {
     Route::resource('halls', HallController::class);
     Route::resource('eventTypes', EventTypeController::class);
     Route::resource('features', FeatureController::class);
+    Route::resource('availabilities', HallAvailabilityController::class);
+
 });
 
 

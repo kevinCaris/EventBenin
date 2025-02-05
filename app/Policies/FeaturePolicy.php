@@ -14,7 +14,6 @@ class FeaturePolicy
     public function viewAny(User $user): bool
     {
         return $user->isAdmin() || $user->isOwner();
-        return $user->isAdmin() || $user->isOwner();
     }
 
     /**

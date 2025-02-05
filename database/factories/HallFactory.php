@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Enums\StatusHallEnum;
 use App\Models\Company;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
@@ -22,14 +23,18 @@ class HallFactory extends Factory
             'title' => fake()->company(),
             'description' => fake()->text(),
             'capacity' => fake()->randomNumber(),
-            'location' => json_encode([
-                'latitude' => fake()->latitude(),
-                'longitude' => fake()->longitude(),
-                'address' => fake()->address(),
-            ]),
-            'price' => fake()->randomFloat(2, 0, 100),
             'image' => null,
             'address' => fake()->address(),
+            'city' => fake()->city(),
+            'country' => fake()->country(),
+            'latitude' => fake()->latitude(),
+            'longitude' => fake()->longitude(),
+            'website' => fake()->url(),
+            'capacity_min' => fake()->randomNumber(),
+            'capacity_max' => fake()->randomNumber(),
+            'price_min' => fake()->randomFloat(2, 0, 100),
+            'price_max' => fake()->randomFloat(2, 0, 100),
+            'status' => StatusHallEnum::AVAILABLE->value,
             'company_id' => $company->id
         ];
     }
