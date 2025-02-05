@@ -48,6 +48,13 @@ new class extends Component {
             </a>
         </li>
         <li>
+            <a href="{{ route('hall-availabilities.index') }}"
+            class="flex items-center space-x-2 p-2 text-gray-600 hover:bg-gray-200 rounded-md">
+             <i class="fas fa-calendar-check text-blue-500"></i>
+             <span>Disponibilités</span>
+         </a>
+        </li>
+        <li>
             <a href="{{ route('features.index') }}"
                class="flex items-center py-3 px-4 hover:bg-primary hover:text-white rounded-l-full">
                 <i class="fas fa-tags text-primary hover:text-white"></i>

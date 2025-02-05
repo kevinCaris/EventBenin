@@ -15,14 +15,20 @@ class Hall extends Model
     protected $fillable = [
         'title',
         'description',
-        'location',
         'capacity',
-        'price',
         'image',
         'address',
+        'city',
+        'country',
+        'latitude',
+        'longitude',
+        'website',
+        'capacity_min',
+        'capacity_max',
+        'price_min',
+        'price_max',
         'status',
         'company_id',
-
     ];
 
     protected $casts = [
@@ -63,6 +69,10 @@ class Hall extends Model
         return $this->belongsToMany(Feature::class, 'feature_halls');
     }
 
+    public function availabilities(): HasMany
+    {
+        return $this->hasMany(HallAvailability::class);
+    }
 
 
 }

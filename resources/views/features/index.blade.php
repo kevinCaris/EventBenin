@@ -51,11 +51,12 @@
                                         class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                                         Description
                                     </th>
-                                    <th scope="col"
-                                        class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                        Action
-                                    </th>
-
+                                    @if (auth()->user()->hasRole('admin'))
+                                        <th scope="col"
+                                            class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                            Action
+                                        </th>
+                                    @endif
                                 </tr>
                             </thead>
                             <tbody class="bg-white divide-y divide-gray-200">
@@ -64,10 +65,10 @@
                                         <td class="px-6 py-4 whitespace-nowrap" data-title="title">
                                             <div class="text-sm text-gray-900">{{ $feature->title }}</div>
                                         </td>
-                                        <td class="px-6 py-4 whitespace-nowrap"
-                                            data-description="description">
+                                        <td class="px-6 py-4 whitespace-nowrap" data-description="description">
                                             <div class="text-sm text-gray-900">{{ $feature->description }}</div>
                                         </td>
+                                        @if (auth()->user()->hasRole('admin'))
                                         <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
                                             <div class="flex space-x-2">
                                                 <x-featureForm :feature="$feature" :title="'Modifier'" :message="'Veuillez remplir les champs ci-dessous.'"
@@ -80,6 +81,7 @@
                                                 </x-confirmationmodal>
                                             </div>
                                         </td>
+                                        @endIf
                                     </tr>
                                 @empty
                                     <tr>
@@ -103,20 +105,19 @@
 </x-dashboard-layout>
 <script>
     function filter() {
-    const query = document.getElementById('searchText').value.toLowerCase();
-    const criteria = document.getElementById('filterCriteria').value; // Récupération du critère
-    const rows = document.querySelectorAll('#table tbody tr');
+        const query = document.getElementById('searchText').value.toLowerCase();
+        const criteria = document.getElementById('filterCriteria').value; // Récupération du critère
+        const rows = document.querySelectorAll('#table tbody tr');
 
-    rows.forEach(row => {
-        // Récupérer la valeur selon le critère choisi
-        const cellValue = row.querySelector(`[data-${criteria}]`)?.textContent.toLowerCase();
+        rows.forEach(row => {
+            // Récupérer la valeur selon le critère choisi
+            const cellValue = row.querySelector(`[data-${criteria}]`)?.textContent.toLowerCase();
 
-        if (cellValue && cellValue.includes(query)) {
-            row.style.display = ''; // Afficher la ligne
-        } else {
-            row.style.display = 'none'; // Masquer la ligne
-        }
-    });
-}
-
+            if (cellValue && cellValue.includes(query)) {
+                row.style.display = ''; // Afficher la ligne
+            } else {
+                row.style.display = 'none'; // Masquer la ligne
+            }
+        });
+    }
 </script>
