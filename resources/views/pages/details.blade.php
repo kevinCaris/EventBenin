@@ -1,7 +1,7 @@
 <x-guest-layout>
     <div class="  sm:justify-center items-center pt-6 sm:pt-0 bg-gray-100">
  <!-- Hero Section -->
- <section class="relative w-full h-[500px] flex items-center text-left justify-center bg-cover bg-center" style="background-image: url('{{ asset('storage/images/detail.png') }}');">
+ <section class="relative w-full h-[500px] flex items-center text-left justify-center bg-cover bg-center" style="background-image: url('{{ asset('images/detail.png') }}');">
 
 </section>
 <header class="bg-white shadow-md sticky my-5">

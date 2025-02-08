@@ -1,7 +1,7 @@
 
 <x-guest-layout>
     <!-- Hero Section -->
-    <section class="relative w-full h-[600px] flex items-center text-left justify-center bg-cover bg-center" style="background-image: url('{{ asset('storage/images/exhibition.jpg.jpg') }}');">
+    <section class="relative w-full h-[550px] flex items-center text-left justify-center bg-cover bg-center" style="background-image: url('{{ asset('images/exhibition.jpg') }}');">
         <div class="bg-white p-8 rounded-lg shadow-lg text-left">
             <h1 class="text-4xl font-bold">Location de salle pour votre événement</h1>
             <p class="text-gray-600 mt-2">We rent, manage, and take care of your real estate investments.</p>
@@ -75,7 +75,7 @@
 
         @foreach ($eventTypes as $event)
             <div class="p-6 bg-gray-200 rounded">
-                <img src="{{ asset('/storage/images/'.$event['image']) }}" alt="{{ $event['name'] }}" class="w-full h-32 object-cover rounded mb-4">
+                <img src="{{ asset('images/'.$event['image']) }}" alt="{{ $event['name'] }}" class="w-full h-32 object-cover rounded mb-4">
                 <h3 class="text-xl font-semibold text-center">{{ $event['name'] }}</h3>
             </div>
         @endforeach
