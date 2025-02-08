@@ -2,7 +2,9 @@
 
 namespace App\Http\Requests;
 
+use App\Enums\StatusAvailabilityEnum;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Support\Facades\Log;
 
 class StoreHallAvailabilityRequest extends FormRequest
 {
@@ -21,11 +23,12 @@ class StoreHallAvailabilityRequest extends FormRequest
      */
     public function rules(): array
     {
+        // Log::info("information".$this->validated());
         return [
             'hall_id'    => 'required|exists:halls,id',
             'start_date' => 'required|date|after:today',
             'end_date'   => 'required|date|after:start_date',
-            'status'     => 'required|in:' . implode(',', array_column(StatusHallAvailabilityEnum::cases(), 'value')),
+            'status'     => 'required|in:' . implode(',', array_column(StatusAvailabilityEnum::cases(), 'value')),
         ];
     }
 }

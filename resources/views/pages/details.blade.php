@@ -1,13 +1,55 @@
-<x-dashboard-layout>
-    <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ __('Details de la compagnie') }}
-        </h2>
-    </x-slot>
+<x-guest-layout>
+    <div class="  sm:justify-center items-center pt-6 sm:pt-0 bg-gray-100">
+ <!-- Hero Section -->
+ <section class="relative w-full h-[500px] flex items-center text-left justify-center bg-cover bg-center" style="background-image: url('{{ asset('storage/images/detail.png') }}');">
 
-    <div class="py-12">
-        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+</section>
+<header class="bg-white shadow-md sticky my-5">
+    <div class="container mx-auto flex justify-between items-center py-4 px-6">
+
+        <!-- Navigation -->
+        <nav>
+            <ul class="flex space-x-6 text-primary text-xl">
+                <li><a href="#galerie" class="hover:text-blue-600">Galerie</a></li>
+                <li><a href="#presentation" class="hover:text-blue-600">Présentation</a></li>
+                <li><a href="#tarification" class="hover:text-blue-600">Tarifs</a></li>
+                <li><a href="#equipements" class="hover:text-blue-600">Equipements</a></li>
+
+            </ul>
+        </nav>
+
+        <!-- Bouton Contacter & Téléphone -->
+        <div class="flex items-center space-x-4">
+            <a href="#contact" class="bg-primary text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition">Contacter</a>
+
+            <!-- Dropdown Téléphone -->
+            <div x-data="{ open: false }" class="relative">
+                <button @click="open = !open" class="flex items-center text-gray-700 hover:text-blue-600">
+                    <i class="fas fa-phone text-xl"></i>
+                </button>
+
+                <!-- Contenu du dropdown -->
+                <div x-show="open" @click.away="open = false" class="absolute right-0 mt-2 z-10  w-64 bg-white shadow-lg rounded-lg p-4 text-sm text-gray-800 border border-gray-200">
+                    <p class="font-semibold">Coordonnées</p>
+                    <p class="text-gray-600 text-xs">Lors de votre appel, comme notre service est gratuit, n'oubliez surtout pas de signaler au prestataire que vous appelez de la part de {{ $hall->company->title }}.</p>
+                    <div class="mt-2">
+                        <p class="font-semibold">Téléphone principal : {{ $hall->company->phone }}</p>
+                    </div>
+                    <div class="mt-2">
+                        <p class="font-semibold">Langues parlées :</p>
+                        <p>Français</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+<!-- Alpine.js pour le dropdown -->
+<script src="https://cdn.jsdelivr.net/npm/alpinejs@3.10.2/dist/cdn.min.js" defer></script>
+    <div class="py-12 text-lg flex  gap-2">
+        <div class="max-full py-5 px-6 flex gap-5">
             <!-- Header -->
+
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg px-8 py-8">
                 <div class="p-6 bg-white border-b border-gray-200">
                     <h2 class="font-semibold text-xl text-gray-800 leading-tight">
@@ -15,7 +57,7 @@
                     </h2>
                 </div>
                 <!-- Galerie d'images -->
-                <div class="container mx-auto px-4 py-8">
+                <div class="container mx-auto px-4 py-8" id="galerie">
                     <!-- Galerie d'images -->
                     <div class="relative">
                         <!-- Image principale -->
@@ -93,7 +135,7 @@
                 <div id="map" class="h-64 w-full rounded-xl hidden"></div>
 
                 <!-- Présentation de la salle -->
-                <div class="my-6">
+                <div class="my-6" id="presentation">
                     <h3 class="text-2xl text-stone-600 font-semibold">Présentation</h3>
                     <p id="description" data-full-text="{{ $hall->description }}" data-expanded="false">
                         {{ Str::limit($hall->description, 150, '...') }}</p>
@@ -102,7 +144,7 @@
                 </div>
 
                 <!-- Tarification -->
-                <div class="my-6">
+                <div class="my-6" id="tarification">
                     <h3 class="text-2xl text-stone-600 font-semibold">Tarification</h3>
                     <p id="tarification" data-full-text="{{ $hall->tarification }}" data-expanded="false">
                         {{ Str::limit($hall->tarification, 150, '...') }}</p>
@@ -111,31 +153,32 @@
                 </div>
 
                 <!-- Tarification par type d'événement -->
-               <!-- Tarification par type d'événement -->
-<div class="my-6">
-    <h3 class="text-2xl font-semibold text-stone-600 mb-4">Tarification par type d'événement</h3>
-    <div class="grid lg:grid-cols-3 sm:grid-cols-2 md:grid-cols-2 gap-5" id="pricing-list">
-        @foreach ($hall->events as $event)
-            <div class="border rounded-lg p-4 mb-4 pricing-block">
-                <h4 class="font-semibold text-xl text-stone-600">{{ $event->title }}</h4>
-                <hr class="my-2">
-                @foreach ($event->eventTypePrices as $key => $eventTypePrice)
-                    <p class="text-blue-500 pricing-item @if ($key >= 2) hidden @endif">
-                        À partir de {{ $eventTypePrice->price }}€
-                    </p>
-                @endforeach
-            </div>
-        @endforeach
-    </div>
+                <!-- Tarification par type d'événement -->
+                <div class="my-6">
+                    <h3 class="text-2xl font-semibold text-stone-600 mb-4">Tarification par type d'événement</h3>
+                    <div class="grid lg:grid-cols-3 sm:grid-cols-2 md:grid-cols-2 gap-5" id="pricing-list">
+                        @foreach ($hall->events as $event)
+                            <div class="border rounded-lg p-4 mb-4 pricing-block">
+                                <h4 class="font-semibold text-xl text-stone-600">{{ $event->title }}</h4>
+                                <hr class="my-2">
+                                @foreach ($event->eventTypePrices as $key => $eventTypePrice)
+                                    <p
+                                        class="text-blue-500 pricing-item @if ($key >= 2) hidden @endif">
+                                        À partir de {{ $eventTypePrice->price }}€
+                                    </p>
+                                @endforeach
+                            </div>
+                        @endforeach
+                    </div>
 
-    <!-- Bouton Voir plus / Voir moins -->
-    <button id="toggle-pricing" onclick="togglePricing()" class="mt-2 text-blue-500">
-        Voir plus <i class="fas fa-caret-down"></i>
-    </button>
-</div>
+                    <!-- Bouton Voir plus / Voir moins -->
+                    <button id="toggle-pricing" onclick="togglePricing()" class="mt-2 text-blue-500">
+                        Voir plus <i class="fas fa-caret-down"></i>
+                    </button>
+                </div>
 
                 <!-- Caractéristiques de la salle -->
-                <div class="my-6">
+                <div class="my-6" id="equipements">
                     <h3 class="text-2xl  text-stone-600  font-semibold mb-3">Equipements</h3>
 
                     <!-- Liste des équipements -->
@@ -156,46 +199,98 @@
                     <button id="toggle-equipments" class="mt-2 text-blue-500" onclick="toggleEquipments()">Voir plus
                         <i class="fas fa-caret-down"></i></button>
                 </div>
-                <!-- Réseaux sociaux -->
-                <div class="my-6">
-                    <h3 class="text-2xl font-semibold mb-3  text-stone-600 ">Mes réseaux sociaux</h3>
-                    <div class="flex space-x-4">
-                        <div class="flex items-center gap-3 border p-2 rounded-lg">
-                            <i class="fab fa-facebook  text-blue-500"></i>
-                            <a href="{{ $hall->company->facebook }}" target="_blank" class="text-primary">Facebook</a>
-                        </div>
 
-                        <div class="flex items-center gap-3 border p-2 rounded-lg">
-                            <i class="fab fa-twitter text-black-500"></i>
-                            <a href="{{ $hall->company->twitter }}" target="_blank" class="text-primary">Twitter</a>
-                        </div>
-
-                        <div class="flex items-center gap-3 border p-2 rounded-lg">
-                            <i class="fab fa-instagram text-red-500"></i>
-                            <a href="{{ $hall->company->instagram }}" target="_blank"
-                                class="text-primary">Instagram</a>
-                        </div>
-
-                        <div class="flex items-center gap-3 border p-2 rounded-lg">
-                            <i class="fab fa-linkedin text-blue-500"></i>
-                            <a href="{{ $hall->company->linkedin }}" target="_blank"
-                                class="text-primary">LinkedIn</a>
-                        </div>
-
-                    </div>
-                </div>
             </div>
 
-            <!-- Autres sections à ajouter -->
+            <!-- compagnie -->
+            <div class="space-y-4">
+                <div>
+                    <div class="bg-white shadow-lg rounded-lg p-6 space-y-4">
+                        <!-- Cover Section -->
+                        <div class="relative mb-8">
+                            <div>
+                                <img src="{{ asset('storage/' . $hall->company->avatar) }}" alt="Avatar"
+                                    class="w-24 h-24 rounded-full border-4 border-white">
+                            </div>
+                        </div>
+                        <div class="flex items-center justify-between  py-2 ">
+                            <div>
+                                <h1 class="text-2xl font-bold text-gray-800">{{ $hall->company->name }}</h1>
+                            </div>
+                        </div>
 
+                        <!-- Informations générales -->
+                        <div class="mt-6">
+                            <div class=" gap-8 mt-4">
+                                <div>
+                                    <p class="text-gray-500">Email :</p>
+                                    <p class="font-medium break-words">{{ $hall->company->email }}</p>
+                                </div>
+                                <div>
+                                    <p class="text-gray-500">Téléphone :</p>
+                                    <p class="font-medium">{{ $hall->company->phone }}</p>
+                                </div>
+                                <div>
+                                    <p class="text-gray-500">Adresse :</p>
+                                    <p class="font-medium">{{ $hall->company->address }}</p>
+                                </div>
+                                <div>
+                                    <p class="text-gray-500">Ville :</p>
+                                    <p class="font-medium">{{ $hall->company->ville }}</p>
+                                </div>
+                                <div>
+                                    <p class="text-gray-500">Code Postal :</p>
+                                    <p class="font-medium">{{ $hall->company->postal_code }}</p>
+                                </div>
+                                <div>
+                                    <p class="text-gray-500">Pays :</p>
+                                    <p class="font-medium">{{ $hall->company->pays }}</p>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Réseaux sociaux -->
+                        <div class="my-6  ">
+                            <h3 class="text-2xl font-semibold mb-3  text-stone-600 ">Mes réseaux sociaux</h3>
+                            <div class="grid grid-cols-2 gap-2">
+                                <div class="flex items-center gap-3 border p-2 rounded-lg ">
+                                    <i class="fab fa-facebook  text-blue-500"></i>
+                                    <a href="{{ $hall->company->facebook_url }}" target="_blank"
+                                        class="text-primary">Facebook</a>
+                                </div>
 
-            <!-- Autres sections à ajouter -->
+                                <div class="flex items-center gap-3 border p-2 rounded-lg">
+                                    <i class="fab fa-twitter text-black-500"></i>
+                                    <a href="{{ $hall->company->twitter_url }}" target="_blank"
+                                        class="text-primary">Twitter</a>
+                                </div>
 
+                                <div class="flex items-center gap-3 border p-2 rounded-lg">
+                                    <i class="fab fa-instagram text-red-500"></i>
+                                    <a href="{{ $hall->company->instagram_url }}" target="_blank"
+                                        class="text-primary">Instagram</a>
+                                </div>
+
+                                <div class="flex items-center gap-3 border p-2 rounded-lg">
+                                    <i class="fab fa-linkedin text-blue-500"></i>
+                                    <a href="{{ $hall->company->linkedin_url }}" target="_blank"
+                                        class="text-primary">LinkedIn</a>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                {{-- <x-demande-evenement/> --}}
+
+            </div>
         </div>
     </div>
     </div>
 
-</x-dashboard-layout>
+
+</x-guest-layout>
 <script>
     function changeImage(imageSrc) {
         document.getElementById('mainImage').src = imageSrc;
@@ -204,17 +299,25 @@
     function toggleMap() {
         let mapContainer = document.getElementById('map');
         mapContainer.classList.toggle('hidden');
+
         if (!mapContainer.classList.contains('hidden')) {
             if (!mapContainer.hasAttribute('data-initialized')) {
                 mapContainer.setAttribute('data-initialized', 'true');
+
                 var map = L.map('map').setView([{{ $hall->latitude }}, {{ $hall->longitude }}], 13);
                 L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
                     maxZoom: 18,
                 }).addTo(map);
                 L.marker([{{ $hall->latitude }}, {{ $hall->longitude }}]).addTo(map);
+
+                // Correction : Forcer la mise à jour après affichage
+                setTimeout(() => {
+                    map.invalidateSize();
+                }, 300);
             }
         }
     }
+
 
     function toggleText(elementId) {
         let element = document.getElementById(elementId);

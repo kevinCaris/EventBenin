@@ -22,7 +22,29 @@ class HallController extends Controller
      *
      * @return void
      */
-    public function __construct(){
+    public function showGuest($id)
+    {
+        Log::info($id);
+        // Récupérer la salle avec ses relations
+        $hall = Hall::with(['pictures', 'features', 'availabilities', 'company', 'events'])->findOrFail($id);
+
+        // Retourner la vue avec les informations de la salle
+        return view('pages.details', compact('hall'));
+    }
+
+    public function showForGuests()
+    {
+        // Récupérer les salles (vous pouvez aussi appliquer des filtres si nécessaire)
+        $halls = Hall::all();
+
+        // Récupérer les villes distinctes pour le filtre, si nécessaire
+        $cities = Hall::distinct()->pluck('city');
+
+        // Retourner la vue avec les salles et les villes
+        return view('pages.halls', compact('halls', 'cities'));
+    }
+    public function __construct()
+    {
         $this->authorizeResource(Hall::class, 'hall');
     }
     /**
@@ -30,15 +52,14 @@ class HallController extends Controller
      */
     public function index()
     {
-        if(auth()->user()->isAdmin()){
+        if (auth()->user()->isAdmin()) {
             $halls = Hall::paginate(10);
             return view('halls.index', compact('halls'));
-        }else{
-            $company= auth()->user()->company_id;
+        } else {
+            $company = auth()->user()->company_id;
             $halls = Hall::where('company_id', $company)->paginate(10);
             return view('halls.index', compact('halls'));
         }
-
     }
 
     /**
@@ -57,21 +78,21 @@ class HallController extends Controller
     public function store(StoreHallRequest $request)
     {
         try {
-        $data=$request->validated();
+            $data = $request->validated();
 
-        $data['company_id'] = auth()->user()->company_id;
+            $data['company_id'] = auth()->user()->company_id;
 
-        if($request->hasFile('image')) {
-            $data['image'] = $request->file('image')->store('halls', 'public');
-        }
-        if($request->status == 1) {
-            $data['status'] = StatusHallEnum::AVAILABLE;
-        }else{
-            $data['status'] = StatusHallEnum::UNAVAILABLE;
-        }
-        Hall::create($data);
+            if ($request->hasFile('image')) {
+                $data['image'] = $request->file('image')->store('halls', 'public');
+            }
+            if ($request->status == 1) {
+                $data['status'] = StatusHallEnum::AVAILABLE;
+            } else {
+                $data['status'] = StatusHallEnum::UNAVAILABLE;
+            }
+            Hall::create($data);
 
-        return redirect()->route('halls.index')->with('success', 'salle crée avec success.');
+            return redirect()->route('halls.index')->with('success', 'salle crée avec success.');
         } catch (\Exception $e) {
 
             return redirect()->route('halls.index')->with('error', 'Une erreur est survenue lors de la création de la salle.');
@@ -83,7 +104,8 @@ class HallController extends Controller
      */
     public function show(Hall $hall)
     {
-        $hall = Hall::with('pictures')->findOrFail($hall->id);
+        $hall->load(['pictures', 'features', 'availabilities', 'company', 'events', 'eventTypePrices']);
+        Log::info($hall);
         return view('halls.show', compact('hall'));
     }
 
@@ -102,20 +124,20 @@ class HallController extends Controller
     public function update(UpdateHallRequest $request, Hall $hall)
     {
         try {
-        $data=$request->validated();
+            $data = $request->validated();
 
-        if($request->hasFile('image')) {
-            Storage::disk('public')->delete($hall->image);
-            $data['image'] = $request->file('image')->store('halls', 'public');
-        }
-        if($request->status == 1) {
-            $data['status'] = StatusHallEnum::AVAILABLE;
-        }else{
-            $data['status'] = StatusHallEnum::UNAVAILABLE;
-        }
+            if ($request->hasFile('image')) {
+                Storage::disk('public')->delete($hall->image);
+                $data['image'] = $request->file('image')->store('halls', 'public');
+            }
+            if ($request->status == 1) {
+                $data['status'] = StatusHallEnum::AVAILABLE;
+            } else {
+                $data['status'] = StatusHallEnum::UNAVAILABLE;
+            }
 
-        $hall->update($data);
-        return redirect()->route('halls.index')->with('success', 'salle mise à jour avec success.');
+            $hall->update($data);
+            return redirect()->route('halls.index')->with('success', 'salle mise à jour avec success.');
         } catch (\Exception $e) {
             return redirect()->route('halls.index')->with('error', 'Une erreur est survenue lors de la mise à jour de la salle.');
         }

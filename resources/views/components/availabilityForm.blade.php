@@ -3,7 +3,8 @@
     'route', // Doit être passé dynamiquement
     'method' => 'POST', // POST par défaut pour compatibilité
     'buttonText' => 'Enregistrer',
-    'feature' => null // Par défaut, null si aucune donnée n'existe
+    'availability' => null ,// Par défaut, null si aucune donnée n'existe
+    'halls' => null,
 ])
 
 <div x-data="{ open: false }">
@@ -27,33 +28,34 @@
                 </button>
             </div>
             <!-- Formulaire -->
-            <form action="{{ $route }}" method="POST">
+            <form  action="{{ $route }}">
                 @csrf
-                @if ($method)
-                    @method($method)
+                @if ($method && $method != 'POST')
+                @method($method)
+                <input type="hidden" name="id" value="{{ $availability->id }}">
+                @endif
+                @if ($method == 'POST')
+
+                <label class="block mb-2">Salle </label>
+                <select name="hall_id" class="w-full p-2 border rounded">
+                    @foreach($halls as $hall)
+                     <option value="{{ $hall->id }}">{{ $hall->title }}</option>
+                    @endforeach
+                </select>
                 @endif
 
-                <!-- Champ pour le titre -->
-                <div class="mb-4">
-                    <label for="title" class="block text-sm font-medium text-gray-700">Titre</label>
-                    <input type="text" name="title" id="title" class="w-full px-3 py-2 border-gray-300 rounded-md" placeholder="info"
-                        value="{{ old('title', $feature->title ?? '') }}" required>
-                    @error('title')
-                        <p class="text-sm text-red-600">{{ $message }}</p>
-                    @enderror
-                </div>
-                <div class="mb-4">
-                    <label for="description" class="block text-sm font-medium text-gray-700">Description</label>
-                    <textarea name="description" id="description" class="w-full px-3 py-2 border-gray-300 rounded-md" placeholder="information........"
-                        required>{{ old('description', $feature->description ?? '') }}</textarea>
-                    @error('description')
-                        <p class="text-sm text-red-600">{{ $message }}</p>
-                    @enderror
-                </div>
+                <label class="block mt-2">Date début </label>
+                <input type="datetime-local" name="start_date" class="w-full p-2 border rounded" value="{{ old('start_date', $availability->start_date ?? '') }}">
 
-                <!-- Ajoute d'autres champs ici si nécessaire -->
+                <label class="block mt-2">Date fin </label>
+                <input type="datetime-local" name="end_date" class="w-full p-2 border rounded" value="{{ old('end_date', $availability->end_date ?? '') }}">
 
-                <!-- Boutons -->
+                <label class="block mt-2">Statut </label>
+                <select name="status" class="w-full p-2 border rounded">
+                    <option value="{{ \App\Enums\StatusAvailabilityEnum::AVAILABLE }}">Disponible</option>
+                    <option value="{{ \App\Enums\StatusAvailabilityEnum::RESERVED }}">Reservé</option>
+                    <option value="{{ \App\Enums\StatusAvailabilityEnum::CLOSED }}">Fermé</option>
+                </select>
                 <div class="flex justify-end gap-4 mt-4">
 
                     <!-- Bouton Enregistrer -->

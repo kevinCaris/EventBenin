@@ -28,6 +28,7 @@ return new class extends Migration
             $table->integer('capacity_max');
             $table->decimal('price_min', 10, 2);
             $table->decimal('price_max', 10, 2);
+            $table->string('tarification');
             $table->enum('status', array_column(StatusHallEnum::cases(), 'value'))->default(StatusHallEnum::AVAILABLE->value);
             $table->foreignId('company_id')->constrained('companies')->onDelete('cascade');
             $table->timestamps();

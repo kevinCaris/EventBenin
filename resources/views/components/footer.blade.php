@@ -1,5 +1,5 @@
-<footer class="bg-gray-800 text-white py-12">
-    {{-- <div class="max-w-7xl mx-auto px-6 sm:px-8">
+{{-- <footer class="bg-gray-800 text-white py-12">
+    <div class="max-w-7xl mx-auto px-6 sm:px-8">
         <!-- Section Introduction -->
 
         <!-- Navigation du footer -->
@@ -31,9 +31,18 @@
             </div>
 
         </div>
-    </div> --}}
+    </div>
     <div class="hidden md:block text-center">
         <h3 class="text-xl font-semibold mb-2">Copyright</h3>
         <p>&copy; Copyright Events-places 2024. Designé et programmé par <a href="https://protai-in.com" class="text-blue-400 hover:text-blue-600">Protai-in Agence web Douala</a></p>
     </div>
-</footer>
+</footer> --}}
+
+    <!-- Footer -->
+    <footer class="bg-gray-900 text-white py-12">
+        <div class="max-w-6xl mx-auto text-center">
+            {{-- <p>&copy; 2024 Pax Living. All rights reserved.</p> --}}
+            <h3 class="text-xl font-semibold mb-2">Copyright</h3>
+            <p>&copy; Copyright Events-places 2024. Designé et programmé par <a href="https://protai-in.com" class="text-blue-400 hover:text-blue-600">Protai-in Agence web Douala</a></p>
+        </div>
+    </footer>

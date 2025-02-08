@@ -71,7 +71,7 @@ new #[Layout('layouts.guest')] class extends Component {
         // $this->redirectIntended(default: RouteServiceProvider::HOME, navigate: true);
     }
 }; ?>
-
+<div class="min-h-screen flex flex-col sm:justify-center items-center pt-6 sm:pt-0 bg-gray-100">
 <div class="lg:w-2/4   my-6 p-10  bg-white shadow-md overflow-hidden sm:rounded-lg">
      <p class="text-center text-3xl text-bold text-capitalize my-5 "> Inscription</p>
     <form wire:submit="register">
@@ -155,4 +155,5 @@ new #[Layout('layouts.guest')] class extends Component {
             </x-primary-button>
         </div>
     </form>
+</div>
 </div>

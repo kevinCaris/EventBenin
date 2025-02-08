@@ -3,6 +3,8 @@
 namespace Database\Seeders;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+
+use App\Models\Hall;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -28,6 +30,8 @@ class DatabaseSeeder extends Seeder
             EventTypeHallSeeder::class,
             FeatureHallSeeder::class,
             PaiementSeeder::class,
+            HallAvailabilitySeeder::class,
+            EventTypePriceSeeder::class,
         ]);
     }
 }

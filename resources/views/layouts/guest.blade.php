@@ -25,9 +25,10 @@
     <x-header />
     <main class="flex-1 overflow-y-auto pt-[6rem]">
         <!-- Main Content -->
-        <div class="min-h-screen flex flex-col sm:justify-center items-center pt-6 sm:pt-0 bg-gray-100">
+
             {{ $slot }}
-        </div>
+            {{-- <div class="min-h-screen flex flex-col sm:justify-center items-center pt-6 sm:pt-0 bg-gray-100">
+        </div> --}}
     </main>
     <x-footer />
 
