@@ -1,4 +1,5 @@
 <x-guest-layout>
+    <div class="min-h-screen flex flex-col sm:justify-center items-center pt-6 sm:pt-0 bg-gray-100">
     <h2 class="font-semibold text-xl text-gray-800 leading-tight">
         {{ __('Fournir les informations sur votre société') }}
     </h2>

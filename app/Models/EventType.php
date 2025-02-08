@@ -13,6 +13,10 @@ class EventType extends Model
     protected $fillable = [
         'title',
     ];
+    public function eventTypePrices()
+    {
+        return $this->hasMany(EventTypePrice::class);
+    }
 
     public function halls():BelongsToMany
     {

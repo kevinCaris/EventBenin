@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\HallAvailability;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
@@ -12,6 +13,6 @@ class HallAvailabilitySeeder extends Seeder
      */
     public function run(): void
     {
-        //
+        HallAvailability::factory()->count(20)->create();
     }
 }

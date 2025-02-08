@@ -17,7 +17,7 @@ class HallAvailability extends Model
 
     public function hall()
     {
-        return $this->belongsTo(Hall::class);
+        return $this->belongsTo(Hall::class, 'hall_id');
     }
 
 }

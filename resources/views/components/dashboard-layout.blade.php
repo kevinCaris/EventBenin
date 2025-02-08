@@ -13,8 +13,11 @@
     <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet" />
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
 
-    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
-    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+
+
+
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
 
     <!-- Scripts -->
     @vite(['resources/css/app.css', 'resources/js/app.js'])
@@ -47,7 +50,7 @@
             <!-- Main Content -->
             <div class="flex-1 flex flex-col  overflow-hidden">
                 <!-- Topbar -->
-                <livewire:dashboard.header  />
+                <livewire:dashboard.header />
                 {{-- <livewire:layout.navigation /> --}}
                 <!-- Content -->
                 <main class="flex-1 overflow-y-auto ">
@@ -106,44 +109,45 @@
     </div>
 
     <!-- Toast Notification -->
-<div id="toastMessage" class="fixed bottom-5 right-5 bg-green-500 text-white px-4 py-2 rounded-lg shadow-lg opacity-0 transition-opacity duration-500">
-    <span id="toastContent"></span>
-</div>
+    <div id="toastMessage"
+        class="fixed bottom-5 right-5 bg-green-500 text-white px-4 py-2 rounded-lg shadow-lg opacity-0 transition-opacity duration-500">
+        <span id="toastContent"></span>
+    </div>
 
-<script>
-    document.addEventListener('DOMContentLoaded', function () {
-        const toastElement = document.getElementById('toastMessage');
-        const toastContent = document.getElementById('toastContent');
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const toastElement = document.getElementById('toastMessage');
+            const toastContent = document.getElementById('toastContent');
 
-        function showToast(message, type = 'success') {
-            if (!toastElement || !toastContent) return;
+            function showToast(message, type = 'success') {
+                if (!toastElement || !toastContent) return;
 
-            // Modifier la couleur selon le type (vert = succès, rouge = erreur)
-            toastElement.classList.remove('bg-primary', 'bg-red-500');
-            toastElement.classList.add(type === 'success' ? 'bg-primary' : 'bg-red-500');
-            toastContent.textContent = message;
+                // Modifier la couleur selon le type (vert = succès, rouge = erreur)
+                toastElement.classList.remove('bg-primary', 'bg-red-500');
+                toastElement.classList.add(type === 'success' ? 'bg-primary' : 'bg-red-500');
+                toastContent.textContent = message;
 
-            // Afficher le toast
-            toastElement.classList.remove('opacity-0');
-            toastElement.classList.add('opacity-100');
+                // Afficher le toast
+                toastElement.classList.remove('opacity-0');
+                toastElement.classList.add('opacity-100');
 
-            // Masquer après 3 secondes
-            setTimeout(() => {
-                toastElement.classList.remove('opacity-100');
-                toastElement.classList.add('opacity-0');
-            }, 3000);
-        }
+                // Masquer après 3 secondes
+                setTimeout(() => {
+                    toastElement.classList.remove('opacity-100');
+                    toastElement.classList.add('opacity-0');
+                }, 3000);
+            }
 
-        // Vérifier si Laravel a stocké un message en session
-        const successMessage = "{{ session('success') }}".trim();
-        const errorMessage = "{{ session('error') }}".trim();
+            // Vérifier si Laravel a stocké un message en session
+            const successMessage = "{{ session('success') }}".trim();
+            const errorMessage = "{{ session('error') }}".trim();
 
-        if (successMessage !== "") {
-            showToast(successMessage, 'success');
-        } else if (errorMessage !== "") {
-            showToast(errorMessage, 'error');
-        }
-    });
+            if (successMessage !== "") {
+                showToast(successMessage, 'success');
+            } else if (errorMessage !== "") {
+                showToast(errorMessage, 'error');
+            }
+        });
     </script>
 
 </body>

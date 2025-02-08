@@ -34,6 +34,7 @@ class HallFactory extends Factory
             'capacity_max' => fake()->randomNumber(),
             'price_min' => fake()->randomFloat(2, 0, 100),
             'price_max' => fake()->randomFloat(2, 0, 100),
+            'tarification' =>fake()->text(),
             'status' => StatusHallEnum::AVAILABLE->value,
             'company_id' => $company->id
         ];

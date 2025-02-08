@@ -4,6 +4,23 @@
         @method($method)
     @endif
     <div class="grid lg:grid-cols-3 sm:grid-cols-1 md:grid-cols-1 gap-4 p-8 ">
+
+        <!-- Sélection d'un utilisateur -->
+{{-- <div class="mb-4">
+    <label for="user_id" class="block text-sm font-medium text-gray-700">Sélectionner un utilisateur</label>
+    <select name="user_id" id="user_id"
+        class="mt-1 block w-full rounded-lg border-gray-300 shadow-sm focus:ring-indigo-500 focus:border-indigo-500">
+        <option value="">-- Choisissez un utilisateur --</option>
+        @foreach ($users as $user)
+            <option value="{{ $user->id }}" {{ old('user_id', $company->user_id ?? '') == $user->id ? 'selected' : '' }}>
+                {{ $user->name }}
+            </option>
+        @endforeach
+    </select>
+    @error('user_id')
+        <span class="text-red-500 text-sm">{{ $message }}</span>
+    @enderror
+</div> --}}
         <!-- Nom -->
         <div class="mb-4">
             <label for="name" class="block text-sm font-medium text-gray-700">Nom de la Compagnie</label>

@@ -7,18 +7,29 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreHallAvailabilityRequest;
 use App\Http\Requests\UpdateHallAvailabilityRequest;
 use App\Models\Hall;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 
 class HallAvailabilityController extends Controller
 {
+    public function __construct()
+    {
+        $this->authorizeResource(HallAvailability::class, 'availability');
+    }
     /**
      * Display a listing of the resource.
      */
-    public function index(Hall $hall)
+    public function index(Request $request)
     {
-        $availabilities = $hall->availabilities()->orderBy('start_date')->get();
-        return view('availabilities.index', compact('availabilities'));
-    }
+        // Récupérer toutes les salles pour afficher dans le menu déroulant
+        $halls = Hall::where('company_id', auth()->user()->company_id)->get();
+        // Vérifier si l'utilisateur a sélectionné une salle
+        $hall = Hall::find($request->hall_id);
+        // Récupérer les disponibilités de la salle sélectionnée (si une salle est choisie)
+        $availabilities = $hall ? $hall->availabilities()->orderBy('start_date')->get() : collect();
 
+        return view('availabilities.index', compact('availabilities', 'hall', 'halls'));
+    }
     /**
      * Show the form for creating a new resource.
      */
@@ -32,17 +43,20 @@ class HallAvailabilityController extends Controller
      */
     public function store(StoreHallAvailabilityRequest $request, Hall $hall)
     {
-        $hall->availabilities()->create($request->validated());
-        return redirect()->back()->with('success', 'Disponibilité ajoutée avec succès.');
+        try {
+            Log::info("information".$request->validated());
+            $hall->availabilities()->create($request->validated());
+            return redirect(route('availabilities.index'))->with('success', 'Disponibilité ajoutée avec succès.');
+        } catch (\Exception $e) {
+            Log::error('Error storing availability: ' . $e->getMessage());
+            return redirect()->back()->with('error', 'Erreur lors de l\'ajout de la disponibilité.');
+        }
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(HallAvailability $hallAvailability)
-    {
-
-    }
+    public function show(HallAvailability $hallAvailability) {}
 
     /**
      * Show the form for editing the specified resource.
@@ -58,7 +72,7 @@ class HallAvailabilityController extends Controller
     public function update(UpdateHallAvailabilityRequest $request, HallAvailability $hallAvailability)
     {
         $hallAvailability->update($request->validated());
-        return redirect()->back()->with('success', 'Disponibilité mise à jour.');
+        return redirect(route('availabilities.index'))->back()->with('success', 'Disponibilité mise à jour.');
     }
 
     /**
@@ -66,7 +80,19 @@ class HallAvailabilityController extends Controller
      */
     public function destroy(HallAvailability $hallAvailability)
     {
+
+        // Vérifier si l'élément existe
+    if (!$hallAvailability) {
+        return redirect(route('availabilities.index'))->with('error', 'Disponibilité non trouvée.');
+    }
+
+    // Supprimer la disponibilité
+    try {
         $hallAvailability->delete();
-        return redirect()->back()->with('success', 'Disponibilité supprimée.');
+        return redirect(route('availabilities.index'))->with('success', 'Disponibilité supprimée.');
+    } catch (\Exception $e) {
+        // Si une erreur survient lors de la suppression
+        return redirect(route('availabilities.index'))->with('error', 'Erreur lors de la suppression de la disponibilité.');
+    }
     }
 }

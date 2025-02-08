@@ -18,10 +18,10 @@
 
                     <div class="hidden sm:block sm:ml-6">
                         <div class="flex space-x-4 ">
-                            <a href="/" class="text-black  hover:text-primary px-3 py-2 rounded-md text-lg font-medium">Accueil</a>
+                            <a href="{{ route('home') }}" class="text-black  hover:text-primary px-3 py-2 rounded-md text-lg font-medium">Accueil</a>
                             <a href="/a-propos" class="text-black  hover:text-primary px-3 py-2 rounded-md text-lg font-medium">À propos</a>
-                            <a href="/explorer" class="text-black  hover:text-primary px-3 py-2 rounded-md text-lg font-medium">Explorer</a>
-                            <a href="/blog" class="text-black  hover:text-primary px-3 py-2 rounded-md text-lg font-medium">Blogue</a>
+                            <a href="{{ route('halls.guest') }}" class="text-black  hover:text-primary px-3 py-2 rounded-md text-lg font-medium">Explorer</a>
+                            <a href="#" class="text-black  hover:text-primary px-3 py-2 rounded-md text-lg font-medium">Blogue</a>
                             <a href="/contact" class="text-black  hover:text-primary px-3 py-2 rounded-md text-lg font-medium">Contact</a>
                         </div>
                     </div>

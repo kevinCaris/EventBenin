@@ -48,7 +48,7 @@ new class extends Component {
             </a>
         </li>
         <li>
-            <a href="{{ route('hall-availabilities.index') }}"
+            <a href="{{ route('availabilities.index') }}"
             class="flex items-center space-x-2 p-2 text-gray-600 hover:bg-gray-200 rounded-md">
              <i class="fas fa-calendar-check text-blue-500"></i>
              <span>Disponibilités</span>

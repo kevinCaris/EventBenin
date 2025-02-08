@@ -3,10 +3,11 @@
 namespace App\Models;
 
 use App\Enums\StatusHallEnum;
-use file;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class Hall extends Model
 {
@@ -27,6 +28,7 @@ class Hall extends Model
         'capacity_max',
         'price_min',
         'price_max',
+        'tarification',
         'status',
         'company_id',
     ];
@@ -40,9 +42,14 @@ class Hall extends Model
         return $this->status === StatusHallEnum::AVAILABLE;
     }
 
+    public function eventTypePrices()
+    {
+        return $this->hasMany(EventTypePrice::class);
+    }
+
     public function company(): BelongsTo
     {
-        return $this->belongsTo(Company::class);
+        return $this->belongsTo(Company::class, 'company_id');
     }
 
     public function pictures(): HasMany
@@ -71,8 +78,14 @@ class Hall extends Model
 
     public function availabilities(): HasMany
     {
-        return $this->hasMany(HallAvailability::class);
+        return $this->hasMany(HallAvailability::class, 'hall_id');
     }
 
+    public function isavailable(){
+        $this ->status = StatusHallEnum::AVAILABLE;
+    }
 
+    public function isunavailable(){
+        $this ->status = StatusHallEnum::UNAVAILABLE;
+    }
 }

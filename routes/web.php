@@ -4,6 +4,7 @@
 use App\Http\Controllers\CompanyController;
 use App\Http\Controllers\EventTypeController;
 use App\Http\Controllers\FeatureController;
+use App\Http\Controllers\HallAvailabilityController;
 use App\Http\Controllers\HallController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
@@ -19,7 +20,9 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::view('/', 'welcome');
+// Route::view('/', 'welcome');
+Route::view('/', 'pages.home')->name("home");
+
 
 Route::middleware(['auth','verified','role:admin'])->group(function () {
 
@@ -69,6 +72,10 @@ Route::middleware(['auth', 'verified', 'role:client'])->group(function () {
         return view('dashboard.client'); // Correspond à resources/views/dashboard/owner.blade.php
     })->name('client.dashboard');
 });
+
+Route::get('/salles', [HallController::class, 'showForGuests'])->name('halls.guest');
+Route::get('/salles/{hall}', [HallController::class, 'showGuest'])->name('guest.hall.show');
+
 
 
 Route::view('dashboard', 'dashboard')

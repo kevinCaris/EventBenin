@@ -7,6 +7,7 @@
                     <h1 class="text-2xl font-bold m-5">Création de la compagnie</h1>
                     {{-- <livewire:companies.create /> --}}
                     @include('companies.partials.form',[
+                        'users'=> $users,
                         'action' => route('companies.store'),
                         'method' => 'POST'
                     ])
