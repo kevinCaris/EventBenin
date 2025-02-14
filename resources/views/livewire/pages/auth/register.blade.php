@@ -71,14 +71,14 @@ new #[Layout('layouts.guest')] class extends Component {
         // $this->redirectIntended(default: RouteServiceProvider::HOME, navigate: true);
     }
 }; ?>
-<div class="min-h-screen flex flex-col sm:justify-center items-center pt-6 sm:pt-0 bg-gray-100">
+<div class="min-h-screen flex flex-col sm:justify-center items-center pt-6 sm:pt-0 bg-primary">
 <div class="lg:w-2/4   my-6 p-10  bg-white shadow-md overflow-hidden sm:rounded-lg">
      <p class="text-center text-3xl text-bold text-capitalize my-5 "> Inscription</p>
     <form wire:submit="register">
         <!-- firtname -->
         <div class="lg:grid grid-cols-2 gap-6">
             <div class="mt-1">
-                <x-input-label for="first_name" :value="__('First Name *')" />
+                <x-input-label for="first_name" :value="__('Prénom *')" />
                 <x-text-input wire:model="firstname" id="firstname" class="block mt-1 w-full" type="text"
                     name="first_name" required autofocus autocomplete="firstname" :placeholder="__('Votre prenom')" />
                 <x-input-error :messages="$errors->get('first_name')" class="mt-2" />
@@ -86,14 +86,14 @@ new #[Layout('layouts.guest')] class extends Component {
 
             <!-- Last Name -->
             <div class="mt-1">
-                <x-input-label for="last_name" :value="__('Last Name *')" />
+                <x-input-label for="last_name" :value="__('Nom *')" />
                 <x-text-input wire:model="lastname" id="lastname" class="block mt-1 w-full" type="text"
                     name="last_name" required autofocus autocomplete="lastname" :placeholder="__('Votre nom')" />
                 <x-input-error :messages="$errors->get('last_name')" class="mt-2" />
             </div>
             <!-- Name -->
             <div class="mt-1">
-                <x-input-label for="name" :value="__('Name *')" />
+                <x-input-label for="name" :value="__('Pseudo *')" />
                 <x-text-input wire:model="name" id="name" class="block mt-1 w-full" type="text" name="name"
                     required autofocus autocomplete="name" :placeholder="__('Votre username')" />
                 <x-input-error :messages="$errors->get('name')" class="mt-2" />
@@ -108,7 +108,7 @@ new #[Layout('layouts.guest')] class extends Component {
             </div>
             <!-- Password -->
             <div class="mt-1">
-                <x-input-label for="password" :value="__('Password')" />
+                <x-input-label for="password" :value="__('Mot de passe')" />
 
                 <x-text-input wire:model="password" id="password" class="block mt-1 w-full" type="password"
                     name="password" :placeholder="__('••••••••')" required autocomplete="new-password" />
@@ -117,7 +117,7 @@ new #[Layout('layouts.guest')] class extends Component {
             </div>
             <!-- Confirm Password -->
             <div class="mt-2">
-                <x-input-label for="password_confirmation" :value="__('Confirm Password')" />
+                <x-input-label for="password_confirmation" :value="__('Confirmer le mot de passe')" />
 
                 <x-text-input wire:model="password_confirmation" id="password_confirmation" class="block mt-1 w-full"
                     type="password" name="password_confirmation" required autocomplete="new-password"
@@ -147,11 +147,11 @@ new #[Layout('layouts.guest')] class extends Component {
         <div class="flex items-center justify-end mt-8 mb-5">
             <a class="underline text-sm text-gray-600 hover:text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
                 href="{{ route('login') }}" wire:navigate>
-                {{ __('Already registered?') }}
+                {{ __('Déja inscrit?') }}
             </a>
 
-            <x-primary-button class="ms-4 ">
-                {{ __('Register') }}
+            <x-primary-button class="ms-4 py-4 justify-center items-center ">
+                {{ __('S\'inscrire') }}
             </x-primary-button>
         </div>
     </form>

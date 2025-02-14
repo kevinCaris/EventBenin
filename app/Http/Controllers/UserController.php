@@ -25,7 +25,12 @@ class UserController extends Controller
 
     public function show(User $user)
     {
+        if($user->isClient())
+        {
+            return view('users.showclient', compact('user'));
+        }
         return view('users.show', compact('user'));
+
     }
 
     public function create()
@@ -65,6 +70,10 @@ class UserController extends Controller
 
     public function edit(User $user)
     {
+        if($user->isClient())
+        {
+            return view('users.editclient', compact('user'));
+        }
         return view('users.edit', compact('user'));
     }
 

@@ -30,10 +30,8 @@ class HallFactory extends Factory
             'latitude' => fake()->latitude(),
             'longitude' => fake()->longitude(),
             'website' => fake()->url(),
-            'capacity_min' => fake()->randomNumber(),
-            'capacity_max' => fake()->randomNumber(),
-            'price_min' => fake()->randomFloat(2, 0, 100),
-            'price_max' => fake()->randomFloat(2, 0, 100),
+            'capacity' => fake()->randomNumber(),
+            'price' => fake()->randomFloat(2, 0, 100),
             'tarification' =>fake()->text(),
             'status' => StatusHallEnum::AVAILABLE->value,
             'company_id' => $company->id

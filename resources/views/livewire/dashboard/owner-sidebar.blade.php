@@ -63,12 +63,12 @@ new class extends Component {
         </li>
 
         <li>
-            <a href=""
+            <a href="{{ route('events.index') }}"
                {{-- class="flex items-center py-3 px-4 hover:bg-gray-700"> --}}
                class="flex items-center py-3 px-4 hover:bg-primary hover:text-white rounded-l-full">
 
                 <i class="fas fa-chart-bar text-primary hover:text-white"></i>
-                <span x-show="sidebarOpen" class="ml-3">Statistiques</span>
+                <span x-show="sidebarOpen" class="ml-3">Réservation</span>
             </a>
         </li>
         <li>

@@ -1,48 +1,69 @@
-{{-- <footer class="bg-gray-800 text-white py-12">
-    <div class="max-w-7xl mx-auto px-6 sm:px-8">
-        <!-- Section Introduction -->
-
-        <!-- Navigation du footer -->
-        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8 text-left">
-            <div class="text-left mb-8">
-                <p class="text-lg max-w-2xl mx-auto ">Bienvenue sur Events Places Votre annuaire de référence pour trouver les lieux événementiels parfaits. Que vous planifiez un mariage, une conférence, ou une fête, nous vous aidons à découvrir des espaces exceptionnels pour chaque occasion. Simplifiez la recherche du lieu idéal avec Events Places.</p>
-            </div>
-
-            <div>
-                <h3 class="text-xl font-semibold mb-2">À travers l’annuaire</h3>
-                <ul class="space-y-2">
-                    <li><a href="/" class="text-gray-300 hover:text-white">Accueil</a></li>
-                    <li><a href="/a-propos" class="text-gray-300 hover:text-white">À propos</a></li>
-                    <li><a href="/blog" class="text-gray-300 hover:text-white">Blogue</a></li>
-                    <li><a href="/meubles" class="text-gray-300 hover:text-white">Tous les meublés</a></li>
-                    <li><a href="/contact" class="text-gray-300 hover:text-white">Contact</a></li>
-                </ul>
-            </div>
-
-            <div>
-                <h3 class="text-xl font-semibold mb-2">Catégories d’événements</h3>
-                <ul class="space-y-2">
-                    <li><a href="/categories" class="text-gray-300 hover:text-white">Catégories</a></li>
-                    <li><a href="/espace" class="text-gray-300 hover:text-white">Votre espace</a></li>
-                    <li><a href="/compte" class="text-gray-300 hover:text-white">Mon compte</a></li>
-                    <li><a href="/ajouter-place" class="text-gray-300 hover:text-white">Ajouter une place événementielle</a></li>
-                    <li><a href="/promouvoir" class="text-gray-300 hover:text-white">Promouvoir</a></li>
-                </ul>
-            </div>
-
-        </div>
-    </div>
-    <div class="hidden md:block text-center">
-        <h3 class="text-xl font-semibold mb-2">Copyright</h3>
-        <p>&copy; Copyright Events-places 2024. Designé et programmé par <a href="https://protai-in.com" class="text-blue-400 hover:text-blue-600">Protai-in Agence web Douala</a></p>
-    </div>
-</footer> --}}
 
     <!-- Footer -->
     <footer class="bg-gray-900 text-white py-12">
-        <div class="max-w-6xl mx-auto text-center">
-            {{-- <p>&copy; 2024 Pax Living. All rights reserved.</p> --}}
-            <h3 class="text-xl font-semibold mb-2">Copyright</h3>
-            <p>&copy; Copyright Events-places 2024. Designé et programmé par <a href="https://protai-in.com" class="text-blue-400 hover:text-blue-600">Protai-in Agence web Douala</a></p>
-        </div>
+            <div class="container mx-auto px-6 lg:px-20">
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+
+                    <!-- Section Navigation -->
+                    <div>
+                        <h3 class="text-lg font-semibold text-yellow-400 mb-4">Navigation</h3>
+                        <ul class="space-y-2">
+                            <li><a href="#" class="text-gray-300 hover:text-yellow-400 transition">Accueil</a></li>
+                            <li><a href="#" class="text-gray-300 hover:text-yellow-400 transition">À propos</a></li>
+                            <li><a href="#" class="text-gray-300 hover:text-yellow-400 transition">Nos services</a></li>
+                            <li><a href="#" class="text-gray-300 hover:text-yellow-400 transition">Réserver une salle</a></li>
+                            <li><a href="#" class="text-gray-300 hover:text-yellow-400 transition">Avis & Témoignages</a></li>
+                            <li><a href="#" class="text-gray-300 hover:text-yellow-400 transition">Contact</a></li>
+                        </ul>
+                    </div>
+
+                    <!-- Section Informations légales -->
+                    <div>
+                        <h3 class="text-lg font-semibold text-yellow-400 mb-4">Informations légales</h3>
+                        <ul class="space-y-2">
+                            <li><a href="#" class="text-gray-300 hover:text-yellow-400 transition">Mentions légales</a></li>
+                            <li><a href="#" class="text-gray-300 hover:text-yellow-400 transition">Conditions générales</a></li>
+                            <li><a href="#" class="text-gray-300 hover:text-yellow-400 transition">Politique de confidentialité</a></li>
+                            <li><a href="#" class="text-gray-300 hover:text-yellow-400 transition">Politique de remboursement</a></li>
+                        </ul>
+                    </div>
+
+                    <!-- Section Contact -->
+                    <div>
+                        <h3 class="text-lg font-semibold text-yellow-400 mb-4">Contact</h3>
+                        <p class="text-gray-300 text-sm mb-2">📍 123 Rue des Événements, Ville, Pays</p>
+                        <p class="text-gray-300 text-sm mb-2">📞 +33 1 23 45 67 89</p>
+                        <p class="text-gray-300 text-sm">📧 <a href="mailto:support@location-salles.com" class="text-yellow-400 hover:underline">support@location-salles.com</a></p>
+
+                        <div class="flex space-x-4 mt-4">
+                            <a href="#" class="text-gray-400 hover:text-yellow-400 text-xl"><i class="fab fa-facebook"></i></a>
+                            <a href="#" class="text-gray-400 hover:text-yellow-400 text-xl"><i class="fab fa-instagram"></i></a>
+                            <a href="#" class="text-gray-400 hover:text-yellow-400 text-xl"><i class="fab fa-twitter"></i></a>
+                            <a href="#" class="text-gray-400 hover:text-yellow-400 text-xl"><i class="fab fa-linkedin"></i></a>
+                        </div>
+                    </div>
+
+                    <!-- Section Newsletter -->
+                    <div>
+                        <h3 class="text-lg font-semibold text-yellow-400 mb-4">Newsletter</h3>
+                        <p class="text-gray-300 text-sm mb-4">📩 Recevez nos dernières nouveautés et promotions !</p>
+                        <form class="flex flex-col space-y-3">
+                            <input type="email" placeholder="Votre email" required
+                                class="p-2 rounded-lg border-none text-gray-800 focus:outline-none focus:ring-2 focus:ring-yellow-400">
+                            <button type="submit"
+                                class="bg-yellow-400 text-gray-900 font-semibold py-2 rounded-lg hover:bg-yellow-500 transition">
+                                S’abonner
+                            </button>
+                        </form>
+                    </div>
+
+                </div>
+
+                <!-- Pied de page inférieur -->
+                <div class="border-t border-gray-700 mt-8 pt-6 text-center text-sm text-gray-400">
+                    <p>© 2024 Location Salles. Tous droits réservés. | Développé par <strong>EventBenin</strong></p>
+                </div>
+            </div>
+
+
     </footer>

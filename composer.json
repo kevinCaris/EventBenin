@@ -39,6 +39,12 @@
         }
     },
     "scripts": {
+        "format": [
+            "vendor/bin/php-cs-fixer fix --config=.php-cs-fixer.dist.php --ansi"
+        ],
+        "post-install-cmd": [
+            "php artisan storage:link"
+        ],
         "post-autoload-dump": [
             "Illuminate\\Foundation\\ComposerScripts::postAutoloadDump",
             "@php artisan package:discover --ansi"

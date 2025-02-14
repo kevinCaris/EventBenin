@@ -24,11 +24,8 @@ return new class extends Migration
             $table->decimal('latitude', 10, 8);
             $table->decimal('longitude');
             $table->string('website')->nullable();
-            $table->integer('capacity_min');
-            $table->integer('capacity_max');
-            $table->decimal('price_min', 10, 2);
-            $table->decimal('price_max', 10, 2);
-            $table->string('tarification');
+            $table->decimal('price', 10, 2);
+            $table->text('tarification');
             $table->enum('status', array_column(StatusHallEnum::cases(), 'value'))->default(StatusHallEnum::AVAILABLE->value);
             $table->foreignId('company_id')->constrained('companies')->onDelete('cascade');
             $table->timestamps();

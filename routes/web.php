@@ -2,12 +2,16 @@
 
 
 use App\Http\Controllers\CompanyController;
+use App\Http\Controllers\EventsController;
 use App\Http\Controllers\EventTypeController;
 use App\Http\Controllers\FeatureController;
 use App\Http\Controllers\HallAvailabilityController;
 use App\Http\Controllers\HallController;
+use App\Http\Controllers\MessageController;
 use App\Http\Controllers\UserController;
+use App\Models\Message;
 use Illuminate\Support\Facades\Route;
+use Tests\Localization\MeTest;
 
 /*
 |--------------------------------------------------------------------------
@@ -21,9 +25,35 @@ use Illuminate\Support\Facades\Route;
 */
 
 // Route::view('/', 'welcome');
-Route::view('/', 'pages.home')->name("home");
+Route::get('/', [HallController::class, 'home'])->name('home');
+
+Route::get('/blog', function () {
+    return view('pages.blog');
+})->name('blog');
+
+Route::get('/contact', function () {
+    return view('pages.contact');
+})->name('contact');
+
+Route::get('/salles', [HallController::class, 'showForGuests'])->name('halls.guest');
+Route::get('/salles/{hall}', [HallController::class, 'showGuest'])->name('guest.hall.show');
 
 
+Route::middleware(['auth','verified','role:client'])->group(function () {
+    Route::resource('events', EventsController::class);
+});
+
+
+// Route::middleware(['auth'])->group(function () {
+// Route::middleware(['auth'])->group(function () {
+//     Route::get('/chat/{conversation}', [MessageController::class, 'showChat'])->name('chat.show');
+//     Route::get('/chat/messages/{conversation}', [MessageController::class, 'getMessages']);
+//     Route::post('/chat/send', [MessageController::class, 'sendMessage']);
+// });
+// Route::middleware(['auth'])->group(function () {
+//     Route::get('/chat/{conversation}', [MessageController::class, 'showChat'])->name('chat.show');
+//     Route::post('/chat/send', [MessageController::class, 'sendMessage']);
+// });
 Route::middleware(['auth','verified','role:admin'])->group(function () {
 
     Route::get('/admin/dashboard', function () {
@@ -39,6 +69,7 @@ Route::middleware(['auth','verified','role:admin'])->group(function () {
     Route::resource('features', FeatureController::class);
     Route::resource('eventTypes', EventTypeController::class);
     Route::resource('users', UserController::class);
+    // Route::resource('events', EventsController::class);
 });
 
 
@@ -66,21 +97,18 @@ Route::middleware(['auth','verified','role:owner'])->group(function () {
 
 
 
-Route::middleware(['auth', 'verified', 'role:client'])->group(function () {
+// Route::middleware(['auth', 'verified', 'role:client'])->group(function () {
 
-    Route::get('/client/dashboard', function () {
-        return view('dashboard.client'); // Correspond à resources/views/dashboard/owner.blade.php
-    })->name('client.dashboard');
-});
-
-Route::get('/salles', [HallController::class, 'showForGuests'])->name('halls.guest');
-Route::get('/salles/{hall}', [HallController::class, 'showGuest'])->name('guest.hall.show');
+//     Route::get('/client/dashboard', function () {
+//         return view('dashboard.client'); // Correspond à resources/views/dashboard/owner.blade.php
+//     })->name('client.dashboard');
+// });
 
 
 
-Route::view('dashboard', 'dashboard')
-    ->middleware(['auth', 'verified'])
-    ->name('dashboard');
+// Route::view('dashboard', 'dashboard')
+//     ->middleware(['auth', 'verified'])
+//     ->name('dashboard');
 
 Route::view('profile', 'profile')
     ->middleware(['auth'])

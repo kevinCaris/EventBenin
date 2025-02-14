@@ -183,12 +183,12 @@ new class extends Component {
                 <x-responsive-nav-link :href="route('owner.dashboard')" :active="request()->routeIs('owner.dashboard')" wire:navigate>
                     {{ __('Owner Dashboard') }}
                 </x-responsive-nav-link>
-            @elseif(auth()->user()->hasRole('client'))
+            {{-- @elseif(auth()->user()->hasRole('client'))
                 <x-responsive-nav-link :href="route('client.dashboard')" :active="request()->routeIs('client.dashboard')" wire:navigate>
                     {{ __('Client Dashboard') }}
-                </x-responsive-nav-link>
+                </x-responsive-nav-link> --}}
             @else
-                <x-responsive-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')" wire:navigate>
+                <x-responsive-nav-link :href="route('home')" :active="request()->routeIs('dashboard')" wire:navigate>
                     {{ __('Dashboard') }}
                 </x-responsive-nav-link>
             @endif

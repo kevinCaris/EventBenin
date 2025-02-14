@@ -1,8 +1,9 @@
 <x-guest-layout>
-    <div class="min-h-screen flex flex-col sm:justify-center items-center pt-6 sm:pt-0 bg-gray-100">
-    <h2 class="font-semibold text-xl text-gray-800 leading-tight">
+    <div class="min-h-screen flex flex-col sm:justify-center items-center pt-6 sm:pt-0 bg-primary">
+        <i class="fas fa-building text-white text-7xl px-2"></i>
+    <h1 class="font-semibold text-3xl text-white leading-tight my-10">
         {{ __('Fournir les informations sur votre société') }}
-    </h2>
+    </h1>
 
     <div class="w-2/4 my-6 p-10 bg-white shadow-md overflow-hidden sm:rounded-lg">
         <form action="{{ route('companies.store') }}" method="POST" enctype="multipart/form-data">
@@ -10,7 +11,7 @@
             <div class="grid lg:grid-cols-2 sm:grid-cols-1 md:grid-cols-1 gap-4 ">
                 <!-- Nom -->
                 <div class="mb-4">
-                    <label for="name" class="block text-lg font-medium text-gray-700">Nom de la Compagnie</label>
+                    <label for="name" class="block text-lg font-medium text-gray-700">Nom de la Société </label>
                     <input type="text" name="name" id="name"
                         class="mt-1 block w-full rounded-lg border-gray-300 shadow-sm focus:ring-indigo-500 focus:border-indigo-500"
                         value="{{ old('name', $company->name ?? '') }}" required>

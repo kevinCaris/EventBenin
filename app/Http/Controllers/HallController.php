@@ -9,6 +9,7 @@ use App\Http\Requests\UpdateHallRequest;
 use App\Models\EventType;
 use App\Models\Feature;
 use App\Models\HallPictures;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
 
@@ -22,6 +23,13 @@ class HallController extends Controller
      *
      * @return void
      */
+
+    public function home()
+    {
+        $halls = Hall::take(8)->get(); // ou Hall::paginate(6);
+
+        return view('pages.home', compact('halls'));
+    }
     public function showGuest($id)
     {
         Log::info($id);
@@ -32,17 +40,55 @@ class HallController extends Controller
         return view('pages.details', compact('hall'));
     }
 
-    public function showForGuests()
+    public function showForGuests(Request $request)
     {
-        // Récupérer les salles (vous pouvez aussi appliquer des filtres si nécessaire)
-        $halls = Hall::all();
+        // Créer la requête de base pour récupérer les salles
+        $hallsQuery = Hall::query();
 
-        // Récupérer les villes distinctes pour le filtre, si nécessaire
+        // Appliquer les filtres s'ils sont présents dans la requête
+
+        // Filtrer par ville si la ville est spécifiée
+        if ($request->has('city') && $request->city != '') {
+            $hallsQuery->where('city', $request->city);
+        }
+
+        // Filtrer par capacité si la capacité est spécifiée
+        if ($request->has('capacity') && $request->capacity != '') {
+            $hallsQuery->where('capacity_max', '>=', $request->capacity);
+        }
+
+        // Filtrer par prix si le prix minimum est spécifié
+        if ($request->has('price') && $request->price != '') {
+            $hallsQuery->where('price_min', '>=', $request->price);
+        }
+
+        $search = trim($request->search);
+        if (!empty($search)) {
+            $hallsQuery->where(function ($query) use ($search) {
+                $query->whereRaw("COALESCE(title, '') LIKE ?", ["%{$search}%"])
+                      ->orWhereRaw("COALESCE(description, '') LIKE ?", ["%{$search}%"])
+                      ->orWhereRaw("COALESCE(address, '') LIKE ?", ["%{$search}%"])
+                      ->orWhereRaw("COALESCE(city, '') LIKE ?", ["%{$search}%"])
+                      ->orWhereRaw("COALESCE(country, '') LIKE ?", ["%{$search}%"]);
+            });
+        }
+
+        // Filtrer par statut si le statut est spécifié (disponible / indisponible)
+        if ($request->has('status') && $request->status != '') {
+            $hallsQuery->where('status', $request->status);
+        }
+
+
+        // Appliquer la pagination
+        $halls = $hallsQuery->paginate(10);
+
+        // Récupérer les villes distinctes pour le filtre de ville
         $cities = Hall::distinct()->pluck('city');
 
         // Retourner la vue avec les salles et les villes
         return view('pages.halls', compact('halls', 'cities'));
     }
+
     public function __construct()
     {
         $this->authorizeResource(Hall::class, 'hall');
