@@ -30,8 +30,23 @@ class HallPicturesController extends Controller
      */
     public function store(StoreHallPicturesRequest $request)
     {
-        //
+          // Vérifier si le champ 'images' existe dans la requête
+    if ($request->hasFile('images')) {
+        foreach ($request->file('images') as $image) {
+            // Sauvegarder l'image
+            $path = $image->store('public/hall_pictures');
+
+            // Créer un nouvel enregistrement pour chaque image
+            HallPictures::create([
+                'hall_id' => $request->hall_id,
+                'path' => str_replace('public/', 'storage/', $path), // Assurez-vous d'inclure le champ 'path'
+            ]);
+        }
     }
+
+    return redirect()->back()->with('success', 'Les images ont été enregistrées avec succès !');
+    }
+
 
     /**
      * Display the specified resource.

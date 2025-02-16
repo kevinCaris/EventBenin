@@ -22,7 +22,6 @@ class StoreEventsRequest extends FormRequest
      */
     public function rules(): array
     {
-        Log::info($this->all());
         return [
             'event_type' => 'required|string|max:255',
             'start_date' => 'required|date',

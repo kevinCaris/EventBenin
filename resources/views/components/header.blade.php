@@ -11,7 +11,7 @@
             <!-- Desktop Menu -->
             <ul class="hidden sm:flex space-x-8 text-lg font-medium">
                 <li><a href="{{ route('home') }}" class="text-black hover:text-primary relative after:absolute after:w-full after:h-0.5 after:bg-primary after:left-0 after:bottom-0 after:scale-x-0 hover:after:scale-x-100 after:transition-transform">Accueil</a></li>
-                <li><a href="/a-propos" class="text-black hover:text-primary relative after:absolute after:w-full after:h-0.5 after:bg-primary after:left-0 after:bottom-0 after:scale-x-0 hover:after:scale-x-100 after:transition-transform">À propos</a></li>
+                <li><a href="{{ route('about') }}" class="text-black hover:text-primary relative after:absolute after:w-full after:h-0.5 after:bg-primary after:left-0 after:bottom-0 after:scale-x-0 hover:after:scale-x-100 after:transition-transform">À propos</a></li>
                 <li><a href="{{ route('halls.guest') }}" class="text-black hover:text-primary relative after:absolute after:w-full after:h-0.5 after:bg-primary after:left-0 after:bottom-0 after:scale-x-0 hover:after:scale-x-100 after:transition-transform">Explorer</a></li>
                 <li><a href="{{ route('blog') }}" class="text-black hover:text-primary relative after:absolute after:w-full after:h-0.5 after:bg-primary after:left-0 after:bottom-0 after:scale-x-0 hover:after:scale-x-100 after:transition-transform">Blog</a></li>
                 <li><a href="{{ route('contact') }}" class="text-black hover:text-primary relative after:absolute after:w-full after:h-0.5 after:bg-primary after:left-0 after:bottom-0 after:scale-x-0 hover:after:scale-x-100 after:transition-transform">Contact</a></li>

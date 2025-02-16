@@ -12,7 +12,7 @@ $auth = auth()->user();
                 <div class="flex justify-between items-center">
                     <h2 class="text-2xl font-semibold text-gray-800">Profil utilisateur</h2>
                     <a href="{{ route('users.edit', $user) }}" class="text-primary">
-                        <i class="fas fa-edit"></i> Modifier
+                        <i class="fas fa-edit"></i>
                     </a>
                 </div>
                 <div class="flex items-center space-x-6">
@@ -53,7 +53,7 @@ $auth = auth()->user();
                 <div class="flex justify-between items-center">
                     <h2 class="text-2xl font-semibold text-gray-800">Réseaux sociaux</h2>
                     <a href="{{ route('companies.edit', $user->company) }}" class="text-blue-600">
-                        <i class="fas fa-edit"></i> Modifier
+                        <i class="fas fa-edit"></i>
                     </a>
                 </div>
                 <x-social-account :company="$user->company" />
@@ -69,8 +69,8 @@ $auth = auth()->user();
                 <div class="bg-white shadow-lg rounded-lg p-6 space-y-4">
                     <div class="flex justify-between items-center">
                         <h2 class="text-2xl font-semibold text-gray-800">Compagnie</h2>
-                        <a href="{{ route('companies.edit', $user->company) }}" class="text-blue-600">
-                            <i class="fas fa-edit"></i> Modifier
+                        <a href="{{ route('companies.edit', $user->company) }}" class="text-primary">
+                            <i class="fas fa-edit"></i>
                         </a>
                     </div>
                     <x-show-company :company="$user->company" />

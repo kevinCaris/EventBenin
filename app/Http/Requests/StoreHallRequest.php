@@ -4,6 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
 
 class StoreHallRequest extends FormRequest
 {
@@ -12,7 +13,7 @@ class StoreHallRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return Auth::check() && Auth::user()->isAdmin() || Auth::user()->isOwner();
+        return true;
     }
 
     /**
@@ -22,6 +23,7 @@ class StoreHallRequest extends FormRequest
      */
     public function rules(): array
     {
+        Log::info($this->all());
             return [
                 'title' => 'required|string|max:255',
                 'description' => 'required|string|min:10',
@@ -33,12 +35,10 @@ class StoreHallRequest extends FormRequest
                 'latitude' => 'required|numeric',
                 'longitude' => 'required|numeric',
                 'website' => 'nullable|url',
-                'capacity_min' => 'required|integer|min:1',
-                'capacity_max' => 'required|integer|min:1',
-                'price_min' => 'required|numeric|min:0',
-                'price_max' => 'required|numeric|min:0',
-                'status' => 'required|numeric', // Basé sur les valeurs de StatusHallEnum
-                'company_id' => 'required|exists:companies,id',
+                'price' => 'required|numeric|min:0',
+                'status' => 'nullable|string', // Base sur les valeurs de StatusHallEnum
+                'tarification' => 'required|string|min:0',
+                'company_id' => 'nullable|exists:companies,id',
             ];
     }
     public function messages()
@@ -48,13 +48,19 @@ class StoreHallRequest extends FormRequest
             'description.required' => 'La description est obligatoire.',
             'capacity.required' => 'La capacité de la salle est obligatoire.',
             'capacity.integer' => 'La capacité doit être un nombre entier.',
-            'capacity.min' => 'La capacité doit être au moins 1.',
             'price.required' => 'Le prix est obligatoire.',
             'price.numeric' => 'Le prix doit être un nombre.',
             'price.min' => 'Le prix doit être supérieur ou égal à 0.',
+            'country.required' => 'Le pays est obligatoire.',
+            'city.required' => 'La ville est obligatoire.',
+            'address.required' => 'L\'adresse est obligatoire.',
+            'latitude.required' => 'La latitude est obligatoire.',
+            'longitude.required' => 'La longitude est obligatoire.',
             'status.in' => 'Le statut fourni est invalide.',
             'company_id.required' => 'L\'ID de la compagnie est obligatoire.',
             'company_id.exists' => 'L\'ID de la compagnie n\'existe pas.',
+            'tarification.required' => 'La tarification est obligatoire.',
+            'tarification.text' => 'La tarification doit contenir du texte.',
         ];
     }
 }

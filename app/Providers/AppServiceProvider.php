@@ -2,6 +2,8 @@
 
 namespace App\Providers;
 
+use App\Services\OwnerStatsService;
+use Illuminate\Support\Facades\View;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\ServiceProvider;
@@ -24,5 +26,9 @@ class AppServiceProvider extends ServiceProvider
         if (!File::exists(public_path('storage'))) {
             Artisan::call('storage:link');
         }
+
+        View::composer('*', function ($view) {
+            $view->with('ownerStats', OwnerStatsService::getStats());
+        });
     }
 }

@@ -118,7 +118,7 @@
                             @enderror
                         </div>
                         </div>
-                        <button type="submit" class="px-6 py-3 bg-blue-500 text-white rounded-full hover:bg-primary">
+                        <button type="submit" class="px-6 py-3 bg-primary text-white rounded-full hover:bg-primary">
                             Enregistrer
                         </button>
                     </form>

@@ -49,21 +49,21 @@
                             <p class="text-gray-500 mt-2"><strong>Adresse :</strong> {{ $event->hall->address }}</p>
                             <p class="text-gray-500 mt-2"><strong>Montant :</strong> {{ number_format($event->amount, 2) }} FCFA</p>
                             <p class="text-gray-500 mt-2"><strong>Réservé par :</strong> {{ $event->user->name }}</p>
-
                             <div class="mt-4 flex justify-between items-center">
                                 @if($event->status == 0)
                                     <span class="bg-yellow-100 text-yellow-600 px-4 py-1 rounded-lg text-lg">En attente</span>
                                     <a href="{{ route('events.edit', $event->id) }}" class="text-blue-600 hover:text-blue-700">
                                         <i class="fas fa-edit text-primary"></i> Modifier
                                     </a>
-                                   {{-- <x-reservationForm title="Créer une nouvelle réservation" :route="route('events.store')"
-                                            method="POST" buttonText="Réserver" :hall="$hall ?? null">
-                                            <i class="fa fa-calendar"></i> Réserver
-                                        </x-reservationForm> --}}
+                                @elseif($event->status == 1)
+                                    <span class="bg-blue-600 text-white px-4 py-1 rounded-lg text-lg">Réservé</span>
                                 @else
-                                    <span class="bg-primary text-white px-4 py-1 rounded-lg text-lg">Réservé</span>
+                                    <span class="bg-red-600 text-white px-4 py-1 rounded-lg text-lg">Annulé</span>
                                 @endif
+
+
                             </div>
+
                         </div>
                     @endforeach
                 </div>

@@ -7,8 +7,10 @@ use App\Http\Controllers\EventTypeController;
 use App\Http\Controllers\FeatureController;
 use App\Http\Controllers\HallAvailabilityController;
 use App\Http\Controllers\HallController;
+use App\Http\Controllers\HallPicturesController;
 use App\Http\Controllers\MessageController;
 use App\Http\Controllers\UserController;
+use App\Models\HallPictures;
 use App\Models\Message;
 use Illuminate\Support\Facades\Route;
 use Tests\Localization\MeTest;
@@ -30,7 +32,9 @@ Route::get('/', [HallController::class, 'home'])->name('home');
 Route::get('/blog', function () {
     return view('pages.blog');
 })->name('blog');
-
+Route::get('/about',function(){
+    return view('pages.about');
+})->name('about');
 Route::get('/contact', function () {
     return view('pages.contact');
 })->name('contact');
@@ -54,6 +58,7 @@ Route::middleware(['auth','verified','role:client'])->group(function () {
 //     Route::get('/chat/{conversation}', [MessageController::class, 'showChat'])->name('chat.show');
 //     Route::post('/chat/send', [MessageController::class, 'sendMessage']);
 // });
+
 Route::middleware(['auth','verified','role:admin'])->group(function () {
 
     Route::get('/admin/dashboard', function () {
@@ -69,6 +74,7 @@ Route::middleware(['auth','verified','role:admin'])->group(function () {
     Route::resource('features', FeatureController::class);
     Route::resource('eventTypes', EventTypeController::class);
     Route::resource('users', UserController::class);
+    Route::resource('HallPictures', HallPicturesController::class);
     // Route::resource('events', EventsController::class);
 });
 
@@ -92,6 +98,8 @@ Route::middleware(['auth','verified','role:owner'])->group(function () {
     Route::resource('eventTypes', EventTypeController::class);
     Route::resource('features', FeatureController::class);
     Route::resource('availabilities', HallAvailabilityController::class);
+    Route::resource('HallPictures', HallPicturesController::class);
+
 
 });
 

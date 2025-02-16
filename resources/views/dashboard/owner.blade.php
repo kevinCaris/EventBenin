@@ -26,7 +26,7 @@
                     </div>
                     <div>
                       <p class="text-gray-500">Salles Disponibles</p>
-                      <h3 class="text-2xl font-bold">42</h3>
+                      <h3 class="text-2xl font-bold"> {{ $ownerStats['totalHalls'] }}</h3>
                     </div>
                   </div>
 
@@ -36,7 +36,7 @@
                     </div>
                     <div>
                       <p class="text-gray-500">Réservations en cours</p>
-                      <h3 class="text-2xl font-bold">18</h3>
+                      <h3 class="text-2xl font-bold">{{ $ownerStats['totalReservations'] }}</h3>
                     </div>
                   </div>
 
@@ -45,8 +45,8 @@
                       ⚠️
                     </div>
                     <div>
-                      <p class="text-gray-500">Validation en attente</p>
-                      <h3 class="text-2xl font-bold">5</h3>
+                      <p class="text-gray-500">Réservation en attente</p>
+                      <h3 class="text-2xl font-bold">{{ $ownerStats['notConfirmedReservations'] }}</h3>
                     </div>
                   </div>
 
@@ -56,7 +56,7 @@
                     </div>
                     <div>
                       <p class="text-gray-500">Revenus ce mois</p>
-                      <h3 class="text-2xl font-bold">5 000€</h3>
+                      <h3 class="text-2xl font-bold">{{ $ownerStats['totalRevenue'] }} FCFA</h3>
                     </div>
                   </div>
                 </div>

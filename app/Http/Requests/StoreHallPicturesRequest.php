@@ -11,7 +11,7 @@ class StoreHallPicturesRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -22,7 +22,8 @@ class StoreHallPicturesRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'hall_id' => 'required|exists:halls,id', // Vérifie que la salle existe
+            'images.*' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048', // Validation des images
         ];
     }
 }

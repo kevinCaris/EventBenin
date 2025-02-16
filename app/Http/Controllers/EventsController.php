@@ -120,26 +120,26 @@ class EventsController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Events $events)
+    public function edit(Events $event)
     {
-        $event = Events::findOrFail($events->id);
 
-        $halls = Hall::all(); // Récupérer toutes les salles disponibles
-        return view('events.create', compact('halls'));
+        return view('events.edit', compact('event'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateEventsRequest $request, $id)
+    public function update(UpdateEventsRequest $request, Events $event)
     {
+
         try {
+
             // Valider les données du formulaire
             $data = $request->validated();
-            Log::info($data);
+           Log::info("data",$data);
 
             // Récupérer l'événement existant
-            $event = Events::findOrFail($id);
+            $event = Events::findOrFail($event->id);
 
             // Mettre à jour uniquement les champs fournis sans écraser les autres
             if (isset($data['event_type'])) {

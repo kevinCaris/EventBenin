@@ -3,19 +3,23 @@
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
             {{ __('Details de la compagnie') }}
         </h2>
+
     </x-slot>
 
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <!-- Header -->
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg px-8 py-8">
-                <div class="p-6 bg-white border-b border-gray-200">
+                <div class="p-6 bg-white border-b border-gray-200 flex align-content-center justify-between">
                     <h2 class="font-semibold text-xl text-gray-800 leading-tight">
                         {{ __('Details de la salle') }}
                     </h2>
+                    <a href="{{ route('halls.edit', $hall) }}" class="text-primary">
+                        <i class="fas fa-edit"></i>
+                    </a>
                 </div>
                 <!-- Galerie d'images -->
-                <div class="container mx-auto px-4 py-8">
+                {{-- <div class="container mx-auto px-4 py-8">
                     <!-- Galerie d'images -->
                     <div class="relative">
                         <!-- Image principale -->
@@ -42,32 +46,33 @@
                                 onclick="changeImage('https://media.istockphoto.com/id/1164656827/photo/corridor-with-chest-of-drawers-and-city-view.jpg?s=612x612&w=is&k=20&c=_qxv9wwSYoy46U4PNtFUcJ23yAI-yEYjJEF4CZSQ7G8=')">
                         </div>
                     </div>
-                </div>
+                </div> --}}
 
-                {{-- <div class="container mx-auto px-4 py-8">
+                <div class="container mx-auto px-4 py-8">
                     <div class="relative">
-                    @if ($hall->pictures->isNotEmpty())
-                        <!-- Image principale -->
-                        <div class="main-image mb-4">
-                            <img src="{{ asset('storage/' . $hall->pictures->first()->url) }}" alt="Image principale"
-                                id="mainImage" class="w-full h-96 object-cover rounded-lg shadow-lg">
-                        </div>
+                        @if ($pictures->isNotEmpty())
+                            <!-- Image principale -->
+                            <div class="main-image mb-4">
+                                <img src="{{ asset($pictures->first()->path) }}" alt="Image principale"
+                                    id="mainImage" class="w-full h-96 object-cover rounded-lg shadow-lg">
+                            </div>
 
-                        <!-- Vignettes -->
-                        <div class="flex justify-center space-x-4">
-                            @foreach ($hall->pictures as $picture)
-                                <img src="{{ asset('storage/' . $picture->url) }}" alt="Image {{ $picture->id }}"
-                                    class="thumbnail w-24 h-24 object-cover rounded-lg cursor-pointer border-2 border-transparent hover:border-blue-500"
-                                    onclick="changeImage('{{ asset('storage/' . $picture->url) }}')">
-                            @endforeach
-                        </div>
-                    @else
-                        <p>Aucune image disponible.</p>
-                    @endif
+                            <!-- Vignettes -->
+                            <div class="flex justify-center space-x-4">
+                                @foreach ($pictures as $picture)
+                                    <img src="{{ asset($picture->path) }}" alt="Image {{ $picture->id }}"
+                                        class="thumbnail w-24 h-24 object-cover rounded-lg cursor-pointer border-2 border-transparent hover:border-blue-500"
+                                        onclick="changeImage('{{ asset($picture->path) }}')">
+                                @endforeach
+                            </div>
+                        @else
+                            <p>Aucune image disponible.</p>
+                        @endif
+                    </div>
                 </div>
-            </div> --}}
-                <!-- Adresse de la salle -->
-                <div class="mb-6">
+
+                 <!-- Adresse de la salle -->
+                 <div class="mb-6">
                     <h3 class="text-xl font-semibold">Adresse de la salle</h3>
                     <p class="text-gray-600">{{ $hall->address }}</p>
                 </div>
@@ -92,8 +97,17 @@
                 </div>
                 <div id="map" class="h-64 w-full rounded-xl hidden"></div>
 
-                <!-- Présentation de la salle -->
+                <!-- Capacité et Prix -->
                 <div class="my-6">
+                    <p class="text-xl text-stone-600 font-semibold mb-5"><strong>Capacité :</strong><span
+                            class="text-yellow-500"> {{ $hall->capacity ?? 'Non spécifiée' }} </span>personnes</p>
+                    <p class="text-xl text-stone-600 font-semibold"><strong>Prix :</strong><span
+                            class="text-yellow-500"> {{ number_format($hall->price, 2, ',', ' ') }} FCFA </span>/
+                        heure</p>
+                </div>
+
+                <!-- Présentation de la salle -->
+                <div class="my-6" id="presentation">
                     <h3 class="text-2xl text-stone-600 font-semibold">Présentation</h3>
                     <p id="description" data-full-text="{{ $hall->description }}" data-expanded="false">
                         {{ Str::limit($hall->description, 150, '...') }}</p>
@@ -101,8 +115,9 @@
                             class="fas fa-arrow-down"></i>"</button>
                 </div>
 
+
                 <!-- Tarification -->
-                <div class="my-6">
+                <div class="my-6" id="tarification">
                     <h3 class="text-2xl text-stone-600 font-semibold">Tarification</h3>
                     <p id="tarification" data-full-text="{{ $hall->tarification }}" data-expanded="false">
                         {{ Str::limit($hall->tarification, 150, '...') }}</p>
@@ -111,31 +126,24 @@
                 </div>
 
                 <!-- Tarification par type d'événement -->
-               <!-- Tarification par type d'événement -->
-<div class="my-6">
-    <h3 class="text-2xl font-semibold text-stone-600 mb-4">Tarification par type d'événement</h3>
-    <div class="grid lg:grid-cols-3 sm:grid-cols-2 md:grid-cols-2 gap-5" id="pricing-list">
-        @foreach ($hall->events as $event)
-            <div class="border rounded-lg p-4 mb-4 pricing-block">
-                <h4 class="font-semibold text-xl text-stone-600">{{ $event->title }}</h4>
-                <hr class="my-2">
-                @foreach ($event->eventTypePrices as $key => $eventTypePrice)
-                    <p class="text-blue-500 pricing-item @if ($key >= 2) hidden @endif">
-                        À partir de {{ $eventTypePrice->price }}€
-                    </p>
-                @endforeach
-            </div>
-        @endforeach
-    </div>
+                <div class="my-6">
+                    <h3 class="text-2xl font-semibold text-stone-600 mb-4">Type d'événement</h3>
+                    <div class="grid lg:grid-cols-3 sm:grid-cols-2 md:grid-cols-2 gap-5" id="pricing-list">
+                        @foreach ($hall->events as $event)
+                            <div class="border rounded-lg p-4 mb-4 pricing-block">
+                                <h4 class="font-semibold text-xl text-stone-600">{{ $event->title }}</h4>
+                            </div>
+                        @endforeach
+                    </div>
 
-    <!-- Bouton Voir plus / Voir moins -->
-    <button id="toggle-pricing" onclick="togglePricing()" class="mt-2 text-blue-500">
-        Voir plus <i class="fas fa-caret-down"></i>
-    </button>
-</div>
+                    <!-- Bouton Voir plus / Voir moins -->
+                    <button id="toggle-pricing" onclick="togglePricing()" class="mt-2 text-blue-500">
+                        Voir plus <i class="fas fa-caret-down"></i>
+                    </button>
+                </div>
 
                 <!-- Caractéristiques de la salle -->
-                <div class="my-6">
+                <div class="my-6" id="equipements">
                     <h3 class="text-2xl  text-stone-600  font-semibold mb-3">Equipements</h3>
 
                     <!-- Liste des équipements -->
@@ -153,9 +161,11 @@
                         @endforeach
                     </ul>
                     <!-- Bouton pour voir plus ou moins -->
-                    <button id="toggle-equipments" class="mt-2 text-blue-500" onclick="toggleEquipments()">Voir plus
+                    <button id="toggle-equipments" class="mt-2 text-blue-500" onclick="toggleEquipments()">Voir
+                        plus
                         <i class="fas fa-caret-down"></i></button>
                 </div>
+
                 <!-- Réseaux sociaux -->
                 <div class="my-6">
                     <h3 class="text-2xl font-semibold mb-3  text-stone-600 ">Mes réseaux sociaux</h3>
