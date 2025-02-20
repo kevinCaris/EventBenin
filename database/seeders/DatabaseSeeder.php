@@ -23,6 +23,7 @@ class DatabaseSeeder extends Seeder
 
         $this->call([
             UserSeeder::class,
+            CompanySeeder::class,
             HallSeeder::class,
             HallPicturesSeeder::class,
             FeatureSeeder::class,
@@ -32,7 +33,8 @@ class DatabaseSeeder extends Seeder
             PaiementSeeder::class,
             HallAvailabilitySeeder::class,
             EventTypePriceSeeder::class,
-            EventsSeeder::class
+            EventsSeeder::class,
+            ReviewSeeder::Class
         ]);
     }
 }

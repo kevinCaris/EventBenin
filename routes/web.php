@@ -9,9 +9,11 @@ use App\Http\Controllers\HallAvailabilityController;
 use App\Http\Controllers\HallController;
 use App\Http\Controllers\HallPicturesController;
 use App\Http\Controllers\MessageController;
+use App\Http\Controllers\ReviewController;
 use App\Http\Controllers\UserController;
 use App\Models\HallPictures;
 use App\Models\Message;
+use Illuminate\Console\Scheduling\Event;
 use Illuminate\Support\Facades\Route;
 use Tests\Localization\MeTest;
 
@@ -39,13 +41,19 @@ Route::get('/contact', function () {
     return view('pages.contact');
 })->name('contact');
 
+
 Route::get('/salles', [HallController::class, 'showForGuests'])->name('halls.guest');
 Route::get('/salles/{hall}', [HallController::class, 'showGuest'])->name('guest.hall.show');
 
 
 Route::middleware(['auth','verified','role:client'])->group(function () {
     Route::resource('events', EventsController::class);
+    Route::get('/events/{event}/download-invoice', [EventsController::class, 'downloadInvoice'])->name('events.downloadInvoice');
+
 });
+
+Route::resource('reviews', ReviewController::class);
+
 
 
 // Route::middleware(['auth'])->group(function () {
@@ -97,26 +105,14 @@ Route::middleware(['auth','verified','role:owner'])->group(function () {
     Route::resource('halls', HallController::class);
     Route::resource('eventTypes', EventTypeController::class);
     Route::resource('features', FeatureController::class);
-    Route::resource('availabilities', HallAvailabilityController::class);
+    // Route::resource('availabilities', HallAvailabilityController::class);
     Route::resource('HallPictures', HallPicturesController::class);
-
-
+    Route::get('/calendar', [EventsController::class, 'showCalendar'])->name('events.calendar');
 });
 
-
-
-// Route::middleware(['auth', 'verified', 'role:client'])->group(function () {
-
-//     Route::get('/client/dashboard', function () {
-//         return view('dashboard.client'); // Correspond à resources/views/dashboard/owner.blade.php
-//     })->name('client.dashboard');
-// });
-
-
-
-// Route::view('dashboard', 'dashboard')
-//     ->middleware(['auth', 'verified'])
-//     ->name('dashboard');
+Route::view('dashboard', 'dashboard')
+    ->middleware(['auth', 'verified'])
+    ->name('dashboard');
 
 Route::view('profile', 'profile')
     ->middleware(['auth'])

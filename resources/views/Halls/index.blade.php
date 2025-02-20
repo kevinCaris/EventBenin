@@ -26,11 +26,13 @@
                         </div>
                     @endif
                     <div class="flex justify-between items-center my-6">
-                        <h3 class="text-lg font-medium text-gray-700">Liste des Salles</h3>
-                        <a href="{{ route('halls.create') }}"
-                            class="px-4 py-2 bg-primary text-white rounded hover:bg-primary">
-                            <i class="fas fa-plus mr-2"></i>Nouvelle Salle
-                        </a>
+                        <h3 class="text-2xl font-medium text-gray-700">Liste des Salles</h3>
+                        @if (auth()->user()->isOwner())
+                            <a href="{{ route('halls.create') }}"
+                                class="px-4 py-2 bg-primary text-white rounded hover:bg-primary">
+                                <i class="fas fa-plus mr-2"></i>Nouvelle Salle
+                            </a>
+                        @endif
                     </div>
 
                     <div class="mb-4">
@@ -69,11 +71,11 @@
                                     </th>
                                     <th scope="col"
                                         class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                        Capacity
+                                        Capacité
                                     </th>
                                     <th scope="col"
                                         class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                        price
+                                        prix
                                     </th>
                                     <th scope="col"
                                         class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
@@ -114,11 +116,11 @@
                                         <td class="px-6 py-4 whitespace-nowrap" data-title="{{ $hall->status }}">
                                             @if ($hall->status == StatusHallEnum::AVAILABLE)
                                                 <span class="text-green-500">
-                                                    <i class="fas fa-check-circle"></i> {{ __('Available') }}
+                                                    <i class="fas fa-check-circle"></i> {{ __('disponible') }}
                                                 </span>
                                             @else
                                                 <span class="text-red-500">
-                                                    <i class="fas fa-times-circle"></i> {{ __('UnAvailable') }}
+                                                    <i class="fas fa-times-circle"></i> {{ __('indisponible') }}
                                                 </span>
                                             @endif
                                         </td>

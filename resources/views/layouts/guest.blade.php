@@ -27,6 +27,21 @@
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
         integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
 
+
+        <!-- FullCalendar CSS -->
+<link href="https://cdn.jsdelivr.net/npm/fullcalendar@5.10.0/main.min.css" rel="stylesheet" />
+
+<!-- FullCalendar JS -->
+<script src="https://cdn.jsdelivr.net/npm/fullcalendar@5.10.0/main.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.2.0/lang/fr.js"></script>
+
+
+
+<!-- Ajout de Tippy.js -->
+<script src="https://unpkg.com/tippy.js@6.3.1/dist/tippy-bundle.umd.min.js"></script>
+<link href="https://unpkg.com/tippy.js@6.3.1/dist/tippy.css" rel="stylesheet" />
+
+
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
         integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
     <style>
@@ -44,7 +59,6 @@
 
 <body class=" text-gray-900 antialiased font-[Poppins]">
     <x-header />
-    {{-- <livewire:layout.navigation /> --}}
     <main class="flex-1 overflow-y-auto pt-[6rem]">
         <!-- Main Content -->
 

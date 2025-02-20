@@ -7,42 +7,55 @@
             <div class="relative z-10 flex flex-col justify-center items-center h-full text-center text-white px-6">
                 <h1 class="text-4xl sm:text-5xl md:text-6xl font-bold mb-4"> {{ $hall->title }}</h1>
                 <p class="text-lg sm:text-xl md:text-2xl mb-6">Pour vos événements inoubliables.</p>
-                <a href="#reservations"
-                    class="bg-yellow-500 text-white px-8 py-4 rounded-full text-lg font-semibold hover:bg-yellow-400 transition duration-300 mb-6">Réservez
-                    dés maintenant</a>
+
+                <div class="flex items-center gap-3 border p-2 rounded-lg">
+                    <a href="{{ route('home') }}" class="text-white hover:text-yellow-500 hover:underline">Accueil</a>
+                    &gt;
+                    <a href="{{ route('halls.guest') }}"
+                        class="text-white hover:text-yellow-500 hover:underline">Salles</a> &gt;
+                    <a href="#" class="text-yellow-500  text-bold">{{ $hall->title }}</a>
+                </div>
             </div>
         </section>
-        <header class="bg-white shadow-md sticky my-5">
+        <header class="bg-white shadow-md sticky mt-5 z-50 ">
             <div class="container mx-auto flex justify-between items-center py-4 px-6">
-
                 <!-- Navigation -->
                 <nav>
                     <ul class="flex space-x-6 text-primary text-xl">
-                        <li><a href="#galerie" class="hover:text-blue-600">Galerie</a></li>
-                        <li><a href="#presentation" class="hover:text-blue-600">Présentation</a></li>
-                        <li><a href="#tarification" class="hover:text-blue-600">Tarifs</a></li>
-                        <li><a href="#equipements" class="hover:text-blue-600">Equipements</a></li>
+                        <li><a href="#galerie" class="hover:text-primary-600">Galerie</a></li>
+                        <li><a href="#presentation" class="hover:text-primary-600">Présentation</a></li>
+                        <li><a href="#tarification" class="hover:text-primary-600">Tarifs</a></li>
+                        <li><a href="#equipements" class="hover:text-primary-600">Equipements</a></li>
+                        <li><a href="#disponibilite" class="hover:text-primary-600">Disponibilité</a></li>
+                        <li><a href="#avis" class="hover:text-primary-600">Avis</a></li>
+
 
                     </ul>
                 </nav>
-
                 <!-- Bouton Contacter & Téléphone -->
-                <div class="flex items-center space-x-4">
-                    <a href="#contact"
-                        class="bg-primary text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition">Contacter</a>
-
+                <div class="flex items-center space-x-6">
+                    <div class="bg-primary text-white px-4 py-2 rounded-lg  transition">
+                        <i class="fab fa-whatsapp text-white text-lg"></i>
+                        <a href="https://wa.me/62590775?text=Bonjour,%20je%20souhaite%20obtenir%20de%20plus%20amples%20informations%20concernant%20vos%20services.%20Pourriez-vous%20m'aider%20s'il%20vous%20plaitez%3F"
+                            target="_blank" class="text-white">Discuter</a>
+                    </div>
+                    <div class="bg-primary text-white px-4 py-2 rounded-lg  transition">
+                        <i class="fa fas-calendar text-white text-lg"></i>
+                        <a href="#reserver"class="text-white">Réserver</a>
+                    </div>
                     <!-- Dropdown Téléphone -->
                     <div x-data="{ open: false }" class="relative">
-                        <button @click="open = !open" class="flex items-center text-gray-700 hover:text-blue-600">
+                        <button @click="open = !open" class="flex items-center text-gray-700 hover:text-primary">
                             <i class="fas fa-phone text-xl"></i>
                         </button>
 
                         <!-- Contenu du dropdown -->
                         <div x-show="open" @click.away="open = false"
-                            class="absolute right-0 mt-2 z-10  w-64 bg-white shadow-lg rounded-lg p-4 text-sm text-gray-800 border border-gray-200">
+                            class="absolute right-0 mt-2 z-50  w-64 bg-white shadow-lg rounded-lg p-4 text-sm text-gray-800 border border-gray-200">
                             <p class="font-semibold">Coordonnées</p>
                             <p class="text-gray-600 text-xs">Lors de votre appel, comme notre service est gratuit,
-                                n'oubliez surtout pas de signaler au prestataire que vous appelez de la part de :  <strong class="text-yellow-500 text-md">{{ $hall->company->name }}</strong>.
+                                n'oubliez surtout pas de signaler au prestataire que vous appelez de la part de :
+                                <strong class="text-yellow-500 text-md">{{ $hall->company->name }}</strong>.
                             </p>
                             <div class="mt-2">
                                 <p class="font-semibold">Téléphone principal : {{ $hall->company->phone }}</p>
@@ -58,165 +71,186 @@
         </header>
         <!-- Alpine.js pour le dropdown -->
         <script src="https://cdn.jsdelivr.net/npm/alpinejs@3.10.2/dist/cdn.min.js" defer></script>
-        <div class="py-12 text-lg flex  gap-2">
+        <div class="py-5 text-lg flex  gap-2">
             <div class="max-full py-5 px-6 flex gap-5">
                 <!-- Header -->
-
-                <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg px-8 py-8">
-                    <div class="p-6 bg-white border-b border-gray-200">
-                        <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-                            {{ __('Details de la salle') }}
-                        </h2>
-                    </div>
-                    <!-- Galerie d'images -->
-                    <div class="container mx-auto px-4 py-8" id="galerie">
-                        <!-- Galerie d'images -->
-                        <div class="relative">
-                            <!-- Image principale -->
-                            <div class="main-image mb-4">
-                                <img src="https://media.istockphoto.com/id/686286056/photo/interior-design-of-luxury-apartment-living-room.jpg?s=612x612&w=is&k=20&c=hdikiZ5WxaUlFQOlknNqdhByVR1b5uVi5676uMjW1M0="
-                                    alt="Image principale" id="mainImage"
-                                    class="w-full h-96 object-cover rounded-lg shadow-lg">
-                            </div>
-
-                            <!-- Vignettes -->
-                            <div class="flex justify-center space-x-4">
-                                <!-- Vignettes cliquables -->
-                                <img src="https://media.istockphoto.com/id/686286056/photo/interior-design-of-luxury-apartment-living-room.jpg?s=612x612&w=is&k=20&c=hdikiZ5WxaUlFQOlknNqdhByVR1b5uVi5676uMjW1M0="
-                                    alt="Image 1"
-                                    class="thumbnail w-24 h-16 object-cover rounded-lg cursor-pointer border-2 border-transparent hover:border-blue-500"
-                                    onclick="changeImage('https://media.istockphoto.com/id/686286056/photo/interior-design-of-luxury-apartment-living-room.jpg?s=612x612&w=is&k=20&c=hdikiZ5WxaUlFQOlknNqdhByVR1b5uVi5676uMjW1M0=')">
-                                <img src="https://cdn.pixabay.com/photo/2013/02/26/01/10/auditorium-86197_1280.jpg"
-                                    alt="Image 2"
-                                    class="thumbnail w-24 h-16 object-cover rounded-lg cursor-pointer border-2 border-transparent hover:border-blue-500"
-                                    onclick="changeImage('https://cdn.pixabay.com/photo/2013/02/26/01/10/auditorium-86197_1280.jpg')">
-                                <img src="https://media.istockphoto.com/id/1164656827/photo/corridor-with-chest-of-drawers-and-city-view.jpg?s=612x612&w=is&k=20&c=_qxv9wwSYoy46U4PNtFUcJ23yAI-yEYjJEF4CZSQ7G8="
-                                    alt="Image 3"
-                                    class="thumbnail w-24 h-16 object-cover rounded-lg cursor-pointer border-2 border-transparent hover:border-blue-500"
-                                    onclick="changeImage('https://media.istockphoto.com/id/1164656827/photo/corridor-with-chest-of-drawers-and-city-view.jpg?s=612x612&w=is&k=20&c=_qxv9wwSYoy46U4PNtFUcJ23yAI-yEYjJEF4CZSQ7G8=')">
+                <div class="container mx-auto flex justify-between items-center py-4 px-6">
+                    <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg px-8 py-8">
+                        <div class="p-6 bg-white border-b border-gray-200 flex justify-between">
+                            <h2 class="font-semibold text-xl text-gray-800 leading-tight">
+                                {{ __('Details de la salle') }}
+                            </h2>
+                            <div>
+                                @if ($hall->status->value === 'available')
+                                    <span class="text-green-500 font-bold">Disponible</span>
+                                @else
+                                    <span class="text-red-500 font-bold">Indisponible</span>
+                                @endif
                             </div>
                         </div>
-                    </div>
 
-                    {{-- <div class="container mx-auto px-4 py-8">
-                    <div class="relative">
-                    @if ($hall->pictures->isNotEmpty())
-                        <!-- Image principale -->
-                        <div class="main-image mb-4">
-                            <img src="{{ asset('storage/' . $hall->pictures->first()->url) }}" alt="Image principale"
-                                id="mainImage" class="w-full h-96 object-cover rounded-lg shadow-lg">
-                        </div>
-
-                        <!-- Vignettes -->
-                        <div class="flex justify-center space-x-4">
-                            @foreach ($hall->pictures as $picture)
-                                <img src="{{ asset('storage/' . $picture->url) }}" alt="Image {{ $picture->id }}"
-                                    class="thumbnail w-24 h-24 object-cover rounded-lg cursor-pointer border-2 border-transparent hover:border-blue-500"
-                                    onclick="changeImage('{{ asset('storage/' . $picture->url) }}')">
-                            @endforeach
-                        </div>
-                    @else
-                        <p>Aucune image disponible.</p>
-                    @endif
-                </div>
-            </div> --}}
-                    <!-- Adresse de la salle -->
-                    <div class="mb-6">
-                        <h3 class="text-xl font-semibold">Adresse de la salle</h3>
-                        <p class="text-gray-600">{{ $hall->address }}</p>
-                    </div>
-                    <!-- Nom de la salle -->
-                    <div class="mb-6">
-                        <h3 class="text-3xl text-stone-600 font-semibold">{{ $hall->title }}</h3>
-                        <p></p>
-                    </div>
-
-                    <!-- Contact de la personne -->
-                    <div class="mb-6 flex justify-between">
-                        <input type="text" class="w-2/4  border border-gray-300 rounded-lg" list="contacts"
-                            placeholder="Sélectionnez un contact">
-                        <datalist id="contacts">
-                            <option value="Contact 1">
-                            <option value="Contact 2">
-                            <option value="Contact 3">
-                        </datalist>
-                        <button
-                            class="mt-4 border border-primary  hover:bg-primary  hover:text-white text-primary p-2 rounded-lg"
-                            onclick="toggleMap()"><i class="fas fa-map-marker-alt"></i> Voir surla carte</button>
-                    </div>
-                    <div id="map" class="h-64 w-full rounded-xl hidden"></div>
-
-                    <!-- Capacité et Prix -->
-                    <div class="my-6">
-                        <p class="text-xl text-stone-600 font-semibold mb-5"><strong>Capacité :</strong><span
-                                class="text-yellow-500"> {{ $hall->capacity ?? 'Non spécifiée' }} </span>personnes</p>
-                        <p class="text-xl text-stone-600 font-semibold"><strong>Prix :</strong><span
-                                class="text-yellow-500"> {{ number_format($hall->price, 2, ',', ' ') }} FCFA </span>/
-                            heure</p>
-                    </div>
-
-                    <!-- Présentation de la salle -->
-                    <div class="my-6" id="presentation">
-                        <h3 class="text-2xl text-stone-600 font-semibold">Présentation</h3>
-                        <p id="description" data-full-text="{{ $hall->description }}" data-expanded="false">
-                            {{ Str::limit($hall->description, 150, '...') }}</p>
-                        <button onclick="toggleText('description')" class="mt-2 text-blue-500">Voir plus <i
-                                class="fas fa-arrow-down"></i>"</button>
-                    </div>
-
-
-                    <!-- Tarification -->
-                    <div class="my-6" id="tarification">
-                        <h3 class="text-2xl text-stone-600 font-semibold">Tarification</h3>
-                        <p id="tarification" data-full-text="{{ $hall->tarification }}" data-expanded="false">
-                            {{ Str::limit($hall->tarification, 150, '...') }}</p>
-                        <button onclick="toggleText('tarification')" class="mt-2 text-blue-500">Voir plus <i
-                                class="fas fa-arrow-down"></i></button>
-                    </div>
-
-                    <!-- Tarification par type d'événement -->
-                    <div class="my-6">
-                        <h3 class="text-2xl font-semibold text-stone-600 mb-4">Type d'événement</h3>
-                        <div class="grid lg:grid-cols-3 sm:grid-cols-2 md:grid-cols-2 gap-5" id="pricing-list">
-                            @foreach ($hall->events as $event)
-                                <div class="border rounded-lg p-4 mb-4 pricing-block">
-                                    <h4 class="font-semibold text-xl text-stone-600">{{ $event->title }}</h4>
-                                </div>
-                            @endforeach
-                        </div>
-
-                        <!-- Bouton Voir plus / Voir moins -->
-                        <button id="toggle-pricing" onclick="togglePricing()" class="mt-2 text-blue-500">
-                            Voir plus <i class="fas fa-caret-down"></i>
-                        </button>
-                    </div>
-
-                    <!-- Caractéristiques de la salle -->
-                    <div class="my-6" id="equipements">
-                        <h3 class="text-2xl  text-stone-600  font-semibold mb-3">Equipements</h3>
-
-                        <!-- Liste des équipements -->
-                        <ul id="equipment-list" class="grid grid-cols-2 list-none gap-5">
-                            @foreach ($hall->features as $index => $feature)
-                                <!-- Limite d'affichage initiale de 4 équipements -->
-                                <li class="feature-item {{ $index >= 4 ? 'hidden' : '' }}">
-                                    <div class="border rounded-lg p-3 mb-2">
-                                        <div class="flex items-center gap-3">
-                                            <i class="fas fa-check text-green-500"></i>
-                                            <span>{{ $feature->title }}</span>
-                                        </div>
+                        <div class="container mx-auto px-4 py-8">
+                            <div class="relative">
+                                @if ($pictures->isNotEmpty())
+                                    <!-- Image principale -->
+                                    <div class="main-image mb-4">
+                                        <img src="{{ asset($pictures->first()->path) }}" alt="Image principale"
+                                            id="mainImage" class="w-full h-96 object-cover rounded-lg shadow-lg">
                                     </div>
-                                </li>
-                            @endforeach
-                        </ul>
-                        <!-- Bouton pour voir plus ou moins -->
-                        <button id="toggle-equipments" class="mt-2 text-blue-500" onclick="toggleEquipments()">Voir
-                            plus
-                            <i class="fas fa-caret-down"></i></button>
+
+                                    <!-- Vignettes -->
+                                    <div class="flex justify-center space-x-4">
+                                        @foreach ($pictures as $picture)
+                                            <img src="{{ asset($picture->path) }}" alt="Image {{ $picture->id }}"
+                                                class="thumbnail w-24 h-24 object-cover rounded-lg cursor-pointer border-2 border-transparent hover:border-blue-500"
+                                                onclick="changeImage('{{ asset($picture->path) }}')">
+                                        @endforeach
+                                    </div>
+                                @else
+                                    <p>Aucune image disponible.</p>
+                                @endif
+                            </div>
+                        </div>
+
+                        <!-- Adresse de la salle -->
+                        <div class="mb-6">
+                            <h3 class="text-xl font-semibold">Adresse de la salle</h3>
+                            <p class="text-gray-600">{{ $hall->address }}</p>
+                        </div>
+                        <!-- Nom de la salle -->
+                        <div class="mb-6">
+                            <h3 class="text-3xl text-stone-600 font-semibold">{{ $hall->title }}</h3>
+                            <p></p>
+                        </div>
+
+                        <!-- Contact de la personne -->
+                        <div class="mb-6 flex justify-between">
+                            <input type="text" class="w-2/4  border border-gray-300 rounded-lg" list="contacts"
+                                placeholder="Sélectionnez un contact">
+                            <datalist id="contacts">
+                                <option value="Contact 1">
+                                <option value="Contact 2">
+                                <option value="Contact 3">
+                            </datalist>
+                            <button
+                                class="mt-4 border border-primary  hover:bg-primary  hover:text-white text-primary p-2 rounded-lg"
+                                onclick="toggleMap()"><i class="fas fa-map-marker-alt"></i> Voir sur la carte</button>
+                        </div>
+                        <div id="map" class="h-64 w-full rounded-xl hidden"></div>
+                        <div class="flex items-center my-2">
+                            <div class="text-yellow-500 text-xl">
+                                @for ($i = 0; $i < 5; $i++)
+                                    <span
+                                        class="{{ $i < $hall->reviews->avg('note') ? 'text-yellow-500 text' : 'text-gray-300' }}">★</span>
+                                @endfor
+                            </div>
+                            <span class="ml-2 text-gray-500">({{ $hall->reviews->count() }} avis)</span>
+                        </div>
+                        <!-- Capacité et Prix -->
+                        <div class="my-6">
+                            <p class="text-xl text-stone-600 font-semibold mb-5"><strong>Capacité :</strong><span
+                                    class="text-yellow-500"> {{ $hall->capacity ?? 'Non spécifiée' }} </span>personnes
+                            </p>
+                            <p class="text-xl text-stone-600 font-semibold"><strong>Prix :</strong><span
+                                    class="text-yellow-500"> {{ number_format($hall->price, 2, ',', ' ') }} FCFA
+                                </span>/
+                                heure</p>
+                        </div>
+
+                        <!-- Présentation de la salle -->
+                        <div>
+                            <div class="my-6" id="presentation">
+                                <h3 class="text-2xl text-stone-600 font-semibold">Présentation</h3>
+                                <p id="description" data-full-text="{{ $hall->description }}" data-expanded="false">
+                                    {{ Str::limit($hall->description, 150, '...') }}</p>
+                                <button onclick="toggleText('description')" class="mt-2 text-blue-500">Voir plus <i
+                                        class="fas fa-arrow-down"></i>"</button>
+                            </div>
+                        </div>
+
+
+                        <!-- Tarification -->
+                        <div class="my-6" id="tarification">
+                            <h3 class="text-2xl text-stone-600 font-semibold">Tarification</h3>
+                            <p id="tarification" data-full-text="{{ $hall->tarification }}" data-expanded="false">
+                                {{ Str::limit($hall->tarification, 150, '...') }}</p>
+                            <button onclick="toggleText('tarification')" class="mt-2 text-blue-500">Voir plus <i
+                                    class="fas fa-arrow-down"></i></button>
+                        </div>
+
+                        <!-- Tarification par type d'événement -->
+                        <div class="my-6">
+                            <h3 class="text-2xl font-semibold text-stone-600 mb-4">Type d'événement</h3>
+                            <div class="grid lg:grid-cols-3 sm:grid-cols-2 md:grid-cols-2 gap-5" id="pricing-list">
+                                @foreach ($hall->events as $event)
+                                    <div class="border rounded-lg p-4 mb-4 pricing-block">
+                                        <h4 class="font-semibold text-xl text-stone-600">{{ $event->title }}</h4>
+                                    </div>
+                                @endforeach
+                            </div>
+
+                            <!-- Bouton Voir plus / Voir moins -->
+                            <button id="toggle-pricing" onclick="togglePricing()" class="mt-2 text-blue-500">
+                                Voir plus <i class="fas fa-caret-down"></i>
+                            </button>
+                        </div>
+
+                        <!-- Caractéristiques de la salle -->
+                        <div class="my-6" id="equipements">
+                            <h3 class="text-2xl  text-stone-600  font-semibold mb-3">Equipements</h3>
+
+                            <!-- Liste des équipements -->
+                            <ul id="equipment-list" class="grid grid-cols-2 list-none gap-5">
+                                @foreach ($hall->features as $index => $feature)
+                                    <!-- Limite d'affichage initiale de 4 équipements -->
+                                    <li class="feature-item {{ $index >= 4 ? 'hidden' : '' }}">
+                                        <div class="border rounded-lg p-3 mb-2">
+                                            <div class="flex items-center gap-3">
+                                                <i class="fas fa-check text-green-500"></i>
+                                                <span>{{ $feature->title }}</span>
+                                            </div>
+                                        </div>
+                                    </li>
+                                @endforeach
+                            </ul>
+                            <!-- Bouton pour voir plus ou moins -->
+                            <button id="toggle-equipments" class="mt-2 text-blue-500"
+                                onclick="toggleEquipments()">Voir
+                                plus
+                                <i class="fas fa-caret-down"></i></button>
+                        </div>
+                        <!-- Liste des disponibilité -->
+                        <div class="my-6" id="disponibilite">
+                            <h3 class="text-2xl  text-stone-600  font-semibold mb-3">Disponibilité</h3>
+                            <div id="calendar"></div>
+                        </div>
+
+                        <div class="my-6" id="avis">
+                            <!-- systeme d' avis -->
+                            <h2 class="text-2xl font-semibold text-stone-600 mb-6">Avis des clients</h2>
+
+                            @if ($reviews->isEmpty())
+                                <p>Aucun avis pour cette salle.</p>
+                            @else
+                                @foreach ($reviews as $review)
+                                    <div class="border p-3 mb-3">
+                                        <strong>{{ $review->nom ?? 'Utilisateur anonyme' }}</strong>
+                                        <span class="text-muted">({{ $review->created_at->format('d/m/Y') }})</span>
+                                        <p>Note : ⭐ {{ $review->note }}/5</p>
+                                        <p>{{ $review->commentaire }}</p>
+                                    </div>
+                                @endforeach
+                                <!-- Pagination -->
+                                <div class="d-flex justify-content-center">
+                                    {{ $reviews->links() }} <!-- Liens de pagination -->
+                                </div>
+                            @endif
+
+                        </div>
+
                     </div>
 
                 </div>
-
                 <!-- compagnie -->
                 <div class="space-y-4">
                     <div>
@@ -290,14 +324,78 @@
                                         <a href="{{ $hall->company->linkedin_url }}" target="_blank"
                                             class="text-primary">LinkedIn</a>
                                     </div>
-
+                                    <div class="flex items-center gap-3 border p-2 rounded-lg">
+                                        <i class="fab fa-whatsapp text-green-500"></i>
+                                        <a href="https://wa.me/62590775?text=Bonjour,%20je%20souhaite%20obtenir%20de%20plus%20amples%20informations%20concernant%20vos%20services.%20Pourriez-vous%20m'aider%20s'il%20vous%20plaitez%3F"
+                                            target="_blank" class="text-primary">WhatsApp</a>
+                                    </div>
                                 </div>
                             </div>
                         </div>
 
                     </div>
+                    <div id="reserver">
+                        <x-demande-evenement :hall="$hall" />
+                    </div>
 
-                    <x-demande-evenement :hall="$hall" />
+                    <!-- resources/views/reservations/show.blade.php -->
+                    <div class="container mx-auto mt-8">
+                        <div class="max-w-lg mx-auto bg-white shadow-md rounded-lg p-8">
+                            <h3 class="text-2xl font-semibold text-gray-800 mb-6">Laisser un avis</h3>
+
+                            <form action="{{ route('reviews.store') }}" method="POST">
+                                @csrf
+                                <input type="hidden" name="hall_id" value="{{ $hall->id }}">
+
+                                <div class="mb-6">
+                                    <label for="nom" class="block text-lg font-medium text-gray-700">Nom
+                                        :</label>
+                                    <input type="text" name="nom" id="nom"
+                                        class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-400"
+                                        required>
+                                </div>
+
+                                <div class="mb-6">
+                                    <label for="email" class="block text-lg font-medium text-gray-700">Email
+                                        :</label>
+                                    <input type="email" name="email" id="email"
+                                        class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-400"
+                                        required>
+                                </div>
+
+                                <div class="mb-6">
+                                    <label for="note" class="block text-lg font-medium text-gray-700">Note
+                                        :</label>
+                                    <select name="note" id="note"
+                                        class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-400"
+                                        required>
+                                        <option value="5">⭐⭐⭐⭐⭐</option>
+                                        <option value="4">⭐⭐⭐⭐</option>
+                                        <option value="3">⭐⭐⭐</option>
+                                        <option value="2">⭐⭐</option>
+                                        <option value="1">⭐</option>
+                                    </select>
+                                </div>
+
+                                <div class="mb-6">
+                                    <label for="commentaire"
+                                        class="block text-lg font-medium text-gray-700">Commentaire :</label>
+                                    <textarea name="commentaire" id="commentaire"
+                                        class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-400" rows="4" required></textarea>
+                                </div>
+
+                                <button type="submit"
+                                    class="w-full bg-primary text-white p-3 rounded-lg font-semibold hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500">
+                                    Envoyer
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+
+
+
+
+
                 </div>
             </div>
         </div>
@@ -412,4 +510,114 @@
             button.innerHTML = 'Voir plus <i class="fas fa-caret-down"></i>'; // Change le texte du bouton
         }
     }
+
+    document.addEventListener('DOMContentLoaded', function() {
+        var calendarEl = document.getElementById('calendar');
+
+        var calendar = new FullCalendar.Calendar(calendarEl, {
+            locale: 'fr', // Définit la langue en français
+            initialView: 'dayGridMonth', // Affichage mensuel
+            events: [
+                @foreach ($events as $event)
+                    {
+                        title: '{{ $event->event_type }}', // Type d'événement (mariage, anniversaire, etc.)
+                        start: '{{ $event->start_date }}T{{ $event->start_time }}', // Date et heure de début
+                        end: '{{ $event->end_date }}T{{ $event->end_time }}', // Date et heure de fin
+                        description: '{{ $event->details }}', // Détails de l'événement
+                        backgroundColor: '{{ $event->status == 1 ? '#FF5733' : '#4CAF50' }}', // Couleur d'arrière-plan (occupé ou disponible)
+                        borderColor: '{{ $event->status == 1 ? '#FF5733' : '#4CAF50' }}', // Couleur de bordure (occupé ou disponible)
+                        className: '{{ $event->status == 1 ? 'occupied' : 'available' }}', // Classe pour appliquer des styles supplémentaires (occupé ou disponible)
+                        extendedProps: {
+                            description: '{{ $event->details }}', // Description affichée dans les détails de l'événement
+                            location: '{{ $event->location }}' // Lieu de l'événement, s'il existe
+                        }
+                    },
+                @endforeach
+            ],
+            editable: true, // Permet l'édition des événements
+            droppable: false, // Désactive le drag-and-drop
+            height: 'auto', // Ajuste la taille du calendrier à l'écran
+            eventsLimit: true, // Limite le nombre d'événements visibles dans une journée
+            headerToolbar: {
+                left: 'prev,next today',
+                center: 'title',
+                right: 'dayGridMonth,dayGridWeek,dayGridDay'
+            },
+            buttonText: { // Définir explicitement les noms des boutons
+                today: 'Aujourd\'hui',
+                month: 'Mois',
+                week: 'Semaine',
+                day: 'Jour'
+            }
+
+            // eventClick: function(info) {
+            //     var eventObj = info.event;
+            //     alert('Événement : ' + eventObj.title + '\n' +
+            //           'Date de début : ' + eventObj.start.toLocaleString() + '\n' +
+            //           'Date de fin : ' + eventObj.end.toLocaleString() + '\n' +
+            //           'Description : ' + eventObj.extendedProps.description + '\n' +
+            //           'Lieu : ' + eventObj.extendedProps.location);
+            // }
+        });
+
+        calendar.render();
+    });
+
+
+    document.addEventListener('DOMContentLoaded', function() {
+        const submitButton = document.getElementById('submit-review');
+        const eventStatus = "{{ $event->status }}";
+        const eventEndDate = "{{ $event->end_date }}";
+        const currentDate = new Date();
+
+        // Vérification des conditions : L'événement doit être réservé et terminé
+        const canSubmitReview = eventStatus === 'réservé' && new Date(eventEndDate) < currentDate;
+
+        if (canSubmitReview) {
+            // Si l'utilisateur peut soumettre, on active le bouton
+            submitButton.disabled = false;
+        } else {
+            // Sinon, on garde le bouton désactivé
+            submitButton.disabled = true;
+        }
+    });
 </script>
+<!-- Ajout du style CSS pour personnaliser le calendrier -->
+<style>
+    #calendar {
+        max-height: 800px;
+        margin: 0 auto;
+    }
+
+    .fc-event-title {
+        font-weight: bold;
+        font-size: 1rem;
+    }
+
+    .fc-daygrid-day-number {
+        font-size: 1.2rem;
+    }
+
+    .fc-event {
+        font-size: 1rem;
+        padding: 5px;
+        border-radius: 5px;
+    }
+
+    .fc-event.occupied {
+        background-color: #FF5733 !important;
+        /* Couleur spécifique pour les événements occupés */
+        border-color: #FF5733 !important;
+    }
+
+    .fc-toolbar-title {
+        font-size: 1.5rem;
+        font-weight: bold;
+    }
+
+    .fc-button-primary {
+        background-color: #0891B2;
+        border-color: #0891B2;
+        color: white;
+    }
+</style>

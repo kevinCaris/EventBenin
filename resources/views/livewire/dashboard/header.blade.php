@@ -1,4 +1,4 @@
-<!-- Header des dashboards utilisateurs(owner,admin) -->
+<!-- Header for user dashboards (owner, admin) -->
 <?php
 
 use App\Livewire\Actions\Logout;
@@ -16,7 +16,7 @@ new class extends Component {
     }
 }; ?>
 
-<nav x-data="{ open: false }" class="bg-white border-b border-gray-100 shadow-sm">
+<nav x-data="{ open: false }" class="bg-white border-b border-gray-100 shadow-sm ">
     <!-- Primary Navigation Menu -->
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="flex justify-between h-16">
@@ -36,110 +36,41 @@ new class extends Component {
                     </a>
                 </div>
             </div>
-            {{--
-            <!-- Settings Dropdown -->
+
+            <!-- User Dropdown -->
             <div class="hidden sm:flex sm:items-center sm:ms-6">
                 <x-dropdown align="right" width="48">
                     <x-slot name="trigger">
                         <button
                             class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-gray-500 bg-white hover:text-gray-700 focus:outline-none transition ease-in-out duration-150">
-                            <div x-data="{{ json_encode(['name' => auth()->user()->name]) }}" x-text="name"
-                                x-on:profile-updated.window="name = $event.detail.name"></div>
-
-                            <div class="ms-1">
-                                <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg"
-                                    viewBox="0 0 20 20">
-                                    <path fill-rule="evenodd"
-                                        d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
-                                        clip-rule="evenodd" />
-                                </svg>
-                            </div>
-                        </button>
-                    </x-slot>
-
-                    <x-slot name="content">
-                        @if (auth()->user()->isAdmin())
-                            <x-dropdown-link :href="route('profile.admin')" wire:navigate>
-                                {{ __('Profile') }}
-                            </x-dropdown-link>
-                        @else
-                            <x-dropdown-link :href="route('profile.owner')" wire:navigate>
-                                {{ __('Profile') }}
-                            </x-dropdown-link>
-                        @endif
-
-                        <!-- Authentication -->
-                        <button wire:click="logout" class="w-full text-start">
-                            <x-dropdown-link>
-                                {{ __('Log Out') }}
-                            </x-dropdown-link>
-                        </button>
-                    </x-slot>
-                </x-dropdown>
-            </div> --}}
-
-            <!-- Settings Dropdown -->
-            <div class="hidden sm:flex sm:items-center sm:ms-6">
-                <x-dropdown align="right" width="48">
-                    <x-slot name="trigger">
-
-                        <button
-                            class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-gray-500 bg-white hover:text-gray-700 focus:outline-none transition ease-in-out duration-150">
-
                             <div class="ms-1 mx-3">
-                                <img class="w-10 h-10  border-4 border-green-400   rounded-full object-cover"
+                                <img class="w-10 h-10 border-4 border-green-400 rounded-full object-cover"
                                     src="{{ asset('storage/' . auth()->user()->avatar) }}" alt="User portrait">
                             </div>
                             <div x-data="{{ json_encode(['name' => auth()->user()->name]) }}" x-text="name"
                                 x-on:profile-updated.window="name = $event.detail.name"></div>
-
-
                         </button>
                     </x-slot>
 
                     <x-slot name="content" class="p-5">
-                        <!-- Email affiché en haut -->
-                        {{-- <div class="px-4 py-2 text-sm text-gray-700 font-semibold my-2 ">
-                            {{ auth()->user()->email }}
-                        </div> --}}
-
                         <x-dropdown-link :href="route('users.show', auth()->user())" wire:navigate>
-                            <i class="fas fa-user text-primary mx-3"></i> {{ __('My Profile') }}
+                            <i class="fas fa-user text-primary mx-3"></i> {{ __('Mon Profil') }}
                         </x-dropdown-link>
 
-                        <!-- Edit Profile -->
                         <x-dropdown-link :href="route('users.edit', auth()->user())" wire:navigate>
-                            <i class="fas fa-user-edit text-primary mx-3"></i> {{ __('Edit My Profile') }}
+                            <i class="fas fa-user-edit text-primary mx-3"></i> {{ __('Profil') }}
                         </x-dropdown-link>
-                        <!-- Profile Link selon rôle -->
-                        {{-- @if (auth()->user()->isAdmin())
-                            <x-dropdown-link :href="route('profile.admin')" wire:navigate>
-                                <i class="fas fa-user-cog text-primary mx-3"></i> {{ __('My Profile') }}
-                            </x-dropdown-link> --}}
-                        {{-- @elseif (auth()->user()->isOwner())
-                            <x-dropdown-link :href="route('users.show', auth()->user())" wire:navigate>
-                                <i class="fas fa-user text-primary mx-3"></i> {{ __('My Profile') }}
-                            </x-dropdown-link>
 
-                            <!-- Edit Profile -->
-                            <x-dropdown-link :href="route('users.edit', auth()->user())" wire:navigate>
-                                <i class="fas fa-user-edit text-primary mx-3"></i> {{ __('Edit My Profile') }}
-                            </x-dropdown-link> --}}
-
-                        <!-- Edit Company (si applicable) -->
                         @if (auth()->user()->isOwner())
                             <x-dropdown-link :href="auth()->user()->company ? route('companies.edit', auth()->user()->company) : '#'" wire:navigate>
                                 <i class="fas fa-building text-primary mx-3"></i>
-                                {{ __('Edit My Company') }}
+                                {{ __('Ma société') }}
                             </x-dropdown-link>
                         @endif
 
-
-                        <!-- Inbox -->
                         <x-dropdown-link wire:navigate>
-                            <i class="fas fa-envelope text-primary mx-3"></i> {{ __('Inbox') }}
+                            <i class="fas fa-envelope text-primary mx-3"></i> {{ __('Mes messages') }}
                         </x-dropdown-link>
-
 
                         <!-- Authentication -->
                         @livewire('logout-button')
@@ -147,7 +78,6 @@ new class extends Component {
                     </x-slot>
                 </x-dropdown>
             </div>
-
 
             <!-- Hamburger -->
             <div class="-me-2 flex items-center sm:hidden">
@@ -170,19 +100,15 @@ new class extends Component {
         <div class="pt-2 pb-3 space-y-1">
             @if (auth()->user()->hasRole('admin'))
                 <x-responsive-nav-link :href="route('admin.dashboard')" :active="request()->routeIs('admin.dashboard')" wire:navigate>
-                    {{ __('Admin Dashboard') }}
+                    {{ __('Tableau de bord') }}
                 </x-responsive-nav-link>
             @elseif(auth()->user()->hasRole('owner'))
                 <x-responsive-nav-link :href="route('owner.dashboard')" :active="request()->routeIs('owner.dashboard')" wire:navigate>
-                    {{ __('Owner Dashboard') }}
+                    {{ __('Tableau de bord') }}
                 </x-responsive-nav-link>
-                {{-- @elseif(auth()->user()->hasRole('client'))
-                <x-responsive-nav-link :href="route('client.dashboard')" :active="request()->routeIs('client.dashboard')" wire:navigate>
-                    {{ __('Client Dashboard') }}
-                </x-responsive-nav-link> --}}
             @else
                 <x-responsive-nav-link :href="route('home')" :active="request()->routeIs('dashboard')" wire:navigate>
-                    {{ __('Dashboard') }}
+                    {{ __('Tableau de bord') }}
                 </x-responsive-nav-link>
             @endif
         </div>
@@ -197,13 +123,13 @@ new class extends Component {
 
             <div class="mt-3 space-y-1">
                 <x-responsive-nav-link :href="route('profile')" wire:navigate>
-                    {{ __('Profile') }}
+                    {{ __('Profil') }}
                 </x-responsive-nav-link>
 
                 <!-- Authentication -->
                 <button wire:click="logout" class="w-full text-start">
                     <x-responsive-nav-link>
-                        {{ __('Log Out') }}
+                        {{ __('Déconnexion') }}
                     </x-responsive-nav-link>
                 </button>
             </div>

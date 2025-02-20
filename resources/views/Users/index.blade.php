@@ -33,11 +33,11 @@
                                 <label for="filterCriteria" class="block text-sm font-medium text-gray-700">Critère de
                                     recherche</label>
                                 <select id="filterCriteria" class="px-4 py-2 border rounded-md ">
-                                    <option value="name">Username</option>
-                                    <option value="firstname">firstname</option>
-                                    <option value="lastname">lastname</option>
+                                    <option value="name">Pseudo</option>
+                                    <option value="firstname">Prénom</option>
+                                    <option value="lastname">Nom</option>
                                     <option value="email">Email</option>
-                                    <option value="phone">Phone</option>
+                                    <option value="phone">Télephone</option>
                                     <option value="role">role</option>
 
                                 </select>
@@ -55,15 +55,15 @@
                                 <tr>
                                     <th scope="col"
                                         class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                        Username
+                                        Pseudo
                                     </th>
                                     <th scope="col"
                                         class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                        FirstName
+                                        Prénom
                                     </th>
                                     <th scope="col"
                                         class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                        LastName
+                                        Nom
                                     </th>
                                     <th scope="col"
                                         class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">

@@ -7,13 +7,13 @@
             <h1 class="text-4xl font-bold">Trouvez la salle parfaite sur EventBenin</h1>
             <p class="text-gray-600 mt-2">Réservez la salle idéale pour vos événements : mariages, anniversaires et plus </p>.</p>
             <div class="mt-4 flex space-x-4">
-                <a href="{{ route('blog') }}" class="bg-primary text-white px-4 py-2 rounded">Voir plus</a>
-                <button class="border border-green-600 text-green-600 px-4 py-2 rounded">Blog</button>
+                <a href="{{ route('halls.guest') }}" class="bg-primary text-white px-4 py-2 rounded">Voir plus</a>
+                <button class="border border-green-600 text-green-600 px-4 py-2 rounded"><a href="{{ route('blog') }}">Blog</a></button>
             </div>
         </div>
     </section>
 
-    <!-- Search Bar -->
+    {{-- <!-- Search Bar -->
     <div class="max-w-5xl mx-auto bg-white p-6 shadow-lg -mt-12 relative z-10 rounded-full">
         <form class="grid grid-cols-4 gap-4">
             <input type="text" placeholder="Select city" class="border p-2 rounded">
@@ -21,7 +21,7 @@
             <input type="date" placeholder="Move-out" class="border p-2 rounded">
             <button class="bg-primary text-white px-4 py-2 rounded-full">Search</button>
         </form>
-    </div>
+    </div> --}}
 
     <!-- Features Section -->
 <section class="max-w-7xl mx-auto text-center py-12 px-4">
@@ -63,8 +63,8 @@
             @foreach($halls as $hall)
                 <div class="bg-white rounded-lg shadow-md overflow-hidden transition-all hover:shadow-lg">
                     <!-- Image de la salle -->
-                    <img src="https://www.1001salles.com/images/provider/61067/salle-ocre.webp" alt="Image de la salle" class="w-full h-48 object-cover">
-
+                    <img src="{{ $hall->pictures->isNotEmpty() ? asset($hall->pictures->first()->path) : "https://www.1001salles.com/images/provider/61067/salle-ocre.webp" }}"
+                        alt="Image de la salle" class="w-full h-48 object-cover">
                     <div class="p-6 text-left">
                         <!-- Titre -->
                         <h5 class="text-xl font-semibold text-gray-800">{{ $hall->title }}</h5>
@@ -74,12 +74,12 @@
 
                         <!-- Informations sur la capacité -->
                         <p class="text-gray-700 mt-2">
-                            <strong><i class="fa fa-users"></i></strong> {{ $hall->capacity_min }} - {{ $hall->capacity_max }} personnes
+                            <strong><i class="fa fa-users"></i></strong> {{ $hall->capacity }} personnes
                         </p>
 
                         <!-- Informations sur le prix -->
                         <p class="text-yellow-500 font-semibold mt-2">
-                            <strong>{{ number_format($hall->price_min, 2) }} FCFA - {{ number_format($hall->price_max, 2) }} FCFA</strong>
+                            <strong>{{ number_format($hall->price, 2) }}  FCFA / Heure</strong>
                         </p>
 
                         <!-- Boutons -->
@@ -90,7 +90,7 @@
                             </a>
 
                             <!-- Bouton Contacter -->
-                            <a href="tel:+123456789" class="bg-primary text-white text-sm font-semibold py-2 px-4 rounded-md flex items-center">
+                            <a href="tel:+229 62590775" class="bg-primary text-white text-sm font-semibold py-2 px-4 rounded-md flex items-center">
                                 <i class="fa fa-phone mr-2"></i> Contacter
                             </a>
                         </div>
@@ -208,5 +208,20 @@
         </div>
       </section>
 
+       <!-- CTA Final amélioré -->
+       <section class="bg-primary text-white text-center py-16">
+        <h2 class="text-3xl font-bold">Rejoignez-nous dès maintenant !</h2>
+        <p class="mt-3 text-lg text-blue-200">Trouver une salle ou louer la vôtre n'a jamais été aussi simple.</p>
+        <div class="mt-6 flex justify-center gap-4">
+            <a href="#"
+                class="bg-white text-primary px-6 py-3 rounded-lg font-semibold flex items-center gap-2 transition hover:bg-gray-200">
+                🔍 Je cherche une salle
+            </a>
+            <a href="#"
+                class="bg-white text-primary px-6 py-3 rounded-lg font-semibold flex items-center gap-2 transition hover:bg-gray-200">
+                🏠 Je loue mes salles
+            </a>
+        </div>
+    </section>
 
 </x-guest-layout>

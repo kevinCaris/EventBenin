@@ -21,7 +21,7 @@ class HallPolicy
      */
     public function view(User $user, Hall $hall): bool
     {
-        return $user->is_admin || $user->isOwner() && $user->company_id === $hall->company_id || $user->isClient();
+        return $user->isAdmin() || $user->isOwner() && $user->company_id === $hall->company_id || $user->isClient();
     }
 
     /**
@@ -29,7 +29,7 @@ class HallPolicy
      */
     public function create(User $user): bool
     {
-        return $user->is_admin || $user->isOwner();
+        return $user->isAdmin() || $user->isOwner();
     }
 
     /**
@@ -37,7 +37,7 @@ class HallPolicy
      */
     public function update(User $user, Hall $hall): bool
     {
-        return $user->is_admin || $user->isOwner() && $user->company_id === $hall->company_id;
+        return $user->isAdmin() || $user->isOwner() && $user->company_id === $hall->company_id;
     }
 
     /**
@@ -45,7 +45,7 @@ class HallPolicy
      */
     public function delete(User $user, Hall $hall): bool
     {
-        return $user->is_admin || $user->isOwner() && $user->company_id === $hall->company_id;
+        return $user->isAdmin() || $user->isOwner() && $user->company_id === $hall->company_id;
     }
 
     /**

@@ -14,6 +14,11 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
 
 
+<!-- FullCalendar CSS -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/5.11.3/main.min.css" rel="stylesheet">
+<!-- FullCalendar JS -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/5.11.3/main.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/5.11.3/locales-all.min.js"></script>
 
 
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
@@ -37,7 +42,7 @@
                     <a href="#" class="text-2xl font-bold" @click="sidebarOpen = !sidebarOpen">
                         <i class="fas fa-bars"></i>
                     </a>
-                    <span x-show="sidebarOpen" class="ml-2">Dashboard</span>
+                    <span x-show="sidebarOpen" class="ml-2 text-bold  bg-dots-darker">{{ config('app.name', 'EventBenin') }}</span>
                 </div>
                 <!-- Dynamic Sidebar -->
                 @if (Auth::user()->getRoleAsString() === 'admin')

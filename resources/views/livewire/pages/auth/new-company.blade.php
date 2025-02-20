@@ -1,8 +1,8 @@
 <x-guest-layout>
     <div class="min-h-screen flex flex-col sm:justify-center items-center pt-6 sm:pt-0 bg-primary">
-        <i class="fas fa-building text-white text-7xl px-2"></i>
-    <h1 class="font-semibold text-3xl text-white leading-tight my-10">
-        {{ __('Fournir les informations sur votre société') }}
+
+    <h1 class="font-semibold text-3xl text-white leading-tight my-6">
+        <i class="fas fa-building text-white text-3xl px-2"></i> {{ __('Fournir les informations sur votre société') }}
     </h1>
 
     <div class="w-2/4 my-6 p-10 bg-white shadow-md overflow-hidden sm:rounded-lg">

@@ -32,10 +32,15 @@ class Hall extends Model
         'company_id',
     ];
 
+
     protected $casts = [
         'status' => StatusHallEnum::class,
     ];
 
+    public function reservations(): HasMany
+    {
+        return $this->hasMany(Events::class);
+    }
     public function isActive(): bool
     {
         return $this->status === StatusHallEnum::AVAILABLE;
@@ -54,11 +59,6 @@ class Hall extends Model
     public function pictures(): HasMany
     {
         return $this->hasMany(HallPictures::class);
-    }
-
-    public function reservations(): HasMany
-    {
-        return $this->hasMany(Reservation::class);
     }
     public function reviews(): HasMany
     {

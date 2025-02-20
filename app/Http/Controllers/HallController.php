@@ -11,7 +11,6 @@ use App\Models\EventType;
 use App\Models\Feature;
 use App\Models\HallPictures;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
 
 use function Ramsey\Uuid\v1;
@@ -33,12 +32,20 @@ class HallController extends Controller
     }
     public function showGuest($id)
     {
-        Log::info($id);
         // Récupérer la salle avec ses relations
-        $hall = Hall::with(['pictures', 'features', 'availabilities', 'company', 'events'])->findOrFail($id);
+        $hall = Hall::with(['pictures', 'features', 'availabilities', 'company', 'events', 'reviews'])->findOrFail($id);
+        $pictures = $hall->pictures;
+
+        $reviews = $hall->reviews()->latest()->paginate(5); // 10 avis par page
+        $hall = Hall::with(['reservations' => function ($query) {
+            $query->where('status', 1);  // Filtrer par statut 1 (réservé)
+        }])->findOrFail($id);
+
+        // Récupérer les réservations filtrées
+        $events = $hall->reservations;  // Ce sera une collection d'événements avec le statut 1
 
         // Retourner la vue avec les informations de la salle
-        return view('pages.details', compact('hall'));
+        return view('pages.details', compact('hall', 'pictures', 'events', 'reviews'));
     }
 
     public function showForGuests(Request $request)
@@ -55,12 +62,12 @@ class HallController extends Controller
 
         // Filtrer par capacité si la capacité est spécifiée
         if ($request->has('capacity') && $request->capacity != '') {
-            $hallsQuery->where('capacity_max', '>=', $request->capacity);
+            $hallsQuery->where('capacity', '>=', $request->capacity);
         }
 
         // Filtrer par prix si le prix minimum est spécifié
         if ($request->has('price') && $request->price != '') {
-            $hallsQuery->where('price_min', '>=', $request->price);
+            $hallsQuery->where('price', '>=', $request->price);
         }
 
         $search = trim($request->search);
@@ -79,9 +86,10 @@ class HallController extends Controller
             $hallsQuery->where('status', $request->status);
         }
 
+        $halls = $hallsQuery->with('reviews')->paginate(9);
 
         // Appliquer la pagination
-        $halls = $hallsQuery->paginate(10);
+        $halls = $hallsQuery->with('pictures')->paginate(9);
 
         // Récupérer les villes distinctes pour le filtre de ville
         $cities = Hall::distinct()->pluck('city');
@@ -104,7 +112,7 @@ class HallController extends Controller
             return view('halls.index', compact('halls'));
         } else {
             $company = auth()->user()->company_id;
-            $halls = Hall::where('company_id', $company)->paginate(10);
+            $halls = Hall::where('company_id', $company)->paginate(9);
             return view('halls.index', compact('halls'));
         }
     }
@@ -158,7 +166,7 @@ class HallController extends Controller
             // // Assigner les fonctionnalités à la salle
             // if ($request->has('selected_features')) {
             //     $features = $request->input('selected_features');
-            //     $hall->features()->sync($features);  // Sync les fonctionnalités avec la salle
+            //     $hall->f eatures()->sync($features);  // Sync les fonctionnalités avec la salle
             // }
 
             // Rediriger avec un message de succès
@@ -199,9 +207,17 @@ class HallController extends Controller
         try {
             $data = $request->validated();
 
-            if ($hall->image && Storage::disk('public')->exists($hall->image)) {
-                // Supprime l'ancienne image si elle existe
-                Storage::disk('public')->delete($hall->image);
+            if ($request->hasFile('image')) {
+                // Supprimer l'ancienne image si elle existe
+                if ($hall->image && Storage::disk('public')->exists(str_replace(asset('storage/'), '', $hall->image))) {
+                    Storage::disk('public')->delete(str_replace(asset('storage/'), '', $hall->image));
+                }
+
+                // Stocker la nouvelle image et récupérer son chemin
+                $imagePath = $request->file('image')->store('halls', 'public');
+
+                // Enregistrer l'URL complète
+                $hall->image = asset("storage/{$imagePath}");
             }
             $hall->update($data);
 

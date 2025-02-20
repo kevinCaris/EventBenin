@@ -31,4 +31,9 @@ class Events extends Model
     {
         return $this->belongsTo(Hall::class);
     }
+
+    public function reviews()
+    {
+        return $this->hasMany(Review::class); // Un événement a plusieurs avis
+    }
 }

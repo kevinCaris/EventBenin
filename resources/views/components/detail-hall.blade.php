@@ -85,7 +85,7 @@
                 <div id="map" class="h-64 w-full rounded-xl hidden"></div>
 
                 <!-- Présentation de la salle -->
-                <div class="my-6">
+                <div class="my-6 ml-10">
                     <h3 class="text-2xl text-stone-600 font-semibold">Présentation</h3>
                     <p id="description" data-full-text="{{ $hall->description }}" data-expanded="false">
                         {{ Str::limit($hall->description, 150, '...') }}</p>

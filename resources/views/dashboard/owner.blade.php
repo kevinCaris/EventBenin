@@ -5,7 +5,7 @@
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6 text-gray-900">
 
-                        <div class="text-2xl font-bold flex justify-between items-center text-gray-800"><h2 class="text-xl font-bold text-gray-800">Dashboard Propriétaire</h2>
+                        <div class="text-2xl font-bold flex justify-between items-center text-gray-800"><h2 class="text-xl font-bold text-gray-800">Tableau de bord </h2>
                         <button class="bg-primary text-white px-3 py-2 rounded-lg shadow-md hover:bg-primary">🔔 Notifications</button></div>
                 </div>
             </div>

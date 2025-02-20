@@ -13,11 +13,12 @@ return new class extends Migration
     {
         Schema::create('reviews', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('user_id')->constrained('users')->onDelete('cascade');
-            $table->foreignId('hall_id')->constrained('halls')->onDelete('cascade');
-            $table->foreignId('reservation_id')->constrained('reservations')->onDelete('cascade');
-            $table->integer('rating');
-            $table->text('comment');
+            $table->foreignId('hall_id')->constrained()->onDelete('cascade'); // Clé étrangère vers la table salles
+            $table->string('nom')->nullable();
+            $table->string('email')->nullable();
+            $table->foreignId('user_id')->nullable()->constrained()->onDelete('cascade');
+            $table->text('commentaire');
+            $table->integer('note')->check('note BETWEEN 1 AND 5');
             $table->timestamps();
         });
     }

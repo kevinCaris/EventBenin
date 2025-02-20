@@ -8,7 +8,7 @@
                 <h1 class="text-4xl sm:text-5xl md:text-6xl font-bold mb-4">Trouvez la salle parfaite</h1>
                 <p class="text-lg sm:text-xl md:text-2xl mb-6">Pour vos événements inoubliables.</p>
                 <a href="#reservations"
-                    class="bg-yellow-500 text-white px-8 py-4 rounded-full text-lg font-semibold hover:bg-yellow-400 transition duration-300 mb-6">Réservez
+                    class="bg-primary text-white px-8 py-4 rounded-full text-lg font-semibold hover:bg-yellow-400 transition duration-300 mb-6">Réservez
                     dés maintenant</a>
             </div>
         </section>
@@ -118,7 +118,7 @@
                         @foreach ($halls as $hall)
                             <div class="flex flex-col bg-white shadow-lg rounded-lg overflow-hidden p-5">
                                 <div class="w-full">
-                                    <img src="https://www.1001salles.com/images/provider/61067/salle-ocre.webp"
+                                    <img src="{{ $hall->pictures->isNotEmpty() ? asset($hall->pictures->first()->path) : '' }}"
                                         alt="Image de la salle" class="w-full h-full object-cover rounded-lg">
                                 </div>
                                 <div class="p-4">
@@ -139,9 +139,18 @@
                                         <strong><i class="fa fa-users"></i></strong> {{ $hall->capacity }} personnes
                                     </p>
                                     <p class="text-gray-800 font-semibold mt-2">
-                                        <i class="fa fa-money"></i> Location
+                                        <i class="fa fa-money"></i>
                                         <strong>{{ number_format($hall->price, 2) }} FCFA / Heure</strong>
                                     </p>
+                                    <!-- Affichage de la note moyenne -->
+                                    <div class="flex items-center my-2">
+                                        <div class="text-yellow-500 text-xl">
+                                            @for ($i = 0; $i < 5; $i++)
+                                                <span class="{{ $i < $hall->reviews->avg('note') ? 'text-yellow-500 text' : 'text-gray-300' }}">★</span>
+                                            @endfor
+                                        </div>
+                                        <span class="ml-2 text-gray-500">({{ $hall->reviews->count() }} avis)</span>
+                                    </div>
                                     <!-- Boutons -->
                                     <div class="mt-4 flex gap-2">
                                         <x-reservationForm title="Créer une nouvelle réservation" :route="route('events.store')"
@@ -165,7 +174,7 @@
                             <div
                                 class="flex flex-col sm:flex-row items-stretch bg-white shadow-lg rounded-lg overflow-hidden p-5">
                                 <div class="w-full sm:w-1/4 flex">
-                                    <img src="https://www.1001salles.com/images/provider/61067/salle-ocre.webp"
+                                    <img src="{{ $hall->pictures->isNotEmpty() ? asset($hall->pictures->first()->path) : '' }}"
                                         alt="Image de la salle" class="w-full h-full object-cover rounded-lg">
                                 </div>
                                 <div class="p-4 w-full sm:w-3/4 flex flex-col justify-between">
@@ -192,15 +201,23 @@
                                             <i class="fa fa-money"></i> Location
                                             <strong>{{ number_format($hall->price, 2) }} FCFA / Heure</strong>
                                         </p>
+                                        <div class="flex items-center my-2">
+                                            <div class="text-yellow-500 text-xl">
+                                                @for ($i = 0; $i < 5; $i++)
+                                                    <span class="{{ $i < $hall->reviews->avg('note') ? 'text-yellow-500 text' : 'text-gray-300' }}">★</span>
+                                                @endfor
+                                            </div>
+                                            <span class="ml-2 text-gray-500">({{ $hall->reviews->count() }} avis)</span>
+                                        </div>
                                     </div>
                                     <!-- Boutons -->
                                     <div class="mt-4 flex gap-4">
-                                        <a href=""
-                                            class="inline-block bg-primary text-white text-sm font-semibold py-2 px-4 rounded-lg hover:bg-blue-600 w-full sm:w-auto">
-                                            <i class="fa fa-phone"></i> Réserver
+                                        <a href="{{ route('events.create') }}"
+                                            class="inline-block bg-primary text-white text-sm font-semibold py-2 px-4 rounded-lg hover:bg-primary w-full sm:w-auto">
+                                            <i class="fa fa-calendar"></i> Réserver
                                         </a>
                                         <a href="{{ route('guest.hall.show', $hall->id) }}"
-                                            class="inline-block bg-primary text-white text-sm font-semibold py-2 px-4 rounded-lg hover:bg-blue-600 w-full sm:w-auto">
+                                            class="inline-block bg-primary text-white text-sm font-semibold py-2 px-4 rounded-lg hover:bg-primary w-full sm:w-auto">
                                             <i class="fa fa-eye"></i> Voir la salle
                                         </a>
                                     </div>
