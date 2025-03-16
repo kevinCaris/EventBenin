@@ -106,7 +106,7 @@ new class extends Component {
                 {{ __('Client Dashboard') }}
             </x-responsive-nav-link>
         @else
-            <x-responsive-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')" wire:navigate>
+            <x-responsive-nav-link :href="route('home')" :active="request()->routeIs('home')" wire:navigate>
                 {{ __('Dashboard') }}
             </x-responsive-nav-link>
         @endif

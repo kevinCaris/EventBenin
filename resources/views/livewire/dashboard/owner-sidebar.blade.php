@@ -87,6 +87,16 @@ new class extends Component {
                 <span x-show="sidebarOpen" class="ml-3 text-lg font-bold">Réservation</span>
             </a>
         </li>
+        <li>
+            <a href="{{ route('chat.index') }}"
+               class="flex items-center py-3 px-4 rounded-l-full transition-colors
+               {{ request()->routeIs('chat.index') ? 'bg-primary text-white' : 'text-gray-700 hover:bg-indigo-100 hover:text-indigo-600' }}">
+                <i class="fas fa-comments text-lg"></i>
+                <span x-show="sidebarOpen" class="ml-3 text-lg font-bold">Chat</span>
+            </a>
+        </li>
+
+
 
         <!-- Paramètres -->
         <li>

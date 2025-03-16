@@ -1,24 +1,22 @@
-@props([
-    'title' => 'Créer ou Modifier',
-    'route', // Doit être passé dynamiquement
-    'method' => 'POST', // POST par défaut pour compatibilité
-    'buttonText' => 'Enregistrer',
-    'hall' => null, // Par défaut, null si aucune donnée n'existe
-])
-
 <div x-data="{ open: {{ $errors->any() ? 'true' : 'false' }} }">
 
-    <!-- Bouton pour ouvrir la modale -->
-    <button @click="open = true"
-        {{ $attributes->merge(['class' => 'px-3 py-2 bg-primary text-white rounded hover:bg-primary transition']) }}>
-        {{ $slot }}
-    </button>
+    @auth
+        <button @click="open = true"
+            {{ $attributes->merge(['class' => 'px-3 py-2 bg-primary text-white rounded hover:bg-primary transition']) }}>
+            {{ $slot }}
+        </button>
+    @else
+        <button title="Vous devez être connecté pour effectuer une réservation !"
+            class="px-3 py-2 bg-gray-400 text-white rounded cursor-not-allowed">
+            {{ $slot }}
+        </button>
+    @endauth
 
     <!-- Modale -->
-    <div x-show="open" class="fixed inset-0 z-50 flex items-center text-left justify-center bg-black bg-opacity-50 p-4"
+    <div x-show="open" class="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50 p-4"
         style="display: none;">
         <!-- Contenu de la modale -->
-        <div class="bg-white w-2/4 max-w-full rounded-lg shadow-lg p-6 space-y-4">
+        <div class="bg-white w-full max-w-3xl rounded-lg shadow-lg p-6 space-y-4 sm:w-11/12 md:w-2/4">
             <div class="flex items-center justify-between">
                 <!-- Titre -->
                 <h2 class="text-xl font-semibold text-gray-800">{{ $title }}</h2>
@@ -27,7 +25,6 @@
                     <i class="fas fa-times"></i>
                 </button>
             </div>
-
 
             @guest
                 <div class="mt-4 p-4 bg-yellow-50 border-l-4 border-yellow-400 text-yellow-800 rounded-lg">
@@ -74,7 +71,7 @@
                     </datalist>
                 </div>
 
-                <div class="grid grid-cols-2 gap-4">
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     <div>
                         <label for="start_date" class="block text-lg font-medium text-gray-700">Date de début</label>
                         <input type="date" name="start_date" id="start_date"
@@ -95,7 +92,7 @@
                     </div>
                 </div>
 
-                <div class="grid grid-cols-2 gap-4">
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     <div>
                         <label for="start_time" class="block text-lg font-medium text-gray-700">Heure de début</label>
                         <input type="time" name="start_time" id="start_time"
@@ -117,8 +114,7 @@
                 </div>
 
                 <div>
-                    <label for="details" class="block text-lg font-medium text-gray-700">Détails de la
-                        Réservation</label>
+                    <label for="details" class="block text-lg font-medium text-gray-700">Détails de la Réservation</label>
                     <textarea name="details" id="details" rows="4"
                         class="mt-1 w-full rounded-lg border-gray-300 shadow-lg focus:ring-blue-500 focus:border-blue-500 @error('details') border-red-500 @enderror"></textarea>
                     @error('details')

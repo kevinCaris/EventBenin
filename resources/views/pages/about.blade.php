@@ -76,8 +76,8 @@
         </div>
     </section>
 
-    <<!-- Avantages -->
-        <section class="bg-primary py-16">
+    <!-- Avantages -->
+        <section class="bg-primary py-16 px-6">
             <div class="max-w-6xl mx-auto text-center">
                 <h2 class="text-4xl font-bold text-white">Pourquoi nous choisir ?</h2>
                 <p class="text-lg text-gray-200 mt-4">Découvrez les avantages exclusifs de notre service.</p>
@@ -137,7 +137,7 @@
         </section>
 
         <!-- CTA Final amélioré -->
-        <section class="bg-blue-600 text-white text-center py-16">
+        <section class="bg-blue-600 text-white text-center py-16 px-8">
             <h2 class="text-3xl font-bold">Rejoignez-nous dès maintenant !</h2>
             <p class="mt-3 text-lg text-blue-200">Trouver une salle ou louer la vôtre n'a jamais été aussi simple.</p>
             <div class="mt-6 flex justify-center gap-4">

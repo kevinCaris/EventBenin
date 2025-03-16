@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Enums\StatusHallEnum;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 use App\Models\Hall;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreHallRequest;
@@ -132,6 +134,7 @@ class HallController extends Controller
      */
     public function store(StoreHallRequest $request)
     {
+        DB::beginTransaction(); // Démarre une transaction
 
         try {
             // Valider les données de la requête
@@ -140,44 +143,46 @@ class HallController extends Controller
             // Assigner le company_id de l'utilisateur authentifié
             $data['company_id'] = auth()->user()->company_id;
 
-            // Gérer l'upload de l'image, si elle est présente
+            // Gestion de l'image principale
             if ($request->hasFile('image')) {
-                $data['image'] = $request->file('image')->store('halls', 'public');
+                $imagePath = $request->file('image')->store('halls', 'public');
+                $data['image'] = asset("storage/{$imagePath}");
             }
 
-            // Assigner l'état (status) selon la valeur sélectionnée
-            $data['status'] = $request->status == 1 ? StatusHallEnum::AVAILABLE : StatusHallEnum::UNAVAILABLE;
-
-            // Créer la salle avec les données
+            // Créer la salle
             $hall = Hall::create($data);
 
             // Gérer l'upload des images supplémentaires (plusieurs fichiers)
             if ($request->hasFile('images')) {
                 foreach ($request->file('images') as $image) {
-                    // Stocker chaque image dans le dossier 'halls' et récupérer le chemin
-                    $path = $image->store('public/hall_pictures');
+                    $path = $image->store('hall_pictures', 'public');
 
-                    // Créer une entrée dans la table pictures avec le chemin et l'id de la salle
                     $hall->pictures()->create([
-                        'path' => str_replace('public/', 'storage/', $path),
+                        'path' => "storage/{$path}",
                     ]);
                 }
             }
-            // // Assigner les fonctionnalités à la salle
-            // if ($request->has('selected_features')) {
-            //     $features = $request->input('selected_features');
-            //     $hall->f eatures()->sync($features);  // Sync les fonctionnalités avec la salle
-            // }
 
-            // Rediriger avec un message de succès
+            // Associer les équipements (features)
+            if ($request->has('features')) {
+                $hall->features()->sync($request->input('features', []));
+            }
+
+            // Associer les types d’événements
+            if ($request->has('event_types')) {
+                $hall->events()->sync($request->input('event_types', []));
+            }
+
+            DB::commit(); // Valide la transaction
+
             return redirect()->route('halls.index')->with('success', 'Salle créée avec succès.');
         } catch (\Exception $e) {
-            // En cas d'exception, rediriger avec un message d'erreur
+            DB::rollBack(); // Annule la transaction en cas d'erreur
             Log::error("Erreur lors de la création de la salle: " . $e->getMessage());
+
             return redirect()->route('halls.index')->with('error', 'Une erreur est survenue lors de la création de la salle.');
         }
     }
-
 
     /**
      * Display the specified resource.
@@ -194,55 +199,79 @@ class HallController extends Controller
      */
     public function edit(Hall $hall)
     {
+        $features = Feature::all();
+        $eventTypes = EventType::all();
         $hall = Hall::findOrFail($hall->id);
-        return view('halls.edit', compact('hall'));
+        return view('halls.edit', compact('hall', 'features', 'eventTypes'));
     }
 
     /**
      * Update the specified resource in storage.
      */
+
+
     public function update(UpdateHallRequest $request, Hall $hall)
     {
-        Log::info($request);
+        DB::beginTransaction(); // Démarre une transaction
+
         try {
             $data = $request->validated();
 
+            // Gestion de l'image principale
             if ($request->hasFile('image')) {
                 // Supprimer l'ancienne image si elle existe
-                if ($hall->image && Storage::disk('public')->exists(str_replace(asset('storage/'), '', $hall->image))) {
-                    Storage::disk('public')->delete(str_replace(asset('storage/'), '', $hall->image));
+                if ($hall->image) {
+                    $oldImagePath = str_replace(asset('storage/'), '', $hall->image);
+                    if (Storage::disk('public')->exists($oldImagePath)) {
+                        Storage::disk('public')->delete($oldImagePath);
+                    }
                 }
 
                 // Stocker la nouvelle image et récupérer son chemin
                 $imagePath = $request->file('image')->store('halls', 'public');
-
-                // Enregistrer l'URL complète
-                $hall->image = asset("storage/{$imagePath}");
+                $data['image'] = asset("storage/{$imagePath}");
             }
+
             $hall->update($data);
 
+            // Gestion des images supplémentaires
             if ($request->hasFile('images')) {
-                // Supprimer les anciennes images si vous le souhaitez (facultatif)
-                $hall->pictures()->delete();  // Cette ligne supprimera toutes les images existantes de la salle
+                // Supprimer les anciennes images
+                $hall->pictures()->each(function ($picture) {
+                    $path = str_replace('storage/', 'public/', $picture->path);
+                    if (Storage::exists($path)) {
+                        Storage::delete($path);
+                    }
+                    $picture->delete();
+                });
 
                 // Ajouter les nouvelles images
                 foreach ($request->file('images') as $image) {
-                    $path = $image->store('public/hall_pictures');
+                    $path = $image->store('hall_pictures', 'public');
 
-                    // Créer une entrée dans la table 'pictures' avec le chemin et l'id de la salle
                     $hall->pictures()->create([
-                        'path' => str_replace('public/', 'storage/', $path),
+                        'path' => "storage/{$path}",
                     ]);
                 }
             }
 
             // Assigner les nouvelles fonctionnalités à la salle
-            if ($request->has('selected_features')) {
-                $features = $request->input('selected_features');
-                $hall->features()->sync($features);  // Sync les fonctionnalités avec la salle
+            if ($request->has('features')) {
+                $hall->features()->sync($request->input('features', []));
             }
-            return redirect()->route('halls.index')->with('success', 'salle mise à jour avec success.');
+
+            // Assigner les types d'événements à la salle
+            if ($request->has('event_types')) {
+                $hall->events()->sync($request->input('event_types', []));
+            }
+
+            DB::commit(); // Valide la transaction
+
+            return redirect()->route('halls.index')->with('success', 'Salle mise à jour avec succès.');
         } catch (\Exception $e) {
+            DB::rollBack(); // Annule la transaction en cas d'erreur
+            Log::error('Erreur lors de la mise à jour de la salle : ' . $e->getMessage());
+
             return redirect()->route('halls.index')->with('error', 'Une erreur est survenue lors de la mise à jour de la salle.');
         }
     }

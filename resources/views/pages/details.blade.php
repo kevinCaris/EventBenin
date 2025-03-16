@@ -35,9 +35,13 @@
                 <!-- Bouton Contacter & Téléphone -->
                 <div class="flex items-center space-x-6">
                     <div class="bg-primary text-white px-4 py-2 rounded-lg  transition">
-                        <i class="fab fa-whatsapp text-white text-lg"></i>
-                        <a href="https://wa.me/62590775?text=Bonjour,%20je%20souhaite%20obtenir%20de%20plus%20amples%20informations%20concernant%20vos%20services.%20Pourriez-vous%20m'aider%20s'il%20vous%20plaitez%3F"
-                            target="_blank" class="text-white">Discuter</a>
+                        <i class="fas fa-comments text-white text-lg"></i>
+                        <a href="{{ route('chat.start', ['owner_id' =>$hall->company->user_id]) }}" class="btn btn-primary">
+                            Discuter
+                        </a>
+
+                        {{-- <a href="https://wa.me/62590775?text=Bonjour,%20je%20souhaite%20obtenir%20de%20plus%20amples%20informations%20concernant%20vos%20services.%20Pourriez-vous%20m'aider%20s'il%20vous%20plaitez%3F"
+                            target="_blank" class="text-white">Discuter</a> --}}
                     </div>
                     <div class="bg-primary text-white px-4 py-2 rounded-lg  transition">
                         <i class="fa fas-calendar text-white text-lg"></i>

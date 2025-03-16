@@ -3,12 +3,14 @@
 namespace App\Http\Controllers;
 
 use App\Enums\StatusHallEnum;
-use App\Models\Event;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreEventsRequest;
 use App\Http\Requests\UpdateEventsRequest;
 use App\Models\Events;
+use App\Models\User;
 use App\Models\Hall;
+use App\Notifications\NewReservationForOwner;
+use App\Notifications\ReservationConfirmed;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
@@ -44,7 +46,7 @@ class EventsController extends Controller
             $events = Events::whereHas('hall', function ($query) use ($user) {
                 // Filtrer les événements pour ne récupérer que ceux dont la salle appartient à la compagnie du propriétaire
                 $query->where('company_id', $user->company_id); // Assurez-vous que company_id dans Hall est correct
-            })->paginate(15); // Pagination à 15 événements par page
+            })->latest()->paginate(15); // Pagination à 15 événements par page
 
             return view('events.AllReserve', compact('events'));
         } elseif ($user->isAdmin()) {
@@ -129,6 +131,16 @@ class EventsController extends Controller
                 'hall_id' => $data['hall_id'],
             ]);
 
+            $ownerId = $event->hall->company->user_id; // L'ID du propriétaire
+            $owner = User::find($ownerId); // Récupérer l'objet utilisateur en fonction de l'ID
+
+            if ($owner) {
+                $owner->notify(new NewReservationForOwner($event)); // Envoi de la notification
+            } else {
+                // Gérer l'erreur si l'utilisateur n'existe pas
+                Log::error("Utilisateur avec l'ID $ownerId non trouvé.");
+            }
+
             // Rediriger vers la page de l'index des événements avec un message de succès
             return redirect()->route('events.index')->with('success', 'Réservation créé avec succès !');
         } catch (\Exception $e) {
@@ -157,7 +169,7 @@ class EventsController extends Controller
     public function edit(Events $event)
     {
 
-        if(auth()->user()->isClient()){
+        if (auth()->user()->isClient()) {
             return view('events.clientedit', compact('event'));
         }
         return view('events.edit', compact('event'));
@@ -175,7 +187,7 @@ class EventsController extends Controller
             $data = $request->validated();
             Log::info("data", $data);
 
-            if(auth()->user()->isClient()){
+            if (auth()->user()->isClient()) {
                 $event->update($data);
                 return redirect()->route('events.AllReserve')->with('success', 'Événement mis à jour avec succès !');
             }
@@ -246,6 +258,7 @@ class EventsController extends Controller
 
 
             $event->save();
+            $event->user->notify(new ReservationConfirmed($event));
 
 
             return redirect()->route('events.index')->with('success', 'Événement mis à jour avec succès !');
@@ -266,29 +279,39 @@ class EventsController extends Controller
 
         // Supprimer l'événement
         $events->delete();
-        return redirect()->route('events.index')->with('success', 'Événement supprimé avec succès !');
+        return redirect()->route('events.index')->with('success', 'evenement supprimé avec succès !');
     }
 
 
     public function showCalendar()
     {
         $user = auth()->user(); // Récupérer le propriétaire connecté
+        $company = $user->company; // Récupérer la compagnie de l'utilisateur
 
         // Vérifier que l'utilisateur est bien un propriétaire
         if (!$user->isOwner()) {
             return redirect()->route('dashboard')->with('error', 'Accès refusé.');
         }
 
-        // Récupérer les réservations confirmées des salles appartenant au propriétaire
-        $reservations = Events::whereHas('hall', function ($query) use ($user) {
-            // Vérifier que l'utilisateur est le propriétaire des salles (company_id correspond à l'ID de l'utilisateur)
-            $query->where('company_id', $user->id);
-        })
-            ->where('status', 1) // Filtrer uniquement les réservations confirmées
-            ->select('id', 'event_type', 'start_date', 'end_date') // Sélectionner les champs nécessaires
-            ->get();
+        // Récupérer toutes les salles appartenant au propriétaire
+        $halls = Hall::where('company_id', $company->id)->with(['reservations' => function ($query) {
+            $query->where('status', 1)->with(['hall', 'user']); // Charger la salle et l'utilisateur (client);
+        }])->get();// Charger la salle et l'utilisateur (client);
 
-        // Retourner la vue avec les réservations
-        return view('events.calendar', compact('reservations'));
+        // Extraire toutes les réservations des salles
+        $events = $halls->flatMap->reservations->map(function ($reservation) {
+            return [
+                'id'    => $reservation->id,
+                'title' => $reservation->event_type,
+                'start' => \Carbon\Carbon::parse($reservation->start_date)->toIso8601String(),
+                'end'   => \Carbon\Carbon::parse($reservation->end_date)->toIso8601String(),
+                'hall_name' => $reservation->hall->title,
+                'user_name'=>$reservation->user->name,
+                'backgroundColor' => '#0891B2',
+                'borderColor' => '#0891B2',
+            ];
+        });
+
+        return view('events.calendar', compact('events'));
     }
 }

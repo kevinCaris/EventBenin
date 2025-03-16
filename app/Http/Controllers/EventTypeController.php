@@ -38,12 +38,25 @@ class EventTypeController extends Controller
     public function store(StoreEventTypeRequest $request)
     {
         try {
+            // Vérifier si le type d'événement existe déjà
+            $existingEventType = EventType::where('title', $request->name)->first();
+
+            if ($existingEventType) {
+                return redirect()->route('eventTypes.index')
+                    ->with('error', 'Ce type événement existe déjà en base.');
+            }
+
+            // Créer le type d'événement s'il n'existe pas encore
             $eventType = EventType::create($request->validated());
-            return redirect()->route('eventTypes.index')->with('success', 'Type d\'evenement ajoutée avec success.');
+
+            return redirect()->route('eventTypes.index')
+                ->with('success', 'Type événement ajouté avec succès.');
         } catch (\Exception $e) {
-            return redirect()->route('eventTypes.index')->with('error', 'une erreur est survenue lors de la création du type d\'evenement.');
+            return redirect()->route('eventTypes.index')
+                ->with('error', 'Une erreur est survenue lors de la création du type événement.');
         }
     }
+
 
     /**
      * Display the specified resource.
@@ -68,7 +81,7 @@ class EventTypeController extends Controller
     {
         try {
             $eventType->update($request->validated());
-            return redirect()->route('eventTypes.index')->with('success', 'Type d\'evenement mise à jour avec success.');
+            return redirect()->route('eventTypes.index')->with('success', 'Type évènement mise à jour avec success.');
         } catch (\Exception $e) {
             return redirect()->route('eventTypes.index')->with('error', 'une erreur est survenue lors de la mise à jour du type d\'evenement.');
         }
@@ -80,6 +93,6 @@ class EventTypeController extends Controller
     public function destroy(EventType $eventType)
     {
         $eventType->delete();
-        return redirect()->route('eventTypes.index')->with('success', 'Type d\'evenement suprimée avec success.');
+        return redirect()->route('eventTypes.index')->with('success', 'Type évènement suprimée avec success.');
     }
 }

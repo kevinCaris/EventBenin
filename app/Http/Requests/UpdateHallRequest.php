@@ -37,6 +37,10 @@ class UpdateHallRequest extends FormRequest
             'status' => 'nullable|string', // Base sur les valeurs de StatusHallEnum
             'tarification' => 'required|string|min:0',
             'company_id' => 'nullable|exists:companies,id',
+            'features' => 'nullable|array',
+            'features.*' => 'exists:features,id', // Valider les équipements sélectionnés
+            'event_types' => 'required|array',
+            'event_types.*' => 'exists:event_types,id',
         ];
     }
     public function messages()

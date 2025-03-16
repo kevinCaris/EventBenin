@@ -13,12 +13,33 @@ class ReviewController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index($hall)
+    public function index($hall=null)
     {
+        $user = auth()->user();
 
+    // Si l'utilisateur est un propriétaire, récupérer les avis de toutes ses salles
+    if ($user->isOwner()) {
+        $reviews = $this->getOwnerReviews($user); // Méthode dédiée pour récupérer les avis du propriétaire
 
+        // Passer les données à la vue
+        return view('Companies.reviews', compact('reviews'));
+    }
         return view('pages.details', compact('reviews', 'hall'));
     }
+
+    private function getOwnerReviews($user)
+    {
+        // Récupérer toutes les salles associées à la compagnie du propriétaire
+        $halls = Hall::where('company_id', $user->company_id)->pluck('id');
+
+        // Récupérer tous les avis liés à ces salles, en paginant directement
+        $reviews = Review::whereIn('hall_id', $halls)
+                         ->latest() // Tri des avis, ici par date décroissante
+                         ->paginate(5); // Pagination des avis (5 par page)
+
+        return $reviews;
+    }
+
 
 
     /**

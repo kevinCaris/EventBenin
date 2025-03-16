@@ -29,7 +29,8 @@
                                 @foreach ($cities as $city)
                                     <option value="{{ $city }}"
                                         {{ request('city') == $city ? 'selected' : '' }}>
-                                        {{ $city }}</option>
+                                        {{ $city }}
+                                    </option>
                                 @endforeach
                             </select>
                         </div>
@@ -68,7 +69,7 @@
 
                         <!-- Bouton de filtrage -->
                         <button type="submit"
-                            class="bg-primary text-white font-semibold py-2 px-4 rounded-md hover:bg-blue-600 w-full">
+                            class="bg-primary text-white font-semibold py-2 px-4 rounded-md hover:bg-primary w-full">
                             Filtrer
                         </button>
                     </form>
@@ -109,7 +110,9 @@
                         </div>
                     </div>
                 </form>
-
+                @if ($halls->isEmpty())
+                    <p class="text-center text-gray-600 text-lg">Aucune salle trouvée.</p>
+                @endif
 
                 <!-- Liste des salles -->
                 <div class="mt-6" id="halls-container">
@@ -122,13 +125,13 @@
                                         alt="Image de la salle" class="w-full h-full object-cover rounded-lg">
                                 </div>
                                 <div class="p-4">
-                                    <div class="flex justify-between items-center">
+                                    {{-- <div class="flex justify-between items-center">
                                         @if ($hall->status->value === 'available')
                                             <span class="text-green-500 font-bold">Disponible</span>
                                         @else
                                             <span class="text-red-500 font-bold">Indisponible</span>
                                         @endif
-                                    </div>
+                                    </div> --}}
                                     <h5 class="text-xl font-semibold text-gray-800">{{ $hall->title }}</h5>
                                     <p class="text-primary text-lg mt-2 flex gap-3">
                                         <strong><i class="fa fa-map-marker text-primary"></i></strong>
@@ -212,10 +215,10 @@
                                     </div>
                                     <!-- Boutons -->
                                     <div class="mt-4 flex gap-4">
-                                        <a href="{{ route('events.create') }}"
-                                            class="inline-block bg-primary text-white text-sm font-semibold py-2 px-4 rounded-lg hover:bg-primary w-full sm:w-auto">
-                                            <i class="fa fa-calendar"></i> Réserver
-                                        </a>
+                                        <x-reservationForm title="Créer une nouvelle réservation" :route="route('events.store')"
+                                        method="POST" buttonText="Réserver" :hall="$hall ?? null">
+                                        <i class="fa fa-calendar"></i> Réserver
+                                    </x-reservationForm>
                                         <a href="{{ route('guest.hall.show', $hall->id) }}"
                                             class="inline-block bg-primary text-white text-sm font-semibold py-2 px-4 rounded-lg hover:bg-primary w-full sm:w-auto">
                                             <i class="fa fa-eye"></i> Voir la salle

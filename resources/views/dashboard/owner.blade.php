@@ -6,7 +6,13 @@
                 <div class="p-6 text-gray-900">
 
                         <div class="text-2xl font-bold flex justify-between items-center text-gray-800"><h2 class="text-xl font-bold text-gray-800">Tableau de bord </h2>
-                        <button class="bg-primary text-white px-3 py-2 rounded-lg shadow-md hover:bg-primary">🔔 Notifications</button></div>
+                            <a href="{{ route('reviews.index') }}">
+                                <button class="bg-primary text-white px-3 py-2 rounded-lg shadow-md hover:bg-primary">
+                                    <i class="fa fa-star mr-2 text-yellow-300"></i> Avis
+                                </button>
+                            </a>
+
+                    </div>
                 </div>
             </div>
         </div>
@@ -56,7 +62,8 @@
                     </div>
                     <div>
                       <p class="text-gray-500">Revenus ce mois</p>
-                      <h3 class="text-2xl font-bold">{{ $ownerStats['totalRevenue'] }} FCFA</h3>
+                      <h3 class="text-2xl font-bold">{{ number_format($ownerStats['totalRevenue'], 0, ',', '.') }} FCFA
+                    </h3>
                     </div>
                   </div>
                 </div>

@@ -1,6 +1,6 @@
 <?php
 
-
+use App\Http\Controllers\ChatsController;
 use App\Http\Controllers\CompanyController;
 use App\Http\Controllers\EventsController;
 use App\Http\Controllers\EventTypeController;
@@ -45,6 +45,15 @@ Route::get('/contact', function () {
 Route::get('/salles', [HallController::class, 'showForGuests'])->name('halls.guest');
 Route::get('/salles/{hall}', [HallController::class, 'showGuest'])->name('guest.hall.show');
 
+Route::middleware(['auth'])->group(function () {
+    Route::get('/chat', [ChatsController::class, 'index'])->name('chat.index');
+    Route::get('/chat/{chat}', [ChatsController::class, 'show'])->name('chat.show');
+    Route::get('/chat/start/{owner_id}', [ChatsController::class, 'startChat'])->name('chat.start');
+    Route::post('/chat/{chat}/send', [ChatsController::class, 'sendMessage'])->name('chat.sendMessage');
+
+});
+
+
 
 Route::middleware(['auth','verified','role:client'])->group(function () {
     Route::resource('events', EventsController::class);
@@ -54,19 +63,8 @@ Route::middleware(['auth','verified','role:client'])->group(function () {
 
 Route::resource('reviews', ReviewController::class);
 
-
-
-// Route::middleware(['auth'])->group(function () {
-// Route::middleware(['auth'])->group(function () {
-//     Route::get('/chat/{conversation}', [MessageController::class, 'showChat'])->name('chat.show');
-//     Route::get('/chat/messages/{conversation}', [MessageController::class, 'getMessages']);
-//     Route::post('/chat/send', [MessageController::class, 'sendMessage']);
-// });
-// Route::middleware(['auth'])->group(function () {
-//     Route::get('/chat/{conversation}', [MessageController::class, 'showChat'])->name('chat.show');
-//     Route::post('/chat/send', [MessageController::class, 'sendMessage']);
-// });
-
+Route::middleware('auth')->get('/proprietaire/avis', [ReviewController::class, 'index'])
+    ->name('reviews.owner'); // Route pour un propriétaire affichant les avis de ses salles
 Route::middleware(['auth','verified','role:admin'])->group(function () {
 
     Route::get('/admin/dashboard', function () {
@@ -109,6 +107,12 @@ Route::middleware(['auth','verified','role:owner'])->group(function () {
     Route::resource('HallPictures', HallPicturesController::class);
     Route::get('/calendar', [EventsController::class, 'showCalendar'])->name('events.calendar');
 });
+
+
+Route::get('/notifications', [NotificationController::class, 'index'])->name('notifications.index');
+Route::get('/notifications/{id}/read', [NotificationController::class, 'markAsRead'])->name('notifications.markAsRead');
+Route::delete('/notifications/{id}', [NotificationController::class, 'destroy'])->name('notifications.destroy');
+
 
 Route::view('dashboard', 'dashboard')
     ->middleware(['auth', 'verified'])

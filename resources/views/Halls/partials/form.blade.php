@@ -82,7 +82,7 @@
 
         <div class="mb-4">
             <label for="longitude" class="block text-lg font-medium text-gray-700 ">Longitude</label>
-            <input type="number" name="longitude" id="longitude"
+            <input type="number" step="0.01" name="longitude" id="longitude"
                 class="mt-1 block w-full rounded-lg border-gray-300 shadow-sm focus:ring-indigo-500 focus:border-indigo-500"
                 value="{{ old('longitude', $hall->longitude ?? '') }}" required>
             @error('longitude')
@@ -92,7 +92,7 @@
 
         <div class="mb-4">
             <label for="latitude" class="block text-lg font-medium text-gray-700">Latitude</label>
-            <input type="number" name="latitude" id="latitude"
+            <input type="number" step="0.01" name="latitude" id="latitude"
                 class="mt-1 block w-full rounded-lg border-gray-300 shadow-sm focus:ring-indigo-500 focus:border-indigo-500"
                 value="{{ old('latitude', $hall->latitude ?? '') }}" required>
             @error('latitude')
@@ -137,11 +137,13 @@
             <select name="status" id="status-select"
                 class="block w-full p-2 border-gray-300 rounded-md shadow-sm focus:ring-primary focus:border-primary">
                 <!-- Disponible -->
-                <option value="{{ \App\enums\StatusHallEnum::AVAILABLE }}">
+                <option value="{{ \App\enums\StatusHallEnum::AVAILABLE }}"
+                    @if (old('status', \App\enums\StatusHallEnum::AVAILABLE) == \App\enums\StatusHallEnum::AVAILABLE) selected @endif>
                     Disponible
                 </option>
                 <!-- Indisponible -->
-                <option value="{{ \App\enums\StatusHallEnum::UNAVAILABLE }}">
+                <option value="{{ \App\enums\StatusHallEnum::UNAVAILABLE }}"
+                    @if (old('status') == \App\enums\StatusHallEnum::UNAVAILABLE) selected @endif>
                     Indisponible
                 </option>
             </select>
@@ -150,6 +152,7 @@
             <span class="text-red-500 text-lg">{{ $message }}</span>
         @enderror
     </div>
+
 
     <div class="mb-4">
         <label for="images" class="block text-lg font-semibold text-gray-700 mb-2">Sélectionner des images</label>
@@ -160,6 +163,49 @@
 
     <!-- Zone d'aperçu des images -->
     <div id="image-preview-container" class="grid grid-cols-3 gap-4 mt-4"></div>
+
+    <!-- Type d'événements -->
+    <div class="mb-4">
+        <label for="event_types" class="block text-lg font-medium text-gray-700">Types d'événements</label>
+        <div class="grid grid-cols-3 gap-4 mt-2 sm:grid-cols-2">
+            @foreach ($eventTypes as $eventType)
+                <div class="flex items-center">
+                    <input type="checkbox" name="event_types[]" value="{{ $eventType->id }}"
+                        id="event_type_{{ $eventType->id }}" class="mr-2"
+                        @if (old('event_types')) {{ in_array($eventType->id, old('event_types', [])) ? 'checked' : '' }}
+                    @elseif (isset($hall) && $hall->events->contains($eventType->id))
+                        checked @endif>
+                    <label for="event_type_{{ $eventType->id }}" class="text-lg">{{ $eventType->title }}</label>
+                </div>
+            @endforeach
+        </div>
+        @error('event_types')
+            <span class="text-red-500 text-lg">{{ $message }}</span>
+        @enderror
+    </div>
+
+
+    <!-- Equipement -->
+    <div class="mb-4">
+        <label for="features" class="block text-lg font-medium text-gray-700">Équipements</label>
+        <div class="grid grid-cols-3 gap-4 mt-2 sm:grid-cols-2">
+            @foreach ($features as $feature)
+                <div class="flex items-center">
+                    <input type="checkbox" name="features[]" value="{{ $feature->id }}"
+                        id="feature_{{ $feature->id }}" class="mr-2"
+                        @if (old('features')) {{ in_array($feature->id, old('features', [])) ? 'checked' : '' }}
+                    @else
+                        {{ isset($hall) && $hall->features->contains($feature->id) ? 'checked' : '' }} @endif>
+                    <label for="feature_{{ $feature->id }}" class="text-lg">{{ $feature->title }}</label>
+                </div>
+            @endforeach
+        </div>
+        @error('features')
+            <span class="text-red-500 text-lg">{{ $message }}</span>
+        @enderror
+    </div>
+
+
 
     <!-- Actions -->
     <div class="text-right mt-6 flex space-x-4">
@@ -225,5 +271,5 @@
 
             reader.readAsDataURL(file);
         }
-        }
+    }
 </script>

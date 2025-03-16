@@ -5,6 +5,8 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
+use function SebastianBergmann\CodeCoverage\TestFixture\h;
+
 class Review extends Model
 {
     use HasFactory;
@@ -20,7 +22,7 @@ class Review extends Model
      */
     public function hall()
     {
-        return $this->belongsTo(Salle::class);
+        return $this->belongsTo(Hall::class);
     }
 
     public function user()

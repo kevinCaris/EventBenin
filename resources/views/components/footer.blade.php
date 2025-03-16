@@ -8,12 +8,11 @@
                     <div>
                         <h3 class="text-lg font-semibold text-yellow-400 mb-4">Navigation</h3>
                         <ul class="space-y-2">
-                            <li><a href="#" class="text-gray-300 hover:text-yellow-400 transition">Accueil</a></li>
-                            <li><a href="#" class="text-gray-300 hover:text-yellow-400 transition">À propos</a></li>
-                            <li><a href="#" class="text-gray-300 hover:text-yellow-400 transition">Nos services</a></li>
-                            <li><a href="#" class="text-gray-300 hover:text-yellow-400 transition">Réserver une salle</a></li>
+                            <li><a href="{{ route('home') }}" class="text-gray-300 hover:text-yellow-400 transition">Accueil</a></li>
+                            <li><a href="{{ route('about') }}" class="text-gray-300 hover:text-yellow-400 transition">À propos</a></li>
+                            <li><a href="" class="text-gray-300 hover:text-yellow-400 transition">Réserver une salle</a></li>
                             <li><a href="#" class="text-gray-300 hover:text-yellow-400 transition">Avis & Témoignages</a></li>
-                            <li><a href="#" class="text-gray-300 hover:text-yellow-400 transition">Contact</a></li>
+                            <li><a href="{{ route('contact') }}" class="text-gray-300 hover:text-yellow-400 transition">Contact</a></li>
                         </ul>
                     </div>
 

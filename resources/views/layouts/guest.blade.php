@@ -26,6 +26,7 @@
 
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
         integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
+        <link rel="icon" type="image/x-icon" href="{{ asset('favicon-96x96.png') }}">
 
 
         <!-- FullCalendar CSS -->
@@ -63,8 +64,7 @@
         <!-- Main Content -->
 
             {{ $slot }}
-            {{-- <div class="min-h-screen flex flex-col sm:justify-center items-center pt-6 sm:pt-0 bg-gray-100">
-        </div> --}}
+
     </main>
     <x-footer />
     <script>

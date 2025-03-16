@@ -33,8 +33,8 @@ new #[Layout('layouts.guest')] class extends Component {
         }
     }
 }; ?>
-<div class="min-h-screen flex flex-col sm:justify-center items-center  sm:pt-0 bg-primary">
-<div class="w-3/4 sm:max-w-md  p-10 bg-white shadow-md overflow-hidden sm:rounded-lg">
+<div class="min-h-screen flex items-center justify-center bg-primary">
+    <div class="w-3/4 sm:max-w-md p-10 bg-white shadow-md overflow-hidden rounded-lg">
 
     <!-- Session Status -->
     <x-auth-session-status class="mb-4" :status="session('status')" />

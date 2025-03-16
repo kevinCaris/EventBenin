@@ -1,4 +1,4 @@
-<div class="max-w-2xl mx-auto bg-white p-8 shadow-lg rounded-xl">
+<div class="max-w-full mx-auto bg-white p-6 sm:p-8 shadow-lg rounded-xl">
     <h2 class="text-2xl font-semibold text-gray-900">Contacter le prestataire</h2>
     <div class="border border-gray-200 p-4 rounded-lg text-center">
         <p class="text-lg text-gray-500 mb-4">La demande de renseignements est 100% gratuite !</p>
@@ -54,7 +54,7 @@
             </datalist>
         </div>
 
-        <div class="grid grid-cols-2 gap-4">
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div>
                 <label for="start_date" class="block text-lg font-medium text-gray-700">Date de début</label>
                 <input type="date" name="start_date" id="start_date" class="mt-1 w-full rounded-lg border-gray-300 shadow-lg focus:ring-blue-500 focus:border-blue-500 @error('start_date') border-red-500 @enderror" required>
@@ -71,7 +71,7 @@
             </div>
         </div>
 
-        <div class="grid grid-cols-2 gap-4">
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div>
                 <label for="start_time" class="block text-lg font-medium text-gray-700">Heure de début</label>
                 <input type="time" name="start_time" id="start_time" class="mt-1 w-full rounded-lg border-gray-300 shadow-lg focus:ring-blue-500 focus:border-blue-500 @error('start_time') border-red-500 @enderror" required>
