@@ -55,6 +55,7 @@ class User extends Authenticatable
      */
     protected $casts = [
         'email_verified_at' => 'datetime',
+        'birthday' => 'date',
         'password' => 'hashed',
         'role' => RoleEnum::class,
         'gender' => GenderEnum::class,
@@ -69,5 +70,9 @@ class User extends Authenticatable
     public function reservations():HasMany
     {
         return $this->hasMany(Reservation::class);
+    }
+    public function events():HasMany
+    {
+        return $this->hasMany(Events::class);
     }
 }

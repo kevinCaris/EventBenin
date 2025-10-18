@@ -13,25 +13,35 @@
     <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet" />
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
 
+
+
+        <!-- FullCalendar CSS -->
+        <link href="https://cdn.jsdelivr.net/npm/fullcalendar@3.10.2/dist/fullcalendar.min.css" rel="stylesheet">
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.2.0/lang/fr.js"></script>
+
+
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+
     <!-- Scripts -->
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
 
 <body class="font-sans antialiased bg-gray-100">
-    <div class="hidden lg:block">
+    <div class="hidden lg:block fixed-top 1">
         <!-- Contenu à afficher uniquement sur PC -->
         <!-- Dashboard Wrapper -->
-        <div x-data="{ sidebarOpen: true }" class="flex h-screen bg-gray-100">
+        <div x-data="{ sidebarOpen: true }" class="flex h-screen bg-gray-100 ">
 
             <!-- Sidebar -->
             <aside :class="{ 'w-52': sidebarOpen, 'w-16': !sidebarOpen }"
-                class="bg-gray-800 text-white flex-shrink-0 transition-all duration-300 max-w-full">
+                class="bg-white   flex-shrink-0 transition-all duration-300 max-w-full border-r-2">
                 <!-- Logo and Toggle -->
                 <div class="flex items-center justify-between p-4">
                     <a href="#" class="text-2xl font-bold" @click="sidebarOpen = !sidebarOpen">
                         <i class="fas fa-bars"></i>
                     </a>
-                    <span x-show="sidebarOpen" class="ml-2">Dashboard</span>
+                    <span x-show="sidebarOpen" class="ml-2 text-bold  bg-dots-darker">{{ config('app.name', 'EventBenin') }}</span>
                 </div>
                 <!-- Dynamic Sidebar -->
                 @if (Auth::user()->getRoleAsString() === 'admin')
@@ -44,8 +54,8 @@
             <!-- Main Content -->
             <div class="flex-1 flex flex-col  overflow-hidden">
                 <!-- Topbar -->
-                {{-- <livewire:dashboard.header /> --}}
-                <livewire:layout.navigation />
+                <livewire:dashboard.header />
+                {{-- <livewire:layout.navigation /> --}}
                 <!-- Content -->
                 <main class="flex-1 overflow-y-auto ">
                     {{ $slot }}
@@ -101,6 +111,49 @@
         </div>
 
     </div>
+
+    <!-- Toast Notification -->
+    <div id="toastMessage"
+        class="fixed bottom-5 right-5 bg-green-500 text-white px-4 py-2 rounded-lg shadow-lg opacity-0 transition-opacity duration-500">
+        <span id="toastContent"></span>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const toastElement = document.getElementById('toastMessage');
+            const toastContent = document.getElementById('toastContent');
+
+            function showToast(message, type = 'success') {
+                if (!toastElement || !toastContent) return;
+
+                // Modifier la couleur selon le type (vert = succès, rouge = erreur)
+                toastElement.classList.remove('bg-primary', 'bg-red-500');
+                toastElement.classList.add(type === 'success' ? 'bg-primary' : 'bg-red-500');
+                toastContent.textContent = message;
+
+                // Afficher le toast
+                toastElement.classList.remove('opacity-0');
+                toastElement.classList.add('opacity-100');
+
+                // Masquer après 3 secondes
+                setTimeout(() => {
+                    toastElement.classList.remove('opacity-100');
+                    toastElement.classList.add('opacity-0');
+                }, 3000);
+            }
+
+            // Vérifier si Laravel a stocké un message en session
+            const successMessage = "{{ session('success') }}".trim();
+            const errorMessage = "{{ session('error') }}".trim();
+
+            if (successMessage !== "") {
+                showToast(successMessage, 'success');
+            } else if (errorMessage !== "") {
+                showToast(errorMessage, 'error');
+            }
+        });
+    </script>
+
 </body>
 
 </html>

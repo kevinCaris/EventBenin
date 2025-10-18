@@ -22,7 +22,7 @@
             {{ __('Client Dashboard') }}
         </x-nav-link>
     @else
-        <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')" wire:navigate>
+        <x-nav-link :href="route('home')" :active="request()->routeIs('home')" wire:navigate>
             {{ __('Dashboard') }}
         </x-nav-link>
     @endif

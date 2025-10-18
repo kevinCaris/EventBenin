@@ -22,17 +22,26 @@ class UpdateHallRequest extends FormRequest
      */
     public function rules(): array
     {
-            return [
-                'title' => 'required|string|max:255',
-                'description' => 'required|string|min:10',
-                'capacity' => 'required|integer|min:1',
-                'location' => 'required|json|max:255',
-                'price' => 'required|numeric|min:0',
-                'image' => 'nullable|image|mimes:jpeg,png,jpg|max:2048',
-                'address' => 'required|string|max:255',
-                'status' => 'required|numeric', // Basé sur les valeurs de StatusHallEnum
-                'company_id' => 'required|exists:companies,id',
-            ];
+        return [
+            'title' => 'required|string|max:255',
+            'description' => 'required|string|min:10',
+            'capacity' => 'required|integer|min:1',
+            'image' => 'nullable|image|mimes:jpeg,png,jpg,webp|max:2048',
+            'address' => 'required|string|max:255',
+            'city' => 'required|string|max:255',
+            'country' => 'required|string|max:255',
+            'latitude' => 'required|numeric',
+            'longitude' => 'required|numeric',
+            'website' => 'nullable|url',
+            'price' => 'required|numeric|min:0',
+            'status' => 'nullable|string', // Base sur les valeurs de StatusHallEnum
+            'tarification' => 'required|string|min:0',
+            'company_id' => 'nullable|exists:companies,id',
+            'features' => 'nullable|array',
+            'features.*' => 'exists:features,id', // Valider les équipements sélectionnés
+            'event_types' => 'required|array',
+            'event_types.*' => 'exists:event_types,id',
+        ];
     }
     public function messages()
     {

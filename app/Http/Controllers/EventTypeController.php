@@ -6,15 +6,22 @@ use App\Models\EventType;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreEventTypeRequest;
 use App\Http\Requests\UpdateEventTypeRequest;
+use Illuminate\Console\Scheduling\Event;
 
 class EventTypeController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
+    public function render()
+    {
+        $events = EventType::all();
+        return view('components.event-select', compact('events'));
+    }
     public function index()
     {
-        //
+        $eventTypes = EventType::paginate(10);
+        return view('eventTypes.index', compact('eventTypes'));
     }
 
     /**
@@ -22,7 +29,7 @@ class EventTypeController extends Controller
      */
     public function create()
     {
-        //
+        return view('eventTypes.create');
     }
 
     /**
@@ -30,15 +37,33 @@ class EventTypeController extends Controller
      */
     public function store(StoreEventTypeRequest $request)
     {
-        //
+        try {
+            // Vérifier si le type d'événement existe déjà
+            $existingEventType = EventType::where('title', $request->name)->first();
+
+            if ($existingEventType) {
+                return redirect()->route('eventTypes.index')
+                    ->with('error', 'Ce type événement existe déjà en base.');
+            }
+
+            // Créer le type d'événement s'il n'existe pas encore
+            $eventType = EventType::create($request->validated());
+
+            return redirect()->route('eventTypes.index')
+                ->with('success', 'Type événement ajouté avec succès.');
+        } catch (\Exception $e) {
+            return redirect()->route('eventTypes.index')
+                ->with('error', 'Une erreur est survenue lors de la création du type événement.');
+        }
     }
+
 
     /**
      * Display the specified resource.
      */
     public function show(EventType $eventType)
     {
-        //
+        return view('eventTypes.show', compact('eventType'));
     }
 
     /**
@@ -46,7 +71,7 @@ class EventTypeController extends Controller
      */
     public function edit(EventType $eventType)
     {
-        //
+        return view('eventTypes.edit', compact('eventType'));
     }
 
     /**
@@ -54,7 +79,12 @@ class EventTypeController extends Controller
      */
     public function update(UpdateEventTypeRequest $request, EventType $eventType)
     {
-        //
+        try {
+            $eventType->update($request->validated());
+            return redirect()->route('eventTypes.index')->with('success', 'Type évènement mise à jour avec success.');
+        } catch (\Exception $e) {
+            return redirect()->route('eventTypes.index')->with('error', 'une erreur est survenue lors de la mise à jour du type d\'evenement.');
+        }
     }
 
     /**
@@ -62,6 +92,7 @@ class EventTypeController extends Controller
      */
     public function destroy(EventType $eventType)
     {
-        //
+        $eventType->delete();
+        return redirect()->route('eventTypes.index')->with('success', 'Type évènement suprimée avec success.');
     }
 }

@@ -3,7 +3,7 @@
     @if ($method ?? false)
         @method($method)
     @endif
-    <div class="grid lg:grid-cols-3 sm:grid-cols-1 md:grid-cols-1 gap-4">
+    <div class="grid lg:grid-cols-3 sm:grid-cols-1 md:grid-cols-1 gap-4 p-8 ">
         <!-- Nom -->
         <div class="mb-4">
             <label for="name" class="block text-sm font-medium text-gray-700">Nom de la Compagnie</label>
@@ -40,8 +40,8 @@
         <!-- Postal_code -->
         <div class="mb-4">
             <label for="address" class="block text-sm font-medium text-gray-700">Code Postal :</label>
-            <textarea name="address" id="address"
-                class="mt-1 block w-full rounded-lg border-gray-300 shadow-sm focus:ring-indigo-500 focus:border-indigo-500">{{ old('postal_code', $company->postal_code ?? '') }}</textarea>
+            <input type="number" name="address" id="address"
+                class="mt-1 block w-full rounded-lg border-gray-300 shadow-sm focus:ring-indigo-500 focus:border-indigo-500" value="{{ old('postal_code', $company->postal_code ?? '') }}"/>
             @error('postal_code')
                 <span class="text-red-500 text-sm">{{ $message }}</span>
             @enderror
@@ -49,8 +49,8 @@
         <!-- Pays -->
         <div class="mb-4">
             <label for="address" class="block text-sm font-medium text-gray-700">Pays</label>
-            <textarea name="pays" id="pays"
-                class="mt-1 block w-full rounded-lg border-gray-300 shadow-sm focus:ring-indigo-500 focus:border-indigo-500">{{ old('pays', $company->pays ?? '') }}</textarea>
+            <input type="text" name="pays" id="pays"
+                class="mt-1 block w-full rounded-lg border-gray-300 shadow-sm focus:ring-indigo-500 focus:border-indigo-500" value="{{ old('pays', $company->pays ?? '') }}"/>
             @error('pays')
                 <span class="text-red-500 text-sm">{{ $message }}</span>
             @enderror
@@ -58,9 +58,9 @@
         <!-- Adresse -->
         <div class="mb-4">
             <label for="address" class="block text-sm font-medium text-gray-700">Adresse</label>
-            <textarea name="address" id="address"
-                class="mt-1 block w-full rounded-lg border-gray-300 shadow-sm focus:ring-indigo-500 focus:border-indigo-500">{{ old('ville', $company->ville ?? '') }}</textarea>
-            @error('ville')
+            <input type="text" name="address" id="address"
+                class="mt-1 block w-full rounded-lg border-gray-300 shadow-sm focus:ring-indigo-500 focus:border-indigo-500" value="{{ old('ville', $company->ville ?? '') }}"/>
+            @error('adress')
                 <span class="text-red-500 text-sm">{{ $message }}</span>
             @enderror
         </div>
@@ -96,7 +96,7 @@
         </div>
     </div>
     <!-- Description -->
-    <div class="mb-4">
+    <div class="mb-4 px-8">
         <label for="description" class="block text-sm font-medium text-gray-700">Description</label>
         <textarea name="description" id="description"
             class="mt-1 block w-full rounded-lg border-gray-300 shadow-sm focus:ring-indigo-500 focus:border-indigo-500">{{ old('description', $company->description ?? '') }}</textarea>
@@ -104,7 +104,7 @@
             <span class="text-red-500 text-sm">{{ $message }}</span>
         @enderror
     </div>
-    <div class="lg:grid-cols-3 sm:grid-cols-1 md:grid-cols-1 gap-4">
+    <div class="lg:grid-cols-3 sm:grid-cols-1 md:grid-cols-1 gap-4 px-8">
         <!-- Réseaux sociaux -->
         <div class="mb-4">
             <label for="facebook_url" class="block text-sm font-medium text-gray-700">Facebook URL</label>
@@ -154,8 +154,8 @@
     </div>
 
     <!-- Actions -->
-    <div class="text-right mt-6 flex space-x-4">
-        <button type="submit" class="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600">
+    <div class="text-right mt-6 flex space-x-4 px-8">
+        <button type="submit" class="px-4 py-2 bg-primary text-white rounded hover:bg-primary">
             @if ($method == 'PUT')
                 Modifier
             @else

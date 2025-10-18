@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class UpdateEventTypeRequest extends FormRequest
 {
@@ -11,7 +12,7 @@ class UpdateEventTypeRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -22,7 +23,7 @@ class UpdateEventTypeRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'title' => ['required', 'string', 'max:255',Rule::unique('event_types','title')->ignore($this->eventType->id)],
         ];
     }
 }

@@ -14,6 +14,9 @@ trait HasRole
      */
     public function hasRole(string $role): bool
     {
+        if ($this->role === null) {
+            return false; // L'utilisateur n'a pas de rôle
+        }
         return $this->role->value === $role;
     }
 

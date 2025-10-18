@@ -33,6 +33,7 @@ class CompanyFactory extends Factory
             'instagram_url' => fake()->url(),
             'website_url' => fake()->url(),
             'cover' => null,
+            'user_id' => null
 
         ];
     }

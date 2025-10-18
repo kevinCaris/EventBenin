@@ -28,6 +28,7 @@ class Company extends Model
         'linkedin_url',
         'youtube_url',
         'tiktok_url',
+        'user_id'
     ];
 
     public function user():BelongsTo
