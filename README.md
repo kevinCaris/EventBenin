@@ -1,23 +1,23 @@
-# 🎉 Plateforme de Gestion de Salles de Fêtes
+# 🎉 Plateforme de Gestion de Salles de Fêtes  
 
-## 📌 Description
-Cette plateforme permet aux utilisateurs de rechercher, réserver et gérer des salles de fêtes pour divers événements. Elle offre une interface intuitive pour les administrateurs, les propriétaires et les clients.
+## 📌 Description  
+Cette plateforme permet aux utilisateurs de rechercher, réserver et gérer des salles de fêtes pour divers événements. Elle offre une interface intuitive pour les administrateurs, les propriétaires et les clients.  
 
-## 🚀 Fonctionnalités principales
-- 🔎 Recherche et réservation de salles
-- 👤 Gestion des utilisateurs (admin, propriétaires, clients)
-- 📅 Gestion des disponibilités et des paiements
-- 🔔 Notifications et rappels automatisés
-- ⚡ Composants interactifs avec **Livewire**
+## 🚀 Fonctionnalités principales  
+- 🔎 Recherche et réservation de salles  
+- 👤 Gestion des utilisateurs (admin, propriétaires, clients)  
+- 📅 Gestion des disponibilités et des paiements  
+- 🔔 Notifications et rappels automatisés  
+- ⚡ Composants interactifs avec **Livewire**  
 
-## 🛠️ Technologies utilisées
-- **Backend** : Laravel + Livewire
-- **Frontend** : Blade + TailwindCSS
-- **Base de données** : MySQL
-- **Conteneurisation** : Docker (optionnel)
-- **Autres** : API REST, Alpine.js
+## 🛠️ Technologies utilisées  
+- **Backend** : Laravel + Livewire  
+- **Frontend** : Blade + TailwindCSS  
+- **Base de données** : MySQL  
+- **Conteneurisation** : Docker (optionnel)  
+- **Autres** : API REST, Alpine.js  
 
-## 🏗️ Installation et exécution
+## 🏗️ Installation et exécution  
 
 ### 1️⃣ Cloner le projet
 ```bash
@@ -53,3 +53,5 @@ php artisan serve
 ```
 ###
 Accéder à l'application via http://127.0.0.1:8000
+
+
