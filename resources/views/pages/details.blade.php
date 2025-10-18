@@ -17,7 +17,7 @@
                 </div>
             </div>
         </section>
-        <header class="bg-white shadow-md sticky mt-5 z-50 ">
+        <header class="bg-white shadow-md sticky mt-5 z-0 ">
             <div class="container mx-auto flex justify-between items-center py-4 px-6">
                 <!-- Navigation -->
                 <nav>
@@ -279,10 +279,10 @@
                                         <p class="text-gray-500">Email :</p>
                                         <p class="font-medium break-words">{{ $hall->company->email }}</p>
                                     </div>
-                                    <div>
+                                    {{-- <div>
                                         <p class="text-gray-500">Téléphone :</p>
                                         <p class="font-medium">{{ $hall->company->phone }}</p>
-                                    </div>
+                                    </div> --}}
                                     <div>
                                         <p class="text-gray-500">Adresse :</p>
                                         <p class="font-medium">{{ $hall->company->address }}</p>

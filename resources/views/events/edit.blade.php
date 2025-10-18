@@ -26,16 +26,10 @@
                     <!-- Type d'événement -->
                     <div>
                         <label for="event_type" class="block text-lg font-medium text-gray-700">Type d'événement</label>
-                        <input
-                            type="text"
-                            name="event_type"
-                            id="event_type"
+                        <input type="text" name="event_type" id="event_type"
                             class="w-full border p-2 rounded-md mt-1 @error('event_type') border-red-500 @enderror"
-                            placeholder="Recherchez ou entrez un type d'événement..."
-                            list="event-types"
-                            value="{{ old('event_type', $event->event_type) }}"
-                            required
-                        >
+                            placeholder="Recherchez ou entrez un type d'événement..." list="event-types"
+                            value="{{ old('event_type', $event->event_type) }}" required>
                         @error('event_type')
                             <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
                         @enderror
@@ -56,29 +50,20 @@
                     <!-- Dates et heures -->
                     <div class="grid grid-cols-2 gap-4">
                         <div>
-                            <label for="start_date" class="block text-lg font-medium text-gray-700">Date de début</label>
-                            <input
-                                type="date"
-                                name="start_date"
-                                id="start_date"
+                            <label for="start_date" class="block text-lg font-medium text-gray-700">Date de
+                                début</label>
+                            <input type="date" name="start_date" id="start_date"
                                 class="mt-1 w-full rounded-lg border-gray-300 shadow-lg focus:ring-blue-500 focus:border-blue-500 @error('start_date') border-red-500 @enderror"
-                                value="{{ old('start_date', $event->start_date) }}"
-                                required
-                            >
+                                value="{{ old('start_date', $event->start_date) }}" required>
                             @error('start_date')
                                 <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
                             @enderror
                         </div>
                         <div>
                             <label for="end_date" class="block text-lg font-medium text-gray-700">Date de fin</label>
-                            <input
-                                type="date"
-                                name="end_date"
-                                id="end_date"
+                            <input type="date" name="end_date" id="end_date"
                                 class="mt-1 w-full rounded-lg border-gray-300 shadow-lg focus:ring-blue-500 focus:border-blue-500 @error('end_date') border-red-500 @enderror"
-                                value="{{ old('end_date', $event->end_date) }}"
-                                required
-                            >
+                                value="{{ old('end_date', $event->end_date) }}" required>
                             @error('end_date')
                                 <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
                             @enderror
@@ -87,29 +72,20 @@
 
                     <div class="grid grid-cols-2 gap-4">
                         <div>
-                            <label for="start_time" class="block text-lg font-medium text-gray-700">Heure de début</label>
-                            <input
-                                type="time"
-                                name="start_time"
-                                id="start_time"
+                            <label for="start_time" class="block text-lg font-medium text-gray-700">Heure de
+                                début</label>
+                            <input type="time" name="start_time" id="start_time"
                                 class="mt-1 w-full rounded-lg border-gray-300 shadow-lg focus:ring-blue-500 focus:border-blue-500 @error('start_time') border-red-500 @enderror"
-                                value="{{ old('start_time', $event->start_time) }}"
-                                required
-                            >
+                                value="{{ old('start_time', $event->start_time) }}" required>
                             @error('start_time')
                                 <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
                             @enderror
                         </div>
                         <div>
                             <label for="end_time" class="block text-lg font-medium text-gray-700">Heure de fin</label>
-                            <input
-                                type="time"
-                                name="end_time"
-                                id="end_time"
+                            <input type="time" name="end_time" id="end_time"
                                 class="mt-1 w-full rounded-lg border-gray-300 shadow-lg focus:ring-blue-500 focus:border-blue-500 @error('end_time') border-red-500 @enderror"
-                                value="{{ old('end_time', $event->end_time) }}"
-                                required
-                            >
+                                value="{{ old('end_time', $event->end_time) }}" required>
                             @error('end_time')
                                 <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
                             @enderror
@@ -118,13 +94,10 @@
 
                     <!-- Détails de la Réservation -->
                     <div>
-                        <label for="details" class="block text-lg font-medium text-gray-700">Détails de la Réservation</label>
-                        <textarea
-                            name="details"
-                            id="details"
-                            rows="4"
-                            class="mt-1 w-full rounded-lg border-gray-300 shadow-lg focus:ring-blue-500 focus:border-blue-500 @error('details') border-red-500 @enderror"
-                        >{{ old('details', $event->details) }}</textarea>
+                        <label for="details" class="block text-lg font-medium text-gray-700">Détails de la
+                            Réservation</label>
+                        <textarea name="details" id="details" rows="4"
+                            class="mt-1 w-full rounded-lg border-gray-300 shadow-lg focus:ring-blue-500 focus:border-blue-500 @error('details') border-red-500 @enderror">{{ old('details', $event->details) }}</textarea>
                         @error('details')
                             <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
                         @enderror
@@ -133,15 +106,9 @@
                     <!-- Montant -->
                     <div>
                         <label for="amount" class="block text-lg font-medium text-gray-700">Montant</label>
-                        <input
-                            type="number"
-                            name="amount"
-                            id="amount"
+                        <input type="number" name="amount" id="amount"
                             class="w-full border p-2 rounded-md mt-1 @error('amount') border-red-500 @enderror"
-                            placeholder="Entrez le montant"
-                            value="{{ old('amount', $event->amount) }}"
-                            required
-                        >
+                            placeholder="Entrez le montant" value="{{ old('amount', $event->amount) }}" required>
                         @error('amount')
                             <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
                         @enderror
@@ -150,22 +117,23 @@
                     <!-- Statut -->
                     <div>
                         <label for="status" class="block text-lg font-medium text-gray-700">Statut</label>
-                        <select
-                            name="status"
-                            id="status"
+                        <select name="status" id="status"
                             class="w-full border p-2 rounded-md mt-1 @error('status') border-red-500 @enderror"
-                            required
-                        >
-                            <option value="0" {{ old('status', $event->status) == 0 ? 'selected' : '' }}>En attente</option>
-                            <option value="1" {{ old('status', $event->status) == 1 ? 'selected' : '' }}>Confirmé</option>
-                            <option value="2" {{ old('status', $event->status) == 2 ? 'selected' : '' }}>Annulé</option>
+                            required>
+                            <option value="0" {{ old('status', $event->status) == 0 ? 'selected' : '' }}>En
+                                attente</option>
+                            <option value="1" {{ old('status', $event->status) == 1 ? 'selected' : '' }}>Confirmé
+                            </option>
+                            <option value="2" {{ old('status', $event->status) == 2 ? 'selected' : '' }}>Annulé
+                            </option>
                         </select>
                         @error('status')
                             <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
                         @enderror
                     </div>
 
-                    <button type="submit" class="w-full bg-primary text-white py-2 rounded-lg hover:bg-blue-700 transition duration-200">
+                    <button type="submit"
+                        class="w-full bg-primary text-white py-2 rounded-lg hover:bg-primary transition duration-200">
                         Modifier l'événement
                     </button>
                 </form>
